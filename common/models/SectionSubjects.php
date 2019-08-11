@@ -1,0 +1,64 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "section_subjects".
+ *
+ * @property int $id
+ * @property int $subject_id
+ * @property string $title
+ * @property string $slug
+ * @property string $short_description
+ * @property string $description
+ * @property string $seo_keywords
+ * @property string $seo_description
+ * @property string $created_at
+ * @property string $updated_at
+ * @property int $is_status
+ */
+class SectionSubjects extends \yii\db\ActiveRecord
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'section_subjects';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['subject_id', 'is_status'], 'integer'],
+            [['description'], 'string'],
+            [['title', 'slug'], 'string', 'max' => 500],
+            [['short_description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
+            'title' => Yii::t('app', 'Title'),
+            'slug' => Yii::t('app', 'Slug'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'description' => Yii::t('app', 'Description'),
+            'seo_keywords' => Yii::t('app', 'Seo Keywords'),
+            'seo_description' => Yii::t('app', 'Seo Description'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'is_status' => Yii::t('app', 'Is Status'),
+        ];
+    }
+}
