@@ -40,6 +40,70 @@ INSERT INTO `migration` VALUES ('m000000_000000_base',1565138989),('m130524_2014
 UNLOCK TABLES;
 
 --
+-- Table structure for table `section_subjects`
+--
+
+DROP TABLE IF EXISTS `section_subjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `section_subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_id` int(11) DEFAULT NULL,
+  `title` varchar(500) CHARACTER SET latin1 DEFAULT NULL,
+  `slug` varchar(500) CHARACTER SET latin1 DEFAULT NULL,
+  `short_description` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `description` text CHARACTER SET latin1,
+  `seo_keywords` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `seo_description` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `created_at` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `updated_at` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `is_status` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `section_subjects`
+--
+
+LOCK TABLES `section_subjects` WRITE;
+/*!40000 ALTER TABLE `section_subjects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `section_subjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subjects`
+--
+
+DROP TABLE IF EXISTS `subjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) DEFAULT NULL,
+  `slug` varchar(500) DEFAULT NULL,
+  `short_description` varchar(300) DEFAULT NULL,
+  `description` text,
+  `seo_keywords` varchar(300) DEFAULT NULL,
+  `seo_description` varchar(300) DEFAULT NULL,
+  `created_at` varchar(300) DEFAULT NULL,
+  `updated_at` varchar(300) CHARACTER SET latin1 DEFAULT NULL,
+  `is_status` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subjects`
+--
+
+LOCK TABLES `subjects` WRITE;
+/*!40000 ALTER TABLE `subjects` DISABLE KEYS */;
+INSERT INTO `subjects` VALUES (1,'физика','fizika','физика','<p>физика</p>','физика','физика','1565511016','1565511016',1);
+/*!40000 ALTER TABLE `subjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -87,4 +151,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-07 12:17:41
+-- Dump completed on 2019-08-11 16:45:05
