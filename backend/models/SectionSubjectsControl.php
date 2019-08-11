@@ -2,14 +2,14 @@
 
 namespace backend\models;
 
+use common\models\SectionSubjects;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Subjects;
 
 /**
  * SectionSubjectsControl represents the model behind the search form of `common\models\Subjects`.
  */
-class SectionSubjectsControl extends Subjects
+class SectionSubjectsControl extends SectionSubjects
 {
     /**
      * {@inheritdoc}
@@ -40,13 +40,11 @@ class SectionSubjectsControl extends Subjects
      */
     public function search($params)
     {
-        $query = Subjects::find();
+        $query = SectionSubjects::find();
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => $query,]);
 
         $this->load($params);
 

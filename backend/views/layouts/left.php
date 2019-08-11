@@ -30,6 +30,9 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => Yii::t('app', 'Subjects'), 'icon' => '', 'url' => ['/subjects']],
+                    ['label' => Yii::t('app', 'Section Subjects'), 'icon' => '', 'url' => ['/section-subjects']],
+
                 ],
             ]
         ) ?>

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "subjects".
@@ -18,7 +19,7 @@ use Yii;
  * @property string $updated_at
  * @property int $is_status
  */
-class Subjects extends \yii\db\ActiveRecord
+class Subjects extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,8 +37,41 @@ class Subjects extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['is_status'], 'integer'],
+            [['title'], 'required'],
             [['title', 'slug'], 'string', 'max' => 500],
-            [['short_description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
+            [
+                ['short_description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'],
+                'string',
+                'max' => 300,
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'slug' => [
+                'class' => 'Zelenin\yii\behaviors\Slug',
+                'slugAttribute' => 'slug',
+                'attribute' => 'title',
+                // optional params
+                'ensureUnique' => true,
+                'replacement' => '-',
+                'lowercase' => true,
+                'immutable' => false,
+                // If intl extension is enabled, see http://userguide.icu-project.org/transforms/general.
+                'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 

@@ -35,7 +35,12 @@
     "yiisoft/yii2-imagine": "~2.1.0",
     "skeeks/yii2-slug-behavior": "*",
     "dmstr/yii2-adminlte-asset": "2.*",
-    "kartik-v/yii2-widgets": "*"
+    "kartik-v/yii2-widgets": "*",
+    "yiisoft/yii2-imagine": "~2.1.0",
+    "yiidoc/yii2-redactor": "*",
+    "xj/yii2-lazyload-widget": "*",
+    "yiisoft/yii2-bootstrap4": "*",
+    "zelenin/yii2-slug-behavior": "*"
   },
   "config": {
     "process-timeout": 1800,

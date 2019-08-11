@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Subjects;
+use common\models\SectionSubjects;
 use backend\models\SectionSubjectsControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -58,13 +58,13 @@ class SectionSubjectsController extends Controller
     }
 
     /**
-     * Creates a new Subjects model.
+     * Creates a new SectionSubjects model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Subjects();
+        $model = new SectionSubjects();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -96,7 +96,7 @@ class SectionSubjectsController extends Controller
     }
 
     /**
-     * Deletes an existing Subjects model.
+     * Deletes an existing SectionSubjects model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,12 +113,12 @@ class SectionSubjectsController extends Controller
      * Finds the Subjects model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Subjects the loaded model
+     * @return SectionSubjects the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Subjects::findOne($id)) !== null) {
+        if (($model = SectionSubjects::findOne($id)) !== null) {
             return $model;
         }
 
