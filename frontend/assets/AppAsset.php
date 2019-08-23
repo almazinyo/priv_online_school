@@ -24,7 +24,6 @@ class AppAsset extends AssetBundle
      */
     public $css =
         [
-            'css/site.css',
             'css/main.css',
             'css/html_styles.css',
         ];
@@ -46,6 +45,6 @@ class AppAsset extends AssetBundle
     public $depends =
         [
             'yii\web\YiiAsset',
-            'yii\bootstrap\BootstrapAsset',
+            'yii\bootstrap4\BootstrapPluginAsset',
         ];
 }

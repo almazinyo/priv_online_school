@@ -36,10 +36,10 @@
                 </div>
 
                 <nav class="d-none lg-d-block">
-                    <a href="#" class="acent font-600">Выбрать бесплатный урок</a>
-                    <a href="/how-it-works.php">Как это работает?</a>
-                    <a href="/reviews.php">Отзывы</a>
-                    <a href="/blog.php">Блог</a>
+                    <a href="<?= $homeUrl?>" class="acent font-600">Выбрать бесплатный урок</a>
+                    <a href="<?= $homeUrl ?>how-it-works">Как это работает?</a>
+                    <a href="<?= $homeUrl ?>reviews">Отзывы</a>
+                    <a href="<?= $homeUrl ?>blog">Блог</a>
                 </nav>
 
                 <div class="profile d-flex align-items-center">
