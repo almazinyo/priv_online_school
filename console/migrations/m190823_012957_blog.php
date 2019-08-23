@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190813_092119_subjects
+ * Class m190823_012957_blog
  */
-class m190813_092119_subjects extends Migration
+class m190823_012957_blog extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,24 +20,20 @@ class m190813_092119_subjects extends Migration
      */
     public function safeDown()
     {
-        echo "m190813_092119_subjects cannot be reverted.\n";
+        echo "m190823_012957_blog cannot be reverted.\n";
 
         return false;
     }
 
-    /**
-     * @return bool|void
-     */
     public function up()
     {
         $this->createTable(
-            'subjects',
+            'blog',
             [
                 'id' => $this->primaryKey(),
                 'title' => $this->string(500)->notNull(),
+                'img_name' => $this->string(500),
                 'slug' => $this->string(500)->notNull(),
-                'icon' => $this->text(),
-                'color' => $this->string(300),
                 'short_description' => $this->text(),
                 'description' => $this->text(),
                 'seo_keywords' => $this->string(300),
@@ -55,6 +51,6 @@ class m190813_092119_subjects extends Migration
      */
     public function down()
     {
-        $this->dropTable('subjects');
+        $this->dropTable('blog');
     }
 }

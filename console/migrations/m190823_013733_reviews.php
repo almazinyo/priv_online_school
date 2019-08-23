@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190813_092119_subjects
+ * Class m190823_013733_reviews
  */
-class m190813_092119_subjects extends Migration
+class m190823_013733_reviews extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,34 +20,29 @@ class m190813_092119_subjects extends Migration
      */
     public function safeDown()
     {
-        echo "m190813_092119_subjects cannot be reverted.\n";
+        echo "m190823_013733_reviews cannot be reverted.\n";
 
         return false;
     }
 
-    /**
-     * @return bool|void
-     */
     public function up()
     {
         $this->createTable(
-            'subjects',
+            'reviews',
             [
                 'id' => $this->primaryKey(),
-                'title' => $this->string(500)->notNull(),
-                'slug' => $this->string(500)->notNull(),
-                'icon' => $this->text(),
-                'color' => $this->string(300),
-                'short_description' => $this->text(),
+                'user_id' => $this->integer(11),
+                'subjects_id' => $this->integer(11),
+                'rating' => $this->tinyInteger(2),
                 'description' => $this->text(),
-                'seo_keywords' => $this->string(300),
-                'seo_description' => $this->string(300),
                 'created_at' => $this->string(300),
                 'updated_at' => $this->string(300),
                 'is_status' => $this->tinyInteger(2),
             ],
             'ENGINE=InnoDB DEFAULT CHARSET=utf8'
         );
+        $this->addForeignKey('FK_reviews_user', 'reviews', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_reviews_subjects', 'reviews', 'subjects_id', 'subjects', 'id', 'CASCADE', 'CASCADE');
     }
 
     /**
@@ -55,6 +50,6 @@ class m190813_092119_subjects extends Migration
      */
     public function down()
     {
-        $this->dropTable('subjects');
+        $this->dropTable('reviews');
     }
 }
