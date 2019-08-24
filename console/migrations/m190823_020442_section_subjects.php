@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190813_083719_section_subjects
+ * Class m190823_020442_section_subjects
  */
-class m190813_083719_section_subjects extends Migration
+class m190823_020442_section_subjects extends Migration
 {
     /**
      * {@inheritdoc}
@@ -15,24 +15,13 @@ class m190813_083719_section_subjects extends Migration
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function safeDown()
-    {
-        echo "m190813_083719_section_subjects cannot be reverted.\n";
-
-        return false;
-    }
-
-    // Use up()/down() to run migration code without a transaction.
     public function up()
     {
         $this->createTable(
             'section_subjects',
             [
                 'id' => $this->primaryKey(),
-                'subject_id' => $this->integer(11)->notNull(),
+                'subject_id' => $this->integer(11),
                 'title' => $this->string(500)->notNull(),
                 'slug' => $this->string(500)->notNull(),
                 'short_description' => $this->text(),
@@ -45,6 +34,16 @@ class m190813_083719_section_subjects extends Migration
             ],
             'ENGINE=InnoDB DEFAULT CHARSET=utf8'
         );
+
+        $this->addForeignKey(
+            'FK_subjects',
+            'section_subjects',
+            'subject_id',
+            'subjects',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
     }
 
     public function down()
@@ -52,3 +51,4 @@ class m190813_083719_section_subjects extends Migration
         $this->dropTable('section_subjects');
     }
 }
+

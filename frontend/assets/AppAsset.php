@@ -9,15 +9,42 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
+    /**
+     * @var string
+     */
     public $basePath = '@webroot';
+
+    /**
+     * @var string
+     */
     public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-    ];
-    public $js = [
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
+
+    /**
+     * @var array
+     */
+    public $css =
+        [
+            'css/main.css',
+            'css/html_styles.css',
+        ];
+
+    /**
+     * @var array
+     */
+    public $js =
+        [
+            'js/scripts.min.js',
+            'js/html_js.min.js',
+            'js/image_lazyload.min.js',
+            'js/font_face_observer.min.js',
+        ];
+
+    /**
+     * @var array
+     */
+    public $depends =
+        [
+            'yii\web\YiiAsset',
+            'yii\bootstrap4\BootstrapPluginAsset',
+        ];
 }

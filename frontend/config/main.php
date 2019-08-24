@@ -11,6 +11,8 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru',
+    'defaultRoute' => 'main/index',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
