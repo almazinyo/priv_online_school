@@ -1,8 +1,11 @@
 <?php
 
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\switchinput\SwitchInput;
+use yii\redactor\widgets\Redactor;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model common\models\Blog */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,28 +15,128 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="col-xs-12">
+        <?= $form->field($model, 'is_status')
+            ->widget(
+                SwitchInput::classname(),
+                [
+                    'value' => true,
+                    'pluginOptions' =>
+                        [
+                            'size' => 'large',
+                            'onColor' => 'success',
+                            'offColor' => 'danger',
+                            'onText' => 'Active',
+                            'offText' => 'Inactive',
+                        ],
+                ]
+            )
+        ;
+        ?>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'short_description')->textarea(['row' => 3]) ?></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6"><?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'seo_description')->textarea(['row' => 3]) ?></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <?= $form->field($model, 'description')
+            ->widget(
+                Redactor::className(),
+                [
+                    'clientOptions' =>
+                        [
+                            'imageUpload' => Url::to(['/redactor/upload/image']),
+                            'fileUpload' => false,
+                            'plugins' => ['fontcolor', 'imagemanager', 'table', 'undoredo', 'clips', 'fullscreen'],
+                        ],
+                ]
+            )
+        ; ?>
+    </div>
 
-    <?= $form->field($model, 'img_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
+    <div class="col-xs-12">
+        <?php
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        $modelId = $model->id;
+        $uploadImagesUrl = Url::to(['/blog/upload-images?id=' . $modelId]);
 
-    <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
+        $imagesOptions = [];
+        $imgPath = [];
 
-    <?= $form->field($model, 'seo_description')->textInput(['maxlength' => true]) ?>
+        if (!$model->isNewRecord) {
+            $imgName = $model->img_name;
+            $imgFullPath = Yii::getAlias("@frontend") . "/web/images/blog/" . $imgName;
 
-    <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
+            if (!empty($imgName)) {
+                $deleteUrl = Url::to(["/blog/delete-file?id=" . $modelId]);
 
-    <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
+                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/blog/') . $imgName;
+                $size = 0;
+                if (file_exists($imgFullPath)) {
+                    $size = filesize($imgFullPath);
+                }
+                $imagesOptions[] = [
+//                'caption' => $model->title,
+                    'url' => $deleteUrl,
+                    'size' => $size,
+                    'key' => $modelId,
+                ];
+            }
+        }
+        ?>
 
-    <?= $form->field($model, 'is_status')->textInput() ?>
+        <?=
+        $form->field($model, 'img_name')
+            ->widget(
+                FileInput::class,
+                [
+                    'attribute' => 'img_name',
+                    'name' => 'img_name',
+                    'options' =>
+                        [
+                            'accept' => 'image/*',
+                            'multiple' => false,
+                        ],
+                    'pluginOptions' =>
+                        [
+                            'previewFileType' => 'image',
+                            "uploadAsync" => true,
+                            'showPreview' => true,
+                            'showUpload' => $model->isNewRecord ? false : true,
+                            'showCaption' => false,
+                            'showDrag' => false,
+                            'uploadUrl' => $uploadImagesUrl,
+                            'initialPreviewConfig' => $imagesOptions,
+                            'initialPreview' => $imgPath,
+                            'initialPreviewAsData' => true,
+                            'initialPreviewShowDelete' => true,
+                            'overwriteInitial' => true,
+                            'resizeImages' => true,
+                            'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
+                        ],
+                ]);
+        ?>
+
+    </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?=
+        Html::submitButton(
+            $model->isNewRecord
+                ? Yii::t('app', 'Create')
+                : Yii::t('app', 'Update'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
+        ?>
     </div>
 
     <?php ActiveForm::end(); ?>

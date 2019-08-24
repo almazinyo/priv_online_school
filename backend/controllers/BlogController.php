@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\components\ImageHelper;
 use Yii;
 use common\models\Blog;
 use backend\models\BlogControl;
@@ -9,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -29,7 +31,7 @@ class BlogController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view'],
+                        'actions' => ['index', 'create', 'update', 'view', 'upload-images', 'delete-file'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -81,8 +83,25 @@ class BlogController extends Controller
     {
         $model = new Blog();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $imgFile = UploadedFile::getInstance($model, "img_name");
+
+            if (!empty($imgFile)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/blog/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $image->reSize($imgPath . $imgName, 800, 600);
+                $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
+
+                $model->img_name = $imgName;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -100,14 +119,79 @@ class BlogController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldImgName = $model->img_name;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $imgFile = UploadedFile::getInstance($model, "img_name");
+
+            if (!empty($imgFile)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/blog/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $image->reSize($imgPath . $imgName, 800, 600);
+                $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
+                $model->img_name = $imgName;
+            } else {
+                $model->img_name = $oldImgName;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUploadImages($id)
+    {
+        $model = $this->findModel($id);
+        $imgFile = UploadedFile::getInstance($model, "img_name");
+
+        if (!empty($imgFile)) {
+            $image = new ImageHelper();
+
+            $imgPath = Yii::getAlias("@frontend") . "/web/images/blog/";
+            $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+            $imgFile->saveAs($imgPath . $imgName);
+
+            $image->reSize($imgPath . $imgName, 800, 600);
+            $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
+
+            $model->img_name = $imgName;
+            $model->save();
+        }
+
+        return true;
+    }
+
+    public function actionDeleteFile($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!empty($model->img_name)) {
+            $imgPath = sprintf('%s/web/images/blog/%s', Yii::getAlias('@frontend'), $model->img_name);
+            $imgPathSmall = sprintf('%s/web/images/blog/small/%s', Yii::getAlias('@frontend'), $model->img_name);
+
+            if (file_exists($imgPathSmall)) {
+                unlink($imgPathSmall);
+            }
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $model->img_name = null;
+                $model->save();
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
