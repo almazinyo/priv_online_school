@@ -14,6 +14,11 @@ return [
     'language' => 'ru',
     'defaultRoute' => 'main/index',
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'api' => [
+            'class' => 'frontend\modules\api\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
