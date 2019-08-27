@@ -2,8 +2,11 @@
 
 namespace common\models;
 
+use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\String_;
 use Yii;
 use \yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "subjects".
@@ -92,5 +95,28 @@ class Subjects extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
             'is_status' => Yii::t('app', 'Is Status'),
         ];
+    }
+
+    /**
+     * @return Subjects[]
+     */
+    public static function receiveSubjects()
+    {
+        return
+            self::find()->asArray()->all();
+    }
+
+    /**
+     * @param string $slug
+     * @return int
+     */
+    public static function receiveId(string $slug): int
+    {
+
+        $model = self::findOne(['slug' => Html::encode($slug)]);
+
+
+
+        return $model ? $model->id : -1;
     }
 }
