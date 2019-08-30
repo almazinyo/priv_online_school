@@ -49,6 +49,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'api/subjects/section/<slug>' => 'api/subjects/section/',
+                'api/blog/details/<slug>' => 'api/blog/details/',
             ],
         ],
     ],
