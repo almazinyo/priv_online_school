@@ -96,18 +96,4 @@ class SectionSubjects extends ActiveRecord
             'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
-
-    /**
-     * @param int $subjectId
-     * @return mixed[]
-     */
-    public static function receiveSectionSubjects(int $subjectId): array
-    {
-        return
-            self::find()
-                ->where(['subject_id' => $subjectId])
-                ->asArray()
-                ->all()
-            ;
-    }
 }

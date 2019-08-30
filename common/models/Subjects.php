@@ -96,25 +96,4 @@ class Subjects extends ActiveRecord
             'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
-
-    /**
-     * @return Subjects[]
-     */
-    public static function receiveSubjects()
-    {
-        return
-            self::find()->asArray()->all();
-    }
-
-    /**
-     * @param string $slug
-     * @return int
-     */
-    public static function receiveId(ActiveRecord $object, string $slug): int
-    {
-
-        $model = self::findOne(['slug' => Html::encode($slug)]);
-
-        return $model ? $model->id : -1;
-    }
 }
