@@ -18,7 +18,7 @@ class SectionSubjectsControl extends SectionSubjects
     {
         return [
             [['id', 'is_status'], 'integer'],
-            [['title', 'slug', 'short_description', 'description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'slug', 'short_description', 'description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,7 +60,7 @@ class SectionSubjectsControl extends SectionSubjects
             'is_status' => $this->is_status,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'description', $this->description])

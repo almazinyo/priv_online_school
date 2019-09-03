@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /* @var $model common\models\Subjects */
 
 $this->title = Yii::t('app', 'Update Subjects: {name}', [
-    'name' => $model->title,
+    'name' => $model->name,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Subjects'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="subjects-update">

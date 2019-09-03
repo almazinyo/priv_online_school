@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\SectionSubjectsControl */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Subjects');
+$this->title = Yii::t('app', 'Sections');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subjects-index">
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'title',
+            'name',
 //            'slug',
 //            'short_description',
 //            'description:ntext',

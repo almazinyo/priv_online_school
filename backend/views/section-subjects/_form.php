@@ -55,7 +55,7 @@ use yii\helpers\ArrayHelper;
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <div class="col-xs-6"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?></div>
             <div class="col-xs-6"><?= $form->field($model, 'short_description')->textarea(['row' => 3]) ?></div>
         </div>
     </div>
