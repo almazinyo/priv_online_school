@@ -29,7 +29,7 @@ class MenuController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index', 'create', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
