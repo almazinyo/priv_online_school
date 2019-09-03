@@ -5,14 +5,15 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "section_subjects".
+ * This is the model class for table "lessons".
  *
  * @property int $id
- * @property int $subject_id
+ * @property int $sort_lessons
  * @property string $name
- * @property string $slug
+ * @property int $section_id
  * @property string $background
- * @property string $icon
+ * @property string $logo
+ * @property string $slug
  * @property string $short_description
  * @property string $description
  * @property string $seo_keywords
@@ -21,17 +22,17 @@ use Yii;
  * @property string $updated_at
  * @property int $is_status
  *
- * @property Lessons[] $lessons
- * @property Subjects $subject
+ * @property SectionSubjects $section
+ * @property StorageLessons[] $storageLessons
  */
-class SectionSubjects extends \yii\db\ActiveRecord
+class Lessons extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'section_subjects';
+        return 'lessons';
     }
 
     /**
@@ -40,12 +41,12 @@ class SectionSubjects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_id', 'is_status'], 'integer'],
+            [['sort_lessons', 'section_id', 'is_status'], 'integer'],
             [['name', 'slug'], 'required'],
             [['short_description', 'description'], 'string'],
-            [['name', 'slug', 'icon'], 'string', 'max' => 500],
+            [['name', 'logo', 'slug'], 'string', 'max' => 500],
             [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
         ];
     }
 
@@ -56,11 +57,12 @@ class SectionSubjects extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'subject_id' => 'Subject ID',
+            'sort_lessons' => 'Sort Lessons',
             'name' => 'Name',
-            'slug' => 'Slug',
+            'section_id' => 'Section ID',
             'background' => 'Background',
-            'icon' => 'Icon',
+            'logo' => 'Logo',
+            'slug' => 'Slug',
             'short_description' => 'Short Description',
             'description' => 'Description',
             'seo_keywords' => 'Seo Keywords',
@@ -74,16 +76,16 @@ class SectionSubjects extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLessons()
+    public function getSection()
     {
-        return $this->hasMany(Lessons::className(), ['section_id' => 'id']);
+        return $this->hasOne(SectionSubjects::className(), ['id' => 'section_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubject()
+    public function getStorageLessons()
     {
-        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+        return $this->hasMany(StorageLessons::className(), ['lesson_id' => 'id']);
     }
 }
