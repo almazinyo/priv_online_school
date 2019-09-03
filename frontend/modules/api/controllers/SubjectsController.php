@@ -23,7 +23,7 @@ class SubjectsController extends Controller
      */
     public function actionIndex()
     {
-        $model = Select::receiveAllData(new Subjects());
+        $model = Subjects::receiveAllData();
 
         return [
             'status' => 200,

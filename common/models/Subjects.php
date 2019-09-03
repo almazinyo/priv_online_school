@@ -96,4 +96,32 @@ class Subjects extends ActiveRecord
             'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(Reviews::className(), ['subjects_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSectionSubjects()
+    {
+        return $this->hasMany(SectionSubjects::className(), ['subject_id' => 'id']);
+    }
+
+    public static function receiveAllData()
+    {
+        return
+            self::find()
+                ->joinWith('sectionSubjects')
+                ->joinWith('sectionSubjects.lessons')
+                ->joinWith('sectionSubjects.lessons.storageLessons')
+                ->asArray()
+                ->all()
+            ;
+    }
 }
