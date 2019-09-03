@@ -20,6 +20,8 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+/node_modules
+
 /log
 
 # composer itself is not needed

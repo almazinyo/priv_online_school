@@ -31,12 +31,13 @@ class m190813_092119_subjects extends Migration
     public function up()
     {
         $this->createTable(
-            'section_subjects',
+            'subjects',
             [
                 'id' => $this->primaryKey(),
-                'subject_id' => $this->integer(11)->notNull(),
                 'title' => $this->string(500)->notNull(),
                 'slug' => $this->string(500)->notNull(),
+                'icon' => $this->text(),
+                'color' => $this->string(300),
                 'short_description' => $this->text(),
                 'description' => $this->text(),
                 'seo_keywords' => $this->string(300),
@@ -54,6 +55,6 @@ class m190813_092119_subjects extends Migration
      */
     public function down()
     {
-        $this->dropTable('section_subjects');
+        $this->dropTable('subjects');
     }
 }

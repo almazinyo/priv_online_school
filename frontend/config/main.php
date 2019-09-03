@@ -11,7 +11,14 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru',
+    'defaultRoute' => 'main/index',
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'api' => [
+            'class' => 'frontend\modules\api\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -41,6 +48,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'api/subjects/section/<slug>' => 'api/subjects/section/',
+                'api/blog/details/<slug>' => 'api/blog/details/',
             ],
         ],
     ],
