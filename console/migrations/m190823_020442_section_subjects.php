@@ -15,6 +15,9 @@ class m190823_020442_section_subjects extends Migration
 
     }
 
+    /**
+     * @return bool|void
+     */
     public function up()
     {
         $this->createTable(
@@ -22,8 +25,10 @@ class m190823_020442_section_subjects extends Migration
             [
                 'id' => $this->primaryKey(),
                 'subject_id' => $this->integer(11),
-                'title' => $this->string(500)->notNull(),
+                'name' => $this->string(500)->notNull(),
                 'slug' => $this->string(500)->notNull(),
+                'background' => $this->string(300),
+                'icon' => $this->string(500),
                 'short_description' => $this->text(),
                 'description' => $this->text(),
                 'seo_keywords' => $this->string(300),
@@ -46,6 +51,9 @@ class m190823_020442_section_subjects extends Migration
         );
     }
 
+    /**
+     * @return bool|void
+     */
     public function down()
     {
         $this->dropTable('section_subjects');
