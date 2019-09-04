@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Lessons;
 use common\models\SectionSubjects;
 use common\models\Subjects;
 use frontend\modules\api\components\Select;
@@ -60,11 +61,25 @@ class SubjectsController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actionSections()
     {
         return [
             'status' => 200,
             'data' =>  SectionSubjects::receiveAllData(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function actionLessons()
+    {
+        return [
+            'status' => 200,
+            'data' =>  Lessons::receiveAllData(),
         ];
     }
 }
