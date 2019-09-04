@@ -31,14 +31,17 @@ class SubjectsController extends Controller
         ];
     }
 
-    public function actionSection()
+    /**
+     * @param $slug
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function actionSection($slug)
     {
-        $getRequest = \Yii::$app->request->get();
-
         $subjectId =
             Select::receiveId(
                 new Subjects(),
-                ['slug' => Html::encode($getRequest['slug'])]
+                ['slug' => Html::encode($slug)]
             );
 
         if ($subjectId === -1) {
@@ -54,6 +57,14 @@ class SubjectsController extends Controller
         return [
             'status' => 200,
             'data' => $model,
+        ];
+    }
+
+    public function actionSections()
+    {
+        return [
+            'status' => 200,
+            'data' =>  SectionSubjects::receiveAllData(),
         ];
     }
 }

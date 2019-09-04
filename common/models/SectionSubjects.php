@@ -45,7 +45,13 @@ class SectionSubjects extends \yii\db\ActiveRecord
             [['short_description', 'description'], 'string'],
             [['name', 'slug', 'icon'], 'string', 'max' => 500],
             [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            [
+                ['subject_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subject_id' => 'id'],
+            ],
         ];
     }
 
@@ -85,5 +91,19 @@ class SectionSubjects extends \yii\db\ActiveRecord
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function receiveAllData()
+    {
+        return
+            self::find()
+                ->joinWith('lessons')
+                ->joinWith('lessons.storageLessons')
+                ->asArray()
+                ->all()
+            ;
     }
 }
