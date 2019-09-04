@@ -4,6 +4,7 @@ namespace frontend\modules\api\controllers;
 
 use common\models\Lessons;
 use common\models\SectionSubjects;
+use common\models\StorageLessons;
 use common\models\Subjects;
 use frontend\modules\api\components\Select;
 use yii\helpers\Html;
@@ -80,6 +81,17 @@ class SubjectsController extends Controller
         return [
             'status' => 200,
             'data' =>  Lessons::receiveAllData(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function actionStorage()
+    {
+        return [
+            'status' => 200,
+            'data' =>  Select::receiveAllData(new StorageLessons()),
         ];
     }
 }
