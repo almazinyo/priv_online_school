@@ -2,7 +2,9 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Lessons;
 use common\models\SectionSubjects;
+use common\models\StorageLessons;
 use common\models\Subjects;
 use frontend\modules\api\components\Select;
 use yii\helpers\Html;
@@ -31,14 +33,17 @@ class SubjectsController extends Controller
         ];
     }
 
-    public function actionSection()
+    /**
+     * @param $slug
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function actionSection($slug)
     {
-        $getRequest = \Yii::$app->request->get();
-
         $subjectId =
             Select::receiveId(
                 new Subjects(),
-                ['slug' => Html::encode($getRequest['slug'])]
+                ['slug' => Html::encode($slug)]
             );
 
         if ($subjectId === -1) {
@@ -54,6 +59,39 @@ class SubjectsController extends Controller
         return [
             'status' => 200,
             'data' => $model,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function actionSections()
+    {
+        return [
+            'status' => 200,
+            'data' =>  SectionSubjects::receiveAllData(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function actionLessons()
+    {
+        return [
+            'status' => 200,
+            'data' =>  Lessons::receiveAllData(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function actionStorage()
+    {
+        return [
+            'status' => 200,
+            'data' =>  Select::receiveAllData(new StorageLessons()),
         ];
     }
 }

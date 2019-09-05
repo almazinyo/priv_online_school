@@ -88,4 +88,17 @@ class Lessons extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StorageLessons::className(), ['lesson_id' => 'id']);
     }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function receiveAllData()
+    {
+        return
+            self::find()
+                ->joinWith('storageLessons')
+                ->asArray()
+                ->all()
+            ;
+    }
 }
