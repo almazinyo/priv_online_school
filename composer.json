@@ -42,8 +42,8 @@
     "yiisoft/yii2-bootstrap4": "*",
     "zelenin/yii2-slug-behavior": "*",
     "skeeks/yii2-assets-auto-compress": "*",
-    "yiisoft/yii2-bootstrap4": "~2.0.6"
-
+    "yiisoft/yii2-bootstrap4": "~2.0.6",
+    "yiisoft/yii2-authclient": "~2.1.0"
   },
   "config": {
     "process-timeout": 1800,
