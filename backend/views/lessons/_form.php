@@ -1,20 +1,22 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use kartik\switchinput\SwitchInput;
-use yii\redactor\widgets\Redactor;
-use yii\helpers\Url;
-use kartik\select2\Select2;
+use common\models\SectionSubjects;
 use common\models\Subjects;
+use kartik\select2\Select2;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\redactor\widgets\Redactor;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Subjects */
+/* @var $model common\models\Lessons */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="subjects-form">
+<div class="lessons-form">
+
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-xs-12">
@@ -38,15 +40,15 @@ use yii\helpers\ArrayHelper;
     </div>
 
     <div class="col-xs-12">
-        <?= $form->field($model, 'subject_id')->widget(
+        <?= $form->field($model, 'section_id')->widget(
             Select2::classname(), [
             'data' =>
                 ArrayHelper::map(
-                    Subjects::find()
-                        ->select('id,title')
+                    SectionSubjects::find()
+                        ->select('id,name')
                         ->asArray()
                         ->all(),
-                    "id", "title"),
+                    "id", "name"),
             'options' => ['placeholder' => 'Parent'],
             'pluginOptions' => ['allowClear' => true],
         ])
@@ -66,13 +68,13 @@ use yii\helpers\ArrayHelper;
         </div>
     </div>
 
-
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-6"><?= $form->field($model, 'background')->textInput(['maxlength' => true]) ?></div>
-            <div class="col-xs-6"><?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?></div>
         </div>
     </div>
+
     <div class="col-xs-12">
         <?= $form->field($model, 'description')
             ->widget(
@@ -88,14 +90,11 @@ use yii\helpers\ArrayHelper;
             )
         ; ?>
     </div>
+
     <div class="form-group">
-        <?=
-        Html::submitButton(
-            $model->isNewRecord
-                ? Yii::t('app', 'Create')
-                : Yii::t('app', 'Update'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
-        ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
+
     <?php ActiveForm::end(); ?>
+
 </div>

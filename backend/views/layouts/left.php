@@ -32,9 +32,21 @@
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => Yii::t('app', 'Menu'), 'icon' => '', 'url' => ['/menu']],
                     ['label' => Yii::t('app', 'Blog'), 'icon' => '', 'url' => ['/blog']],
-                    ['label' => Yii::t('app', 'Subjects'), 'icon' => '', 'url' => ['/subjects']],
-                    ['label' => Yii::t('app', 'Section Subjects'), 'icon' => '', 'url' => ['/section-subjects']],
-
+                    [
+                        'label' => Yii::t('app', 'Subjects'),
+                        'icon' => '',
+                        'url' => ['#'],
+                        'items' =>
+                            [
+                                ['label' => Yii::t('app', 'Subjects'), 'icon' => '', 'url' => ['/subjects']],
+                                [
+                                    'label' => Yii::t('app', 'Section Subjects'),
+                                    'icon' => '',
+                                    'url' => ['/section-subjects'],
+                                ],
+                                ['label' => Yii::t('app', 'Lessons'), 'icon' => '', 'url' => ['/lessons']],
+                            ],
+                    ],
                 ],
             ]
         ) ?>
