@@ -94,12 +94,21 @@ class SectionSubjects extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTeachers()
+    {
+        return $this->hasMany(Teachers::className(), ['section_id' => 'id']);
+    }
+
+    /**
      * @return array|\yii\db\ActiveRecord[]
      */
     public static function receiveAllData()
     {
         return
             self::find()
+                ->joinWith('teachers')
                 ->joinWith('lessons')
                 ->joinWith('lessons.storageLessons')
                 ->asArray()
