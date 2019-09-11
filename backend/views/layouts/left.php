@@ -34,17 +34,24 @@
                     ['label' => Yii::t('app', 'Blog'), 'icon' => '', 'url' => ['/blog']],
                     [
                         'label' => Yii::t('app', 'Subjects'),
-                        'icon' => '',
-                        'url' => ['#'],
                         'items' =>
                             [
                                 ['label' => Yii::t('app', 'Subjects'), 'icon' => '', 'url' => ['/subjects']],
                                 [
-                                    'label' => Yii::t('app', 'Section Subjects'),
+                                    'label' => Yii::t('app', 'Section'),
                                     'icon' => '',
                                     'url' => ['/section-subjects'],
+
+                                    'items' => [
+                                        [
+                                            'label' => Yii::t('app', 'Section'),
+                                            'icon' => '',
+                                            'url' => ['/section-subjects'],
+                                        ],
+                                        ['label' => Yii::t('app', 'Lessons'), 'icon' => '', 'url' => ['/lessons']],
+                                        ['label' => Yii::t('app', 'Teachers'), 'icon' => '', 'url' => ['/teachers']],
+                                    ],
                                 ],
-                                ['label' => Yii::t('app', 'Lessons'), 'icon' => '', 'url' => ['/lessons']],
                             ],
                     ],
                 ],

@@ -41,6 +41,8 @@ class m190910_070454_teachers extends Migration
                 'position' => $this->string(500),
                 'section_id' => $this->integer(11)->notNull(),
                 'img_name' => $this->string(500),
+                'short_description' => $this->string(500),
+                'slug' => $this->string(500),
                 'description' => $this->text(),
                 'created_at' => $this->string(300),
                 'updated_at' => $this->string(300),

@@ -18,7 +18,20 @@ class BlogControl extends Blog
     {
         return [
             [['id', 'is_status'], 'integer'],
-            [['title', 'img_name', 'slug', 'short_description', 'description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'safe'],
+            [
+                [
+                    'title',
+                    'img_name',
+                    'slug',
+                    'short_description',
+                    'description',
+                    'seo_keywords',
+                    'seo_description',
+                    'created_at',
+                    'updated_at',
+                ],
+                'trim',
+            ],
         ];
     }
 
@@ -70,7 +83,8 @@ class BlogControl extends Blog
             ->andFilterWhere(['like', 'seo_keywords', $this->seo_keywords])
             ->andFilterWhere(['like', 'seo_description', $this->seo_description])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
+        ;
 
         return $dataProvider;
     }

@@ -18,7 +18,19 @@ class SubjectsControl extends Subjects
     {
         return [
             [['id', 'is_status'], 'integer'],
-            [['title', 'slug', 'short_description', 'description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'safe'],
+            [
+                [
+                    'title',
+                    'slug',
+                    'short_description',
+                    'description',
+                    'seo_keywords',
+                    'seo_description',
+                    'created_at',
+                    'updated_at',
+                ],
+                'trim',
+            ],
         ];
     }
 
@@ -69,7 +81,8 @@ class SubjectsControl extends Subjects
             ->andFilterWhere(['like', 'seo_keywords', $this->seo_keywords])
             ->andFilterWhere(['like', 'seo_description', $this->seo_description])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
+        ;
 
         return $dataProvider;
     }

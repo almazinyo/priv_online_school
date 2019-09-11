@@ -18,7 +18,19 @@ class TeachersControl extends Teachers
     {
         return [
             [['id', 'section_id', 'is_status'], 'integer'],
-            [['name', 'position', 'img_name', 'description', 'created_at', 'updated_at'], 'safe'],
+            [
+                [
+                    'name',
+                    'position',
+                    'img_name',
+                    'short_description',
+                    'slug',
+                    'description',
+                    'created_at',
+                    'updated_at',
+                ],
+                'trim',
+            ],
         ];
     }
 
@@ -68,7 +80,8 @@ class TeachersControl extends Teachers
             ->andFilterWhere(['like', 'img_name', $this->img_name])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
+        ;
 
         return $dataProvider;
     }

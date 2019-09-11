@@ -18,7 +18,7 @@ class MenuControl extends Menu
     {
         return [
             [['id', 'is_status'], 'integer'],
-            [['name', 'slug', 'logo', 'parent_id', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'slug', 'logo', 'parent_id', 'created_at', 'updated_at'], 'trim'],
         ];
     }
 
@@ -67,7 +67,8 @@ class MenuControl extends Menu
             ->andFilterWhere(['like', 'logo', $this->logo])
             ->andFilterWhere(['like', 'parent_id', $this->parent_id])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
+        ;
 
         return $dataProvider;
     }
