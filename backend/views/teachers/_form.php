@@ -145,9 +145,6 @@ use yii\widgets\ActiveForm;
 
     </div>
 
-    <?= $form->field($model, 'img_name')->textInput(['maxlength' => true]) ?>
-
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
