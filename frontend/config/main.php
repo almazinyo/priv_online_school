@@ -50,6 +50,7 @@ return [
             'rules' => [
                 'api/subjects/section/<slug>' => 'api/subjects/section/',
                 'api/blog/details/<slug>' => 'api/blog/details/',
+                'api/subjects/teacher/<slug>' => 'api/subjects/teacher/',
             ],
         ],
     ],
