@@ -33,6 +33,7 @@ class m190823_013733_reviews extends Migration
                 'id' => $this->primaryKey(),
                 'user_id' => $this->integer(11),
                 'subjects_id' => $this->integer(11),
+                'section_id' => $this->integer(11),
                 'rating' => $this->tinyInteger(2),
                 'description' => $this->text(),
                 'created_at' => $this->string(300),
@@ -42,7 +43,8 @@ class m190823_013733_reviews extends Migration
             'ENGINE=InnoDB DEFAULT CHARSET=utf8'
         );
         $this->addForeignKey('FK_reviews_user', 'reviews', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('FK_reviews_subjects', 'reviews', 'subjects_id', 'subjects', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_reviews_subject', 'reviews', 'subjects_id', 'subjects', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_reviews_section', 'reviews', 'section_id', 'section_subjects', 'id', 'CASCADE', 'CASCADE');
     }
 
     /**
