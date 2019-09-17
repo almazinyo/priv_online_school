@@ -54,6 +54,7 @@
                                 ],
                             ],
                     ],
+                    ['label' => Yii::t('app', 'Promotional Code'), 'icon' => '', 'url' => ['/promotional-code']],
                 ],
             ]
         ) ?>

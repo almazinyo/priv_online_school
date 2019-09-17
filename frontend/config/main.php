@@ -23,10 +23,16 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON,
+            'charset' => 'UTF-8',
+
+            // ...
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'enableAutoLogin' => false,
+            'enableSession' => false,
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
