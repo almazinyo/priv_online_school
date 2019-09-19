@@ -19,6 +19,16 @@ return [
             'uploadUrl' => 'http://health-insurance/images',
             'imageAllowExtensions' => ['jpg', 'png', 'jpeg', 'gif'],
         ],
+
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                ],
+            ],
+        ],
+
     ],
     'components' => [
         'request' => [

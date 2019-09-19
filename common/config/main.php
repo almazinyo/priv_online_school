@@ -6,7 +6,18 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'language' => 'ru',
+    'sourceLanguage' => 'en',
     'components' => [
+        'i18n'=>[
+            'translations'=>[
+                '*'=>[
+                    'class'=>'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en',
+                    'basePath' => '@common/messages',
+                ],
+            ],
+        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [

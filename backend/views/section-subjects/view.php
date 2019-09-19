@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model common\models\SectionSubjects */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Subjects'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Section'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="subjects-view">

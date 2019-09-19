@@ -85,17 +85,17 @@ class Teachers extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'position' => 'Position',
-            'section_id' => 'Section ID',
-            'img_name' => 'Img Name',
-            'short_description' => 'Short Description',
-            'slug' => 'Slug',
-            'description' => 'Description',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'is_status' => 'Is Status',
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'position' => Yii::t('app', 'Position'),
+            'section_id' => Yii::t('app', 'Section ID'),
+            'img_name' => Yii::t('app', 'Img Name'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'slug' => Yii::t('app', 'Slug'),
+            'description' => Yii::t('app', 'Description'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
 
