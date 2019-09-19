@@ -43,23 +43,6 @@ class Menu extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'slug' => 'Slug',
-            'logo' => 'Logo',
-            'parent_id' => 'Parent ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'is_status' => 'Is Status',
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -70,6 +53,23 @@ class Menu extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'slug' => Yii::t('app', 'Slug'),
+            'logo' => Yii::t('app', 'Logo'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
 }

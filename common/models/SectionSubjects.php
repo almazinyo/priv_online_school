@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "section_subjects".
@@ -40,7 +41,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_id', 'is_status'], 'integer'],
+            [['subject_id', 'is_status', 'parent_id'], 'integer'],
             [['name', 'slug'], 'required'],
             [['short_description', 'description'], 'string'],
             [['name', 'slug', 'icon'], 'string', 'max' => 500],
@@ -58,22 +59,51 @@ class SectionSubjects extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [
+            'slug' => [
+                'class' => 'Zelenin\yii\behaviors\Slug',
+                'slugAttribute' => 'slug',
+                'attribute' => 'name',
+                // optional params
+                'ensureUnique' => true,
+                'replacement' => '-',
+                'lowercase' => true,
+                'immutable' => false,
+                // If intl extension is enabled, see http://userguide.icu-project.org/transforms/general.
+                'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'subject_id' => 'Subject ID',
-            'name' => 'Name',
-            'slug' => 'Slug',
-            'background' => 'Background',
-            'icon' => 'Icon',
-            'short_description' => 'Short Description',
-            'description' => 'Description',
-            'seo_keywords' => 'Seo Keywords',
-            'seo_description' => 'Seo Description',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'is_status' => 'Is Status',
+            'id' => Yii::t('app', 'ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
+            'name' => Yii::t('app', 'Name'),
+            'slug' => Yii::t('app', 'Slug'),
+            'background' => Yii::t('app', 'Background'),
+            'icon' => Yii::t('app', 'Icon'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'description' => Yii::t('app', 'Description'),
+            'seo_keywords' => Yii::t('app', 'Seo Keywords'),
+            'seo_description' => Yii::t('app', 'Seo Description'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
 

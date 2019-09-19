@@ -29,17 +29,48 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => Yii::t('app', 'Menu'), 'icon' => '', 'url' => ['/menu']],
-                    ['label' => Yii::t('app', 'Blog'), 'icon' => '', 'url' => ['/blog']],
+                    [
+                        'label' => Yii::t('app', 'Users Access'),
+                        'icon' => 'fa fa-key',
+                        'url' => ['#'],
+                        'items' => [
+                            [
+                                'label' => Yii::t('app', 'Route'),
+                                'icon' => '',
+                                'url' => ['/admin/route/'],
+                                'active' => Yii::$app->controller->id == 'route',
+                            ],
+                            [
+                                'label' => Yii::t('app', 'Assignment'),
+                                'icon' => '',
+                                'url' => ['/admin/assignment/'],
+                                'active' => Yii::$app->controller->id == 'assignment',
+                            ],
+                            [
+                                'label' => Yii::t('app', 'Permission'),
+                                'icon' => '',
+                                'url' => ['/admin/permission/'],
+                                'active' => Yii::$app->controller->id == 'permission',
+                            ],
+                            [
+                                'label' => Yii::t('app', 'Role'),
+                                'icon' => '',
+                                'url' => ['/admin/role/'],
+                                'active' => Yii::$app->controller->id == 'role',
+                            ],
+                        ],
+                    ],
+                    ['label' => Yii::t('app', 'Menu'), 'icon' => 'fa fa-bars', 'url' => ['/menu']],
+                    ['label' => Yii::t('app', 'Blog'), 'icon' => 'fa fa-clipboard', 'url' => ['/blog']],
                     [
                         'label' => Yii::t('app', 'Subjects'),
+                        'icon' => 'fa fa-key',
                         'items' =>
                             [
-                                ['label' => Yii::t('app', 'Subjects'), 'icon' => '', 'url' => ['/subjects']],
+                                ['label' => Yii::t('app', 'Subject'), 'icon' => '', 'url' => ['/subjects']],
                                 [
-                                    'label' => Yii::t('app', 'Section'),
-                                    'icon' => '',
+                                    'label' => Yii::t('app', 'Sections'),
+                                    'icon' => 'fa fa-key',
                                     'url' => ['/section-subjects'],
 
                                     'items' => [
