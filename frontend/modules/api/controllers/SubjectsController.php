@@ -34,7 +34,7 @@ class SubjectsController extends Controller
      * @return array
      * @throws NotFoundHttpException
      */
-    public function actionSection($slug)
+    public function actionDetails($slug)
     {
         $subjectId =
             Select::receiveId(

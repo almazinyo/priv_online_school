@@ -58,7 +58,7 @@ return [
             'rules' => [
                 '' => 'main/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-                'api/subjects/section/<slug>' => 'api/subjects/section/',
+                'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/blog/details/<slug>' => 'api/blog/details/',
                 'api/subjects/teacher/<slug>' => 'api/subjects/teacher/',
             ],
