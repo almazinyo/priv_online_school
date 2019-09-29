@@ -16,7 +16,7 @@ return [
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@frontend/web/images/redactor',
-            'uploadUrl' => 'http://health-insurance/images',
+            'uploadUrl' => '/images',
             'imageAllowExtensions' => ['jpg', 'png', 'jpeg', 'gif'],
         ],
 

@@ -80,6 +80,7 @@
                                             'url' => ['/section-subjects'],
                                         ],
                                         ['label' => Yii::t('app', 'Lessons'), 'icon' => '', 'url' => ['/lessons']],
+                                        ['label' => Yii::t('app', 'Quiz'), 'icon' => '', 'url' => ['/quiz']],
                                         ['label' => Yii::t('app', 'Teachers'), 'icon' => '', 'url' => ['/teachers']],
                                     ],
                                 ],

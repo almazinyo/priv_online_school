@@ -11,18 +11,17 @@
  * template configuration file with detailed description for each parameter.
  */
 return [
+    'sourcePath' => __DIR__. DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .    DIRECTORY_SEPARATOR,
+    'languages' => ['ru'],
     'color' => null,
     'interactive' => true,
     'help' => null,
-    'sourcePath' => '@common',
-    'messagePath' => '@common/messages',
-//    'filePath' => '',
-    'languages' => ['ru'],
     'translator' => 'Yii::t',
     'sort' => false,
-    'overwrite' => true,
     'removeUnused' => false,
+    'overwrite' => true,
     'markUnused' => true,
+    'only' => ['*.php'],
     'except' => [
         '.svn',
         '.git',
@@ -31,10 +30,7 @@ return [
         '.hgignore',
         '.hgkeep',
         '/messages',
-        '/BaseYii.php',
-    ],
-    'only' => [
-        '*.php',
+        '/vendor',
     ],
     'format' => 'php',
     'db' => 'db',
@@ -43,5 +39,5 @@ return [
     'catalog' => 'messages',
     'ignoreCategories' => [],
     'phpFileHeader' => '',
-    'phpDocBlock' => null,
+    'messagePath' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .      'messages', //path of messages folder created above
 ];

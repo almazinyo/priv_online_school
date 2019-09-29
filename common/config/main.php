@@ -11,7 +11,7 @@ return [
     'components' => [
         'i18n'=>[
             'translations'=>[
-                '*'=>[
+                'app*'=>[
                     'class'=>'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'en',
                     'basePath' => '@common/messages',
