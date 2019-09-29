@@ -47,7 +47,7 @@ class m190929_110848_quizzes_users extends Migration
         );
 
         $this->addForeignKey('FK_quizzes_users_user', 'quizzes_users', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('FK_quizzes_users_quiz', 'quiz', 'quiz_id', 'quiz', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_quizzes_users_quiz', 'quizzes_users', 'quiz_id', 'quiz', 'id', 'CASCADE', 'CASCADE');
     }
 
     /**
