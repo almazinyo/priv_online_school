@@ -116,6 +116,14 @@ class Lessons extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getQuizzes()
+    {
+        return $this->hasMany(Quiz::className(), ['lessons_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStorageLessons()
     {
         return $this->hasMany(StorageLessons::className(), ['lesson_id' => 'id']);
@@ -128,6 +136,7 @@ class Lessons extends ActiveRecord
     {
         return
             self::find()
+                ->joinWith('quizzes')
                 ->joinWith('storageLessons')
                 ->asArray()
                 ->all()

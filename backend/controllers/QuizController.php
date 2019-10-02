@@ -70,12 +70,12 @@ class QuizController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $question = UploadedFile::getInstance($model, "question");
-            $hint = UploadedFile::getInstance($model, "hint");
+            $question = UploadedFile::getInstance($model, 'question');
+            $hint = UploadedFile::getInstance($model, 'hint');
 
             if (!empty($question)) {
                 $image = new ImageHelper();
-                $imgPath = Yii::getAlias("@frontend") . "/web/images/question/";
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/question/';
                 $imgName = Yii::$app->security->generateRandomString() . '.' . $question->extension;
                 $question->saveAs($imgPath . $imgName);
                 $model->question = $imgName;
@@ -83,7 +83,7 @@ class QuizController extends Controller
 
             if (!empty($hint)) {
                 $image = new ImageHelper();
-                $imgPath = Yii::getAlias("@frontend") . "/web/images/question/hint/";
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/question/hint/';
                 $imgName = Yii::$app->security->generateRandomString() . '.' . $hint->extension;
                 $hint->saveAs($imgPath . $imgName);
                 $model->hint = $imgName;
@@ -122,7 +122,7 @@ class QuizController extends Controller
     public function actionUploadQuestion($id)
     {
         $model = $this->findModel($id);
-        $imgFile = UploadedFile::getInstance($model, "question");
+        $imgFile = UploadedFile::getInstance($model, 'question');
         $oldImageName = $model->question;
 
         if (!empty($imgFile)) {
@@ -135,7 +135,7 @@ class QuizController extends Controller
             }
 
             $image = new ImageHelper();
-            $imgPath = Yii::getAlias("@frontend") . "/web/images/question/";
+            $imgPath = Yii::getAlias('@frontend') . '/web/images/question/';
             $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
             $imgFile->saveAs($imgPath . $imgName);
 
@@ -148,8 +148,8 @@ class QuizController extends Controller
     public function actionUploadHint($id)
     {
         $model = $this->findModel($id);
-        $imgFile = UploadedFile::getInstance($model, "hint");
-        $oldImageName = $model->question;
+        $imgFile = UploadedFile::getInstance($model, 'hint');
+        $oldImageName = $model->hint;
 
         if (!empty($imgFile)) {
             if (!empty($oldImageName)) {
@@ -161,11 +161,11 @@ class QuizController extends Controller
             }
 
             $image = new ImageHelper();
-            $imgPath = Yii::getAlias("@frontend") . "/web/images/question/hint/";
+            $imgPath = Yii::getAlias('@frontend') . '/web/images/question/hint/';
             $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
             $imgFile->saveAs($imgPath . $imgName);
 
-            $model->question = $imgName;
+            $model->hint = $imgName;
             $model->save();
         }
 
