@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'slug',
                 'logo',
                 'parent_id',
-                //'created_at',
-                //'updated_at',
+                'created_at:datetime',
+                'updated_at:datetime',
                 //'is_status',
 
                 ['class' => 'yii\grid\ActionColumn'],

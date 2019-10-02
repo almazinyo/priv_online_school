@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'section_id',
             'img_name',
             //'description:ntext',
-            //'created_at',
-            //'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
             //'is_status',
 
             ['class' => 'yii\grid\ActionColumn'],

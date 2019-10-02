@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\QuizControl */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -33,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'question',
             'hint',
             //'correct_answer',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
             //'is_status',
 
             ['class' => 'yii\grid\ActionColumn'],

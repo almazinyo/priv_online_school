@@ -30,8 +30,8 @@ use yii\widgets\ActiveForm;
                             'size' => 'large',
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => 'Active',
-                            'offText' => 'Inactive',
+                            'onText' => Yii::t('app','Active'),
+                            'offText' => Yii::t('app','Inactive'),
                         ],
                 ]
             )

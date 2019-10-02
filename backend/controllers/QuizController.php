@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\components\ImageHelper;
 use Yii;
 use common\models\Quiz;
 use backend\models\QuizControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * QuizController implements the CRUD actions for Quiz model.
@@ -66,8 +68,30 @@ class QuizController extends Controller
     {
         $model = new Quiz();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $question = UploadedFile::getInstance($model, "question");
+            $hint = UploadedFile::getInstance($model, "hint");
+
+            if (!empty($question)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/question/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $question->extension;
+                $question->saveAs($imgPath . $imgName);
+                $model->question = $imgName;
+            }
+
+            if (!empty($hint)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/question/hint/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $hint->extension;
+                $hint->saveAs($imgPath . $imgName);
+                $model->hint = $imgName;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -95,18 +119,123 @@ class QuizController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Quiz model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionUploadQuestion($id)
+    {
+        $model = $this->findModel($id);
+        $imgFile = UploadedFile::getInstance($model, "question");
+        $oldImageName = $model->question;
+
+        if (!empty($imgFile)) {
+            if (!empty($oldImageName)) {
+                $imgPath = sprintf('%s/web/images/question/%s', Yii::getAlias('@frontend'), $oldImageName);
+
+                if (file_exists($imgPath)) {
+                    unlink($imgPath);
+                }
+            }
+
+            $image = new ImageHelper();
+            $imgPath = Yii::getAlias("@frontend") . "/web/images/question/";
+            $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+            $imgFile->saveAs($imgPath . $imgName);
+
+            $model->question = $imgName;
+            $model->save();
+        }
+
+        return true;
+    }
+    public function actionUploadHint($id)
+    {
+        $model = $this->findModel($id);
+        $imgFile = UploadedFile::getInstance($model, "hint");
+        $oldImageName = $model->question;
+
+        if (!empty($imgFile)) {
+            if (!empty($oldImageName)) {
+                $imgPath = sprintf('%s/web/images/question/hint/%s', Yii::getAlias('@frontend'), $oldImageName);
+
+                if (file_exists($imgPath)) {
+                    unlink($imgPath);
+                }
+            }
+
+            $image = new ImageHelper();
+            $imgPath = Yii::getAlias("@frontend") . "/web/images/question/hint/";
+            $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+            $imgFile->saveAs($imgPath . $imgName);
+
+            $model->question = $imgName;
+            $model->save();
+        }
+
+        return true;
+    }
+
+
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!empty($model->question)) {
+            $imgPath = sprintf('%s/web/images/question/%s', Yii::getAlias('@frontend'), $model->question);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+            }
+        }
+
+        if (!empty($model->hint)) {
+            $imgPath = sprintf('%s/web/images/question/hint/%s', Yii::getAlias('@frontend'), $model->hint);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+            }
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDeleteQuestion($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!empty($model->question)) {
+            $imgPath = sprintf('%s/web/images/question/%s', Yii::getAlias('@frontend'), $model->question);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $model->question = null;
+                $model->save();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function actionDeleteHint($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!empty($model->hint)) {
+            $imgPath = sprintf('%s/web/images/question/hint/%s', Yii::getAlias('@frontend'), $model->hint);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $model->hint = null;
+                $model->save();
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
