@@ -99,6 +99,11 @@
                                                         'icon' => '',
                                                         'url' => ['/quiz'],
                                                     ],
+                                                    [
+                                                        'label' => Yii::t('app', 'Storage'),
+                                                        'icon' => '',
+                                                        'url' => ['/storage-lessons'],
+                                                    ],
                                                 ],
                                             ],
                                         ],

@@ -45,11 +45,11 @@ class StorageLessons extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'lesson_id' => 'Lesson ID',
-            'name' => 'Name',
-            'type' => 'Type',
-            'is_status' => 'Is Status',
+            'id' => Yii::t('app', 'ID'),
+            'lesson_id' => Yii::t('app', 'Lesson ID'),
+            'name' => Yii::t('app', 'Name'),
+            'type' => Yii::t('app', 'Type'),
+            'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
 

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\PromotionalCodeControl */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Promotional Codes';
+$this->title = Yii::t('app', 'Promotional Codes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="promotional-code-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Promotional Code', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Promotional Code'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

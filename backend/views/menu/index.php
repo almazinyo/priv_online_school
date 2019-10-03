@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'parent_id',
                 'created_at:datetime',
                 'updated_at:datetime',
-                //'is_status',
+                'is_status',
 
                 ['class' => 'yii\grid\ActionColumn'],
             ],

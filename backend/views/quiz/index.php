@@ -33,10 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'bonus_points',
             'question',
             'hint',
-            //'correct_answer',
+            'correct_answer',
             'created_at:datetime',
             'updated_at:datetime',
-            //'is_status',
+            'is_status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\LessonsControl */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lessons';
+$this->title = Yii::t('app', 'Lessons');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-index">
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Lessons', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Lessons'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -26,22 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'sort_lessons',
             'name',
             'section_id',
             'background',
-            //'logo',
-            //'slug',
-            //'short_description:ntext',
-            //'description:ntext',
-            //'seo_keywords',
-            //'seo_description',
+            'logo',
+            'slug',
+            'short_description:ntext',
+            'description:ntext',
+            'seo_keywords',
+            'seo_description',
             'created_at:datetime',
             'updated_at:datetime',
-            //'is_status',
-
+            'is_status',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
