@@ -31,7 +31,7 @@ class StorageLessonsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'upload-images', 'delete-file'],
+                        'actions' => ['index', 'create', 'update', 'view', 'upload-file', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,7 +54,6 @@ class StorageLessonsController extends Controller
     {
         $searchModel = new StorageLessonsControl();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -109,18 +108,35 @@ class StorageLessonsController extends Controller
     }
 
     /**
-     * Updates an existing StorageLessons model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $lessonId = $model->lesson_id;
+            $status = $model->is_status;
+
+            $lessons = UploadedFile::getInstances($model, 'name');
+
+            if (!empty($lessons)) {
+                foreach ($lessons as $file) {
+                    $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
+                    $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                    $file->saveAs($filePath . $fileName);
+                    $model = new StorageLessons();
+                    $model->name = $fileName;
+                    $model->lesson_id = $lessonId;
+                    $model->is_status = $status;
+                    $model->save();
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -129,17 +145,58 @@ class StorageLessonsController extends Controller
     }
 
     /**
-     * Deletes an existing StorageLessons model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @param bool $deleteFile
+     * @return bool|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $isFormPage = false)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!empty($model->name)) {
+            $imgPath = sprintf('%s/web/images/lessons/%s', Yii::getAlias('@frontend'), $model->name);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+            }
+        }
+
+        $model->delete();
+
+        if ($isFormPage) {
+            return true;
+        }
 
         return $this->redirect(['index']);
+    }
+
+    public function actionUploadFile($id)
+    {
+        $storage = $this->findModel($id);
+        $model = new StorageLessons();
+
+        $lessonId = $storage->lesson_id;
+        $status = $storage->is_status;
+
+        $lessons = UploadedFile::getInstances($model, 'name');
+
+        if (!empty($lessons)) {
+            foreach ($lessons as $file) {
+                $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
+                $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                $file->saveAs($filePath . $fileName);
+                $model = new StorageLessons();
+                $model->name = $fileName;
+                $model->lesson_id = $lessonId;
+                $model->is_status = $status;
+                $model->save();
+            }
+        }
+
+        return true;
     }
 
     /**

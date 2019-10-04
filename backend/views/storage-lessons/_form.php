@@ -60,17 +60,16 @@ use common\models\StorageLessons;
         <?php
 
         $model_id = $model->id;
-        $uploadImages = Url::to(['/products/upload-images?id=' . $model_id]);
+        $uploadImages = Url::to(['/storage-lessons/upload-file?id=' . $model_id]);
         $imagesOptions = [];
         $imgPath = [];
         $size = 0;
 
         if (!$model->isNewRecord) {
-            $imgFullPath = Yii::getAlias("@frontend") . "/web/images/lessons/";
+            $imgFullPath = Yii::getAlias('@frontend') . '/web/images/lessons/';
 
             foreach (StorageLessons::receiveFileName($model->lesson_id) as $fileId => $fileName) {
-                var_dump($fileId);
-                $deleteUrl = Url::to(["/products/delete-file?id=" . $fileId]);
+                $deleteUrl = Url::to(['/storage-lessons/delete?isFormPage=true&id=' . $fileId]);
 
                 if (file_exists($imgFullPath . $fileName)) {
                     $size = filesize($imgFullPath . $fileName);
