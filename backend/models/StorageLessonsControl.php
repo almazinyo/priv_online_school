@@ -18,7 +18,7 @@ class StorageLessonsControl extends StorageLessons
     {
         return [
             [['id', 'lesson_id', 'is_status'], 'integer'],
-            [['name', 'type'], 'safe'],
+            [['name', ], 'trim'],
         ];
     }
 
@@ -63,8 +63,7 @@ class StorageLessonsControl extends StorageLessons
             'is_status' => $this->is_status,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'type', $this->type]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

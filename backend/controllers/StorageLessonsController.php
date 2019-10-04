@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use backend\components\ImageHelper;
 use Yii;
 use common\models\StorageLessons;
 use backend\models\StorageLessonsControl;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * StorageLessonsController implements the CRUD actions for StorageLessons model.
@@ -20,6 +23,20 @@ class StorageLessonsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'upload-images', 'delete-file'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -66,13 +83,29 @@ class StorageLessonsController extends Controller
     {
         $model = new StorageLessons();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $lessonId = $model->lesson_id;
+            $status = $model->is_status;
+
+            $lessons = UploadedFile::getInstances($model, 'name');
+
+            if (!empty($lessons)) {
+                foreach ($lessons as $file) {
+                    $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
+                    $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                    $file->saveAs($filePath . $fileName);
+                    $model = new StorageLessons();
+                    $model->name = $fileName;
+                    $model->lesson_id = $lessonId;
+                    $model->is_status = $status;
+                    $model->save();
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render('create', ['model' => $model,]);
     }
 
     /**
