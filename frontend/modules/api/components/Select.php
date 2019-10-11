@@ -14,8 +14,20 @@ final class Select
      */
     public static function receiveAllData(ActiveRecord $object): array
     {
+        $select =
+            sprintf(
+                '%s.*, %s, %s,',
+                $object::tableName(),
+                'DATE(FROM_UNIXTIME(created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(updated_at)) as updated_at'
+            );
+
         return
-            $object::find()->asArray()->all();
+            $object::find()
+                ->select($select)
+                ->asArray()
+                ->all()
+            ;
     }
 
     /**
@@ -38,8 +50,17 @@ final class Select
      */
     public static function receiveSpecificData(ActiveRecord $object, array $conditions): array
     {
+        $select =
+            sprintf(
+                '%s.*, %s, %s,',
+                $object::tableName(),
+                'DATE(FROM_UNIXTIME(created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(updated_at)) as updated_at'
+            );
+
         return
             $object::find()
+                ->select($select)
                 ->where($conditions)
                 ->asArray()
                 ->all()

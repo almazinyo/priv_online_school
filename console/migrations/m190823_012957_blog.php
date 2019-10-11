@@ -31,6 +31,7 @@ class m190823_012957_blog extends Migration
             'blog',
             [
                 'id' => $this->primaryKey(),
+                'subject_id' => $this->integer(11),
                 'title' => $this->string(500)->notNull(),
                 'img_name' => $this->string(500),
                 'slug' => $this->string(500)->notNull(),
@@ -43,6 +44,16 @@ class m190823_012957_blog extends Migration
                 'is_status' => $this->tinyInteger(2),
             ],
             'ENGINE=InnoDB DEFAULT CHARSET=utf8'
+        );
+
+        $this->addForeignKey(
+            'FK_subjects_blog',
+            'blog',
+            'subject_id',
+            'subjects',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
     }
 

@@ -31,7 +31,7 @@ class BlogController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'upload-images', 'delete-file'],
+                        'actions' => ['index', 'create', 'update', 'view', 'upload-images', 'delete-file', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -203,7 +203,25 @@ class BlogController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!empty($model->img_name)) {
+            $imgPath = sprintf('%s/web/images/blog/%s', Yii::getAlias('@frontend'), $model->img_name);
+            $imgPathSmall = sprintf('%s/web/images/blog/small/%s', Yii::getAlias('@frontend'), $model->img_name);
+
+            if (file_exists($imgPathSmall)) {
+                unlink($imgPathSmall);
+            }
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $model->img_name = null;
+                $model->save();
+            }
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

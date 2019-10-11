@@ -36,11 +36,18 @@ class Blog extends ActiveRecord
     public function rules()
     {
         return [
+            [['subject_id', 'is_status'], 'integer'],
             [['title', 'slug'], 'required'],
             [['short_description', 'description'], 'string'],
-            [['is_status'], 'integer'],
             [['title', 'img_name', 'slug'], 'string', 'max' => 500],
             [['seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
+            [
+                ['subject_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subject_id' => 'id'],
+            ],
         ];
     }
 
@@ -79,6 +86,7 @@ class Blog extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
             'title' => Yii::t('app', 'Title'),
             'img_name' => Yii::t('app', 'Img Name'),
             'slug' => Yii::t('app', 'Slug'),
@@ -90,5 +98,32 @@ class Blog extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
             'is_status' => Yii::t('app', 'Is Status'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubject()
+    {
+        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+
+    public static function receiveAllData(ActiveRecord $object): array
+    {
+        $select =
+            sprintf(
+                '%s.*, %s, %s,',
+                $object::tableName(),
+                'DATE(FROM_UNIXTIME(created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(updated_at)) as updated_at'
+            );
+
+        return
+            $object::find()
+                ->select($select)
+                ->joinWith('subjects')
+                ->asArray()
+                ->all()
+            ;
     }
 }
