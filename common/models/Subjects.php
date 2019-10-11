@@ -38,7 +38,7 @@ class Subjects extends ActiveRecord
     public function rules()
     {
         return [
-            [['description'], 'string'],
+            [['description','icon','color'], 'string'],
             [['is_status'], 'integer'],
             [['title'], 'required'],
             [['title', 'slug'], 'string', 'max' => 500],

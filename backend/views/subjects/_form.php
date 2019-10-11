@@ -25,8 +25,8 @@ use yii\helpers\Url;
                             'size' => 'large',
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => Yii::t('app','Active'),
-                            'offText' => Yii::t('app','Inactive'),
+                            'onText' => Yii::t('app', 'Active'),
+                            'offText' => Yii::t('app', 'Inactive'),
                         ],
                 ]
             )
@@ -37,6 +37,12 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-xs-6"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?></div>
             <div class="col-xs-6"><?= $form->field($model, 'short_description')->textarea(['row' => 3]) ?></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6"><?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'color')->textarea(['row' => 3]) ?></div>
         </div>
     </div>
     <div class="col-xs-12">

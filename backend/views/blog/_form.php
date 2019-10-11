@@ -34,6 +34,24 @@ use yii\helpers\Url;
         ;
         ?>
     </div>
+
+    <div class="col-xs-12">
+        <?= $form->field($model, 'subject_id')->widget(
+            \kartik\select2\Select2::classname(), [
+            'data' =>
+                \yii\helpers\ArrayHelper::map(
+                    \common\models\Subjects::find()
+                        ->select('id,title')
+                        ->asArray()
+                        ->all(),
+                    "id", "title"),
+            'options' => ['placeholder' => 'Parent'],
+            'pluginOptions' => ['allowClear' => true],
+        ])
+        ;
+        ?>
+    </div>
+
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-6"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?></div>
