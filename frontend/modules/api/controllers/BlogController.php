@@ -58,7 +58,7 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-        $model = Select::receiveAllData(new Blog());
+        $model = Blog::receiveAllData();
 
         return [
             'status' => 200,

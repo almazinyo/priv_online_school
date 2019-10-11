@@ -108,20 +108,20 @@ class Blog extends ActiveRecord
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
     }
 
-    public static function receiveAllData(ActiveRecord $object): array
+    public static function receiveAllData(): array
     {
         $select =
             sprintf(
-                '%s.*, %s, %s,',
-                $object::tableName(),
-                'DATE(FROM_UNIXTIME(created_at)) as created_at',
-                'DATE(FROM_UNIXTIME(updated_at)) as updated_at'
+                '%s.*, %s, %s, subjects.title as subject_name',
+                self::tableName(),
+                'DATE(FROM_UNIXTIME(blog.created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(blog.updated_at)) as updated_at'
             );
 
         return
-            $object::find()
+            self::find()
                 ->select($select)
-                ->joinWith('subjects')
+                ->joinWith('subject')
                 ->asArray()
                 ->all()
             ;

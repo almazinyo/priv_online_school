@@ -113,6 +113,14 @@ class Subjects extends ActiveRecord
         return $this->hasMany(SectionSubjects::className(), ['subject_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBlog()
+    {
+        return $this->hasMany(Blog::className(), ['subject_id' => 'id']);
+    }
+
     public static function receiveAllData()
     {
         return
