@@ -122,6 +122,7 @@ class Blog extends ActiveRecord
             self::find()
                 ->select($select)
                 ->joinWith('subject')
+                ->where(['blog.is_status' => true])
                 ->asArray()
                 ->all()
             ;
