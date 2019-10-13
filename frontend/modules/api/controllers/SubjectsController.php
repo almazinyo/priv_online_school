@@ -82,17 +82,7 @@ class SubjectsController extends Controller
      */
     public function actionDetails($slug)
     {
-        $subjectId =
-            Select::receiveId(
-                new Subjects(),
-                ['slug' => Html::encode($slug)]
-            );
-
-        if ($subjectId === -1) {
-            throw new NotFoundHttpException();
-        }
-
-        $model = Select::receiveSpecificData(new SectionSubjects(), ['subject_id' => $subjectId]);
+        $model = Subjects::receiveSpecificData(Html::encode($slug));
 
         if (empty($model)) {
             throw new NotFoundHttpException();

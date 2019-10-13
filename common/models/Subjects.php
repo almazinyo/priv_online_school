@@ -134,6 +134,19 @@ class Subjects extends ActiveRecord
             ;
     }
 
+    public static function receiveSpecificData($slug)
+    {
+        return
+            self::find()
+                ->joinWith('sectionSubjects')
+                ->joinWith('sectionSubjects.lessons')
+                ->joinWith('sectionSubjects.lessons.storageLessons')
+                ->where(['subjects.slug' => Html::encode($slug)])
+                ->asArray()
+                ->all()
+            ;
+    }
+
     public static function receiveMenu()
     {
         return
