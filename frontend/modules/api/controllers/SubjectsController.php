@@ -62,6 +62,20 @@ class SubjectsController extends Controller
     }
 
     /**
+     * @return mixed[]
+     */
+    public function actionMenu()
+    {
+        $model = Subjects::receiveMenu();
+
+        return
+            [
+                'status' => 200,
+                'data' => $model,
+            ];
+    }
+
+    /**
      * @param $slug
      * @return array
      * @throws NotFoundHttpException

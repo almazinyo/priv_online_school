@@ -38,7 +38,7 @@ class Subjects extends ActiveRecord
     public function rules()
     {
         return [
-            [['description','icon','color'], 'string'],
+            [['description', 'icon', 'color'], 'string'],
             [['is_status'], 'integer'],
             [['title'], 'required'],
             [['title', 'slug'], 'string', 'max' => 500],
@@ -128,6 +128,18 @@ class Subjects extends ActiveRecord
                 ->joinWith('sectionSubjects')
                 ->joinWith('sectionSubjects.lessons')
                 ->joinWith('sectionSubjects.lessons.storageLessons')
+                ->where(['subjects.is_status' => true])
+                ->asArray()
+                ->all()
+            ;
+    }
+
+    public static function receiveMenu()
+    {
+        return
+            self::find()
+                ->select('title, slug, icon, color')
+                ->where(['is_status' => true])
                 ->asArray()
                 ->all()
             ;
