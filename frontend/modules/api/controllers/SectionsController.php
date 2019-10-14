@@ -9,8 +9,7 @@ class SectionsController extends Controller
 {
     public function actionDetails($slug)
     {
-        var_dump($slug);
-        exit();
+     
         $model = SectionSubjects::receiveSpecificData($slug);
 
         if (empty($model)) {
