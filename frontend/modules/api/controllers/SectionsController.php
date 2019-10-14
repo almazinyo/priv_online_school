@@ -46,10 +46,10 @@ class SectionsController extends Controller
 
 
         $model = SectionSubjects::receiveSpecificData($slug);
-//
-//        if (empty($model)) {
-//            throw new NotFoundHttpException();
-//        }
+
+        if (empty($model)) {
+            throw new NotFoundHttpException();
+        }
 
         return [
             'status' => 200,
