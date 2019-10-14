@@ -147,7 +147,6 @@ class Subjects extends ActiveRecord
                         'section_subjects.is_status' => true,
                     ]
                 )
-                ->orWhere(['lessons.is_status' => true])
                 ->asArray()
                 ->all()
             ;
