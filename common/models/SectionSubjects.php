@@ -150,13 +150,14 @@ class SectionSubjects extends \yii\db\ActiveRecord
 
     public static function receiveSpecificData($slug)
     {
-        self::find()
-            ->joinWith('subject')
-            ->joinWith('teachers')
-            ->joinWith('lessons')
-            ->where(['section_subjects.slug' => Html::encode($slug)])
-            ->asArray()
-            ->one()
-        ;
+        return
+            self::find()
+                ->joinWith('subject')
+                ->joinWith('teachers')
+                ->joinWith('lessons')
+                ->where(['section_subjects.slug' => Html::encode($slug)])
+                ->asArray()
+                ->one()
+            ;
     }
 }

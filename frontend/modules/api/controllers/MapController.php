@@ -22,11 +22,12 @@ class MapController extends Controller
 
                 'Subjects' => [
                     $homeUrl . 'api/subjects',
+                    $homeUrl . 'api/subjects/menu',
+                    $homeUrl . 'api/subjects/details/<slug>',
                     [
                         'Sections' => [
                             $homeUrl . 'api/subjects/sections',
-                            $homeUrl . 'api/subjects/details/<slug>',
-
+                            $homeUrl . 'api/sections/details/<slug>',
                         ],
                         'Lessons' => [
                             $homeUrl . 'api/subjects/lessons',
