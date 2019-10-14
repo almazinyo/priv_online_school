@@ -60,6 +60,7 @@ return [
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/blog/details/<slug>' => 'api/blog/details/',
+                'api/sections/details/<slug>' => 'api/sections/details/',
                 'api/subjects/teacher/<slug>' => 'api/subjects/teacher/',
             ],
         ],

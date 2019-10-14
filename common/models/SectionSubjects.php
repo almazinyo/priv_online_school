@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "section_subjects".
@@ -138,11 +139,24 @@ class SectionSubjects extends \yii\db\ActiveRecord
     {
         return
             self::find()
+                ->joinWith('subject')
                 ->joinWith('teachers')
                 ->joinWith('lessons')
                 ->joinWith('lessons.storageLessons')
                 ->asArray()
                 ->all()
             ;
+    }
+
+    public static function receiveSpecificData($slug)
+    {
+        self::find()
+            ->joinWith('subject')
+            ->joinWith('teachers')
+            ->joinWith('lessons')
+            ->where(['section_subjects.slug' => Html::encode($slug)])
+            ->asArray()
+            ->one()
+        ;
     }
 }

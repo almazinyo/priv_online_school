@@ -141,7 +141,13 @@ class Subjects extends ActiveRecord
                 ->joinWith('sectionSubjects')
                 ->joinWith('sectionSubjects.lessons')
                 ->joinWith('sectionSubjects.lessons.storageLessons')
-                ->where(['subjects.slug' => Html::encode($slug)])
+                ->where(
+                    [
+                        'subjects.slug' => Html::encode($slug),
+                        'section_subjects.is_status' => true,
+                    ]
+                )
+                ->orWhere(['lessons.is_status' => true])
                 ->asArray()
                 ->all()
             ;

@@ -138,6 +138,7 @@ class Lessons extends ActiveRecord
             self::find()
                 ->joinWith('quizzes')
                 ->joinWith('storageLessons')
+                ->where(['lessons.is_status' => true])
                 ->asArray()
                 ->all()
             ;
