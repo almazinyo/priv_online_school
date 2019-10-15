@@ -31,6 +31,7 @@ class MapController extends Controller
                         ],
                         'Lessons' => [
                             $homeUrl . 'api/subjects/lessons',
+                            $homeUrl . 'api/lessons/details/<slug>',
 
                         ],
                         'Teachers' => [
