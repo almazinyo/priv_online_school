@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "lessons".
@@ -141,6 +142,20 @@ class Lessons extends ActiveRecord
                 ->where(['lessons.is_status' => true])
                 ->asArray()
                 ->all()
+            ;
+    }
+
+
+    public static function receiveSpecificData($slug)
+    {
+        return
+            self::find()
+                ->joinWith('subject')
+                ->joinWith('quiz')
+                ->joinWith('storageLessons')
+                ->where(['section_subjects.slug' => Html::encode($slug)])
+                ->asArray()
+                ->one()
             ;
     }
 }
