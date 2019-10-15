@@ -150,7 +150,6 @@ class Lessons extends ActiveRecord
     {
         return
             self::find()
-                ->joinWith('subject')
                 ->joinWith('quiz')
                 ->joinWith('storageLessons')
                 ->where(['section_subjects.slug' => Html::encode($slug)])
