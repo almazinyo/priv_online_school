@@ -1,0 +1,3 @@
+.ps-container > .ps-scrollbar-y-rail {
+    z-index: 1002;
+}
