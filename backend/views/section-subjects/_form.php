@@ -69,7 +69,16 @@ use yii\helpers\ArrayHelper;
 
     <div class="col-xs-12">
         <div class="row">
-            <div class="col-xs-6"><?= $form->field($model, 'background')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6">
+                <?= $form->field($model, 'background')->widget(
+                    \kartik\color\ColorInput::classname(),
+                    [
+                        'options' => ['placeholder' => Yii::t('app', 'Select color ...')],
+                    ]
+                )
+                ; ?>
+            </div>
+
             <div class="col-xs-6"><?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?></div>
         </div>
     </div>

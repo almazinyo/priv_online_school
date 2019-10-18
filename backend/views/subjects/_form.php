@@ -42,7 +42,16 @@ use yii\helpers\Url;
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-6"><?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?></div>
-            <div class="col-xs-6"><?= $form->field($model, 'color')->textarea(['row' => 3]) ?></div>
+            <div class="col-xs-6">
+                <?= $form->field($model, 'color')->widget(
+                    \kartik\color\ColorInput::classname(),
+                    [
+                        'options' => ['placeholder' => Yii::t('app', 'Select color ...')],
+                    ]
+                )
+                ; ?>
+            </div>
+
         </div>
     </div>
     <div class="col-xs-12">
