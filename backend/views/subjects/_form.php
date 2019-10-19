@@ -20,6 +20,12 @@ use yii\helpers\Url;
                 SwitchInput::classname(),
                 [
                     'value' => true,
+                    'type' => SwitchInput::RADIO,
+                    'items' => [
+                        ['label' => Yii::t('app', 'visible to everyone'), 'value' => 1],
+                        ['label' => Yii::t('app', 'prohibition of visibility'), 'value' => 2],
+                        ['label' => Yii::t('app', 'not visible to anyone'), 'value' => 0],
+                    ],
                     'pluginOptions' =>
                         [
                             'size' => 'large',
@@ -32,6 +38,9 @@ use yii\helpers\Url;
             )
         ;
         ?>
+    </div>
+    <div class="col-xs-12">
+        <?= $form->field($model, 'sortable_id')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-xs-12">
         <div class="row">
@@ -61,10 +70,6 @@ use yii\helpers\Url;
         </div>
     </div>
 
-    <div class="col-xs-12">
-        <?= $form->field($model, 'sortable_id')->textInput(['maxlength' => true]) ?>
-
-    </div>
     <div class="col-xs-12">
         <?= $form->field($model, 'description')
             ->widget(

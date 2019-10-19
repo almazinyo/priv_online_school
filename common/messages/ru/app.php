@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Message translations.
  *
@@ -71,6 +70,7 @@ return [
     'Seo Description' => 'Сео Описание',
     'Seo Keywords' => 'SEO Ключевые слова',
     'Short Description' => 'Краткое описание',
+    'Sortable Id' => 'Сортируемый Id',
     'Storage' => 'Хранилище',
     'Subject' => 'Предмет',
     'Subjects' => 'Предметы',
@@ -80,6 +80,8 @@ return [
     'Update' => 'Обновить',
     'Updated At' => 'Обновлен',
     'Users Access' => 'Доступ пользователя',
+    'not visible to anyone' => 'Никому Не Виден',
+    'visible to everyone' => 'Виден Всем',
     'Abort any changes and reset settings' => '',
     'All' => '',
     'Apply' => '',
@@ -128,7 +130,6 @@ return [
     'Show first page data' => '',
     'Slug' => '',
     'Sort Lessons' => '',
-    'Sortable Id' => 'Сортируемый Id',
     'Storage Lessons' => '',
     'Subject ID' => '',
     'Subjects ID' => '',
@@ -151,6 +152,7 @@ return [
     'Yii2 Grid Export (PDF)' => '',
     'grid-export' => '',
     'krajee, grid, export, yii2-grid, pdf' => '',
+    'prohibition of visibility' => 'Запрет На Видимость',
     'rows per page' => '',
     '© Krajee Yii2 Extensions' => '',
     'Blogs' => '@@@@',
