@@ -38,6 +38,7 @@ class m190813_092119_subjects extends Migration
                 'slug' => $this->string(500)->notNull(),
                 'icon' => $this->text(),
                 'color' => $this->string(300),
+                'sortable_id' => $this->string(300),
                 'short_description' => $this->text(),
                 'description' => $this->text(),
                 'seo_keywords' => $this->string(300),

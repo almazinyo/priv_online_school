@@ -22,6 +22,7 @@ class SubjectsControl extends Subjects
                 [
                     'title',
                     'slug',
+                    'sortable_id',
                     'short_description',
                     'description',
                     'seo_keywords',
@@ -53,6 +54,7 @@ class SubjectsControl extends Subjects
     public function search($params)
     {
         $query = Subjects::find();
+        $query->orderBy(['sortable_id' => SORT_ASC]);
 
         // add conditions that should always apply here
 

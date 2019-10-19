@@ -13,6 +13,7 @@ use yii\helpers\Html;
  *
  * @property int $id
  * @property string $title
+ * @property string $sortable_id
  * @property string $slug
  * @property string $short_description
  * @property string $description
@@ -38,7 +39,8 @@ class Subjects extends ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'icon', 'color'], 'string'],
+            [['description', 'icon', 'color', 'sortable_id'], 'string'],
+            ['sortable_id', 'default', 'value' => 0],
             [['is_status'], 'integer'],
             [['title'], 'required'],
             [['title', 'slug'], 'string', 'max' => 500],
@@ -86,6 +88,7 @@ class Subjects extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
+            'sortable_id' => Yii::t('app', 'Sortable Id'),
             'slug' => Yii::t('app', 'Slug'),
             'short_description' => Yii::t('app', 'Short Description'),
             'description' => Yii::t('app', 'Description'),
@@ -158,6 +161,7 @@ class Subjects extends ActiveRecord
             self::find()
                 ->select('title, slug, icon, color')
                 ->where(['is_status' => true])
+                ->orderBy(['sortable_id' => SORT_ASC])
                 ->asArray()
                 ->all()
             ;

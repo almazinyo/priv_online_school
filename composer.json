@@ -37,7 +37,8 @@
     "yiisoft/yii2-authclient": "~2.1.0",
     "mdmsoft/yii2-admin": "~2.0",
     "kartik-v/yii2-dialog": "@dev",
-    "kartik-v/yii2-sortable": "@dev"
+    "kartik-v/yii2-sortable": "@dev",
+    "kartik-v/yii2-grid": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

@@ -267,12 +267,14 @@ class GridView extends YiiGridView
      * Set download target for grid export to a new window that auto closes after download
      */
     const TARGET_BLANK = '_blank';
+
     /**
      * @var array configuration settings for the Krajee dialog widget that will be used to render alerts and
      * confirmation dialog prompts
      * @see http://demos.krajee.com/dialog
      */
     public $krajeeDialogSettings = [];
+
     /**
      * @var string the layout that determines how different sections of the list view should be organized.
      * The layout template will be automatically set based on the [[panel]] setting. If [[panel]] is a valid
@@ -294,6 +296,7 @@ class GridView extends YiiGridView
      *
      */
     public $layout = "{summary}\n{items}\n{pager}";
+
     /**
      * @var string the template for rendering the grid within a bootstrap styled panel.
      * The following special tokens are recognized and will be replaced:
@@ -318,6 +321,7 @@ class GridView extends YiiGridView
     {panelFooter}
 </div>
 HTML;
+
     /**
      * @var string the template for rendering the panel heading. The following special tokens are
      * recognized and will be replaced:
@@ -338,6 +342,7 @@ HTML;
     </h3>
     <div class="clearfix"></div>
 HTML;
+
     /**
      * @var string the template for rendering the panel footer. The following special tokens are
      * recognized and will be replaced:
@@ -356,6 +361,7 @@ HTML;
     {footer}
     <div class="clearfix"></div>
 HTML;
+
     /**
      * @var string the template for rendering the `{before} part in the layout templates.
      * The following special tokens are recognized and will be replaced:
@@ -376,6 +382,7 @@ HTML;
     {before}
     <div class="clearfix"></div>
 HTML;
+
     /**
      * @var string the template for rendering the `{after} part in the layout templates. The following special
      * variables are recognized and will be replaced:
@@ -388,12 +395,14 @@ HTML;
      * - `{export}`: _string_, which will render the [[export]] menu button content
      */
     public $panelAfterTemplate = '{after}';
+
     /**
      * @var string the panel CSS prefix that will be applied to the panel container for rendering the grid
      * within a bootstrap styled panel. This can be set to a different value to generate different styles for
      * other bootstrap themes. For example, this can be set to `box box-` for rendering boxes in AdminLTE theme.
      */
     public $panelPrefix = 'panel panel-';
+
     /**
      * @var array the panel settings for displaying the grid view within a bootstrap styled panel. This property is
      * therefore applicable only if [[bootstrap]] property is `true`. The following array keys can be configured:
@@ -415,6 +424,7 @@ HTML;
      *   `kv-panel-after`.
      */
     public $panel = [];
+
     /**
      * @var array|string configuration of additional header table rows that will be rendered before the default grid
      * header row. If set as a _string_, it will be displayed as is, without any HTML encoding. If set as an _array_,
@@ -426,6 +436,7 @@ HTML;
      * - `options`: _array_, the HTML attributes for the table row
      */
     public $beforeHeader = [];
+
     /**
      * @var array|string configuration of additional header table rows that will be rendered after default grid header
      * row. If set as a _string_, it will be displayed as is, without any HTML encoding. If set as an _array_, each
@@ -437,6 +448,7 @@ HTML;
      * - `options`: _array_, the HTML attributes for the table row
      */
     public $afterHeader = [];
+
     /**
      * @var array|string configuration of additional footer table rows that will be rendered before the default grid
      * footer row. If set as a _string_, it will be displayed as is, without any HTML encoding. If set as an _array_,
@@ -448,6 +460,7 @@ HTML;
      * - `options`: _array_, the HTML attributes for the table row
      */
     public $beforeFooter = [];
+
     /**
      * @var array|string configuration of additional footer table rows that will be rendered after the default grid
      * footer row. If set as a _string_, it will be displayed as is, without any HTML encoding. If set as an _array_,
@@ -459,6 +472,7 @@ HTML;
      * - `options`: _array_, the HTML attributes for the table row
      */
     public $afterFooter = [];
+
     /**
      * @var array|string the toolbar content configuration. Can be setup as a string or an array. When set as a
      * _string_, it will be rendered as is. When set as an _array_, each line item will be considered as per the
@@ -477,6 +491,7 @@ HTML;
         '{toggleData}',
         '{export}',
     ];
+
     /**
      * @var array tags to replace in the rendered layout. Enter this as `$key => $value` pairs, where:
      * - `$key`: _string_, defines the flag.
@@ -492,29 +507,35 @@ HTML;
      * ```
      */
     public $replaceTags = [];
+
     /**
      * @var string the default data column class if the class name is not explicitly specified when configuring a data
      * column. Defaults to 'kartik\grid\DataColumn'.
      */
     public $dataColumnClass = 'backend\modules\grid\DataColumn';
+
     /**
      * @var array the HTML attributes for the grid footer row
      */
     public $footerRowOptions = ['class' => 'kv-table-footer'];
+
     /**
      * @var array the HTML attributes for the grid caption
      */
     public $captionOptions = ['class' => 'kv-table-caption'];
+
     /**
      * @var array the HTML attributes for the grid element
      */
     public $tableOptions = [];
+
     /**
      * @var boolean whether the grid view will be rendered within a pjax container. Defaults to `true`. If set to
      * `false`, the entire GridView widget will be parsed via Pjax and auto-rendered inside a yii\widgets\Pjax
      * widget container. If set to `false` pjax will be disabled and none of the pjax settings will be applied.
      */
     public $pjax = false;
+
     /**
      * @var array the pjax settings for the widget. This will be considered only when [[pjax]] is set to true. The
      * following settings are recognized:
@@ -528,65 +549,80 @@ HTML;
      * - `afterGrid`: _string_, any content to be embedded within pjax container after the Grid widget.
      */
     public $pjaxSettings = [];
+
     /**
      * @var boolean whether to allow resizing of columns
      */
     public $resizableColumns = true;
+
     /**
      * @var boolean whether to hide resizable columns for smaller screen sizes (< 768px). Defaults to `true`.
      */
     public $hideResizeMobile = true;
+
     /**
      * @var array the resizableColumns plugin options
      */
     public $resizableColumnsOptions = ['resizeFromBody' => false];
+
     /**
      * @var boolean whether to store resized column state using local storage persistence (supported by most modern
      * browsers).
      */
     public $persistResize = false;
+
     /**
      * @var string resizable unique storage prefix to append to the grid id. If empty or not set it will default to
      * `Yii::$app->user->id`.
      */
     public $resizeStorageKey;
+
     /**
      * @var boolean whether the grid view will have Bootstrap table styling.
      */
     public $bootstrap = true;
+
     /**
      * @var boolean whether the grid will have a `bordered` style. Applicable only if `bootstrap` is `true`.
      */
     public $bordered = true;
+
     /**
      * @var boolean whether the grid will have a `striped` style. Applicable only if `bootstrap` is `true`.
      */
     public $striped = true;
+
     /**
      * @var boolean whether the grid will have a `condensed` style. Applicable only if `bootstrap` is `true`.
      */
     public $condensed = false;
+
     /**
      * @var boolean whether the grid will have a `responsive` style. Applicable only if `bootstrap` is `true`.
      */
     public $responsive = true;
+
     /**
      * @var boolean whether the grid will automatically wrap to fit columns for smaller display sizes.
      */
     public $responsiveWrap = true;
+
     /**
      * @var boolean whether the grid will highlight row on `hover`. Applicable only if `bootstrap` is `true`.
      */
     public $hover = true;
+
     /**
      * @var boolean whether the grid will have a floating table header.
      */
     public $floatHeader = false;
+
     /**
      * @var boolean whether the table header will float and sticks around as you scroll within a container. If
      * `responsive` is true then this is auto set to `true`.
      */
     public $floatOverflowContainer = false;
+
     /**
      * @var array the plugin options for the floatThead plugin that would render the floating/sticky table header
      * behavior. The default offset from the top of the window where the floating header will 'stick' when scrolling
@@ -595,6 +631,7 @@ HTML;
      * @see http://mkoryak.github.io/floatThead#options
      */
     public $floatHeaderOptions = ['top' => 50];
+
     /**
      * @var boolean whether pretty perfect scrollbars using perfect scrollbar plugin is to be used. Defaults to
      * `false`. If this is set to true, the `floatOverflowContainer` property will be auto set to `true`, if
@@ -602,34 +639,41 @@ HTML;
      * @see https://github.com/noraesae/perfect-scrollbar
      */
     public $perfectScrollbar = false;
+
     /**
      * @var array the plugin options for the perfect scrollbar plugin.
      * @see https://github.com/noraesae/perfect-scrollbar
      */
     public $perfectScrollbarOptions = [];
+
     /**
      * @var boolean whether to show the page summary row for the table. This will be displayed above the footer.
      */
     public $showPageSummary = false;
+
     /**
      * @array the HTML attributes for the page summary container. The following special options are recognized:
      *
      * - `tag`: _string_, the tag used to render the page summary. Defaults to `tbody`.
      */
     public $pageSummaryContainer = ['class' => 'kv-page-summary-container'];
+
     /**
      * @array the HTML attributes for the summary row.
      */
     public $pageSummaryRowOptions = ['class' => 'kv-page-summary warning'];
+
     /**
      * @var string the default pagination that will be read by toggle data. Should be one of 'page' or 'all'. If not
      * set to 'all', it will always defaults to 'page'.
      */
     public $defaultPagination = 'page';
+
     /**
      * @var boolean whether to enable toggling of grid data. Defaults to `true`.
      */
     public $toggleData = true;
+
     /**
      * @var array the settings for the toggle data button for the toggle data type. This will be setup as an
      * associative array of $key => $value pairs, where $key can be:
@@ -677,16 +721,19 @@ HTML;
      *      ```
      */
     public $toggleDataOptions = [];
+
     /**
      * @var array the HTML attributes for the toggle data button group container. By default this will always have the
      * `class = btn-group` automatically added, if no class is set.
      */
     public $toggleDataContainer = [];
+
     /**
      * @var array the HTML attributes for the export button group container. By default this will always have the
      * `class = btn-group` automatically added, if no class is set.
      */
     public $exportContainer = [];
+
     /**
      * @var array|boolean the grid export menu settings. Displays a Bootstrap dropdown menu that allows you to export the
      * grid as either html, csv, or excel. If set to `false`, will not be displayed. The following options can be
@@ -730,6 +777,7 @@ HTML;
      *   [[\yii\bootstrap\Dropdown]] widget.
      */
     public $export = [];
+
     /**
      * @var array the configuration for each export format. The array keys must be the one of the `format` constants
      * (CSV, HTML, TEXT, EXCEL, PDF, JSON) and the array value is a configuration array consisiting of these settings:
@@ -778,6 +826,7 @@ HTML;
      *          - `indentSpace`: int, pretty print json output and indent by number of spaces specified. Defaults to `4`.
      */
     public $exportConfig = [];
+
     /**
      * @var array conversion of defined patterns in the grid cells as a preprocessing before the gridview is formatted
      * for export. Each array row must consist of the following two keys:
@@ -792,33 +841,40 @@ HTML;
      * ```
      */
     public $exportConversions = [];
+
     /**
      * @var boolean determines whether the exported EXCEL cell data will be automatically guessed and formatted based on
      * [[DataColumn::format]] property. This property is applicable for EXCEL export content only. One can override this
      * behavior and change the auto-derived format mask by setting [[DataColumn::xlFormat]].
      */
     public $autoXlFormat = false;
+
     /**
      * @var array|boolean the HTML attributes for the grid container. The grid items will be wrapped in a `div`
      * container with the configured HTML attributes. The ID for the container will be auto generated.
      */
     public $containerOptions = [];
+
     /**
      * @var boolean whether to allow setup of the pagination. Defaults to `true`.
      */
     public $allowPageSetting = true;
+
     /**
      * @var boolean whether to allow display/setup of the theme. Defaults to `true`.
      */
     public $allowThemeSetting = true;
+
     /**
      * @var boolean whether to allow display/setup of the filter in the personalize grid form
      */
     public $allowFilterSetting = true;
+
     /**
      * @var boolean whether to allow display/setup of the sort in the personalize grid form
      */
     public $allowSortSetting = true;
+
     /**
      * @var array the HTML attributes for the save/apply action button. If this is set to `false`, it will not be
      * displayed. The following special variables are supported:
@@ -827,6 +883,7 @@ HTML;
      * - `title`: _string_, the title for the action button. Defaults to `Save grid settings`.
      */
     public $submitButtonOptions = [];
+
     /**
      * @var array|boolean the HTML attributes for the reset action button. If this is set to `false`, it will not be
      * displayed. The following special variables are supported:
@@ -835,6 +892,7 @@ HTML;
      * - `title`: _string_, the title for the action button. Defaults to `Abort any changes and reset settings`.
      */
     public $resetButtonOptions = [];
+
     /**
      * @var array|boolean the HTML attributes for the delete/trash action button. If this is set to `false`, it will
      * not be displayed. The following special variables are supported:
@@ -843,41 +901,56 @@ HTML;
      * - `title`: _string_, the title for the action button. Defaults to `Remove saved grid settings`.
      */
     public $deleteButtonOptions = [];
+
     public $isValidActionColumn = true;
+
     public $isValidSerialColumn = true;
+
     public $isValidFiledSettings = true;
+
     /**
      * @var string the generated client script for the grid
      */
     protected $_gridClientFunc = '';
+
     /**
      * @var Module the grid module.
      */
     protected $_module;
+
     /**
      * @var string key to identify showing all data
      */
     protected $_toggleDataKey;
+
     /**
      * @var string HTML attribute identifier for the toggle button
      */
     protected $_toggleButtonId;
+
     /**
      * @var string the JS variable to store the toggle options
      */
     protected $_toggleOptionsVar;
+
     /**
      * @var string generated plugin script for the toggle button
      */
     protected $_toggleScript;
+
     /**
      * @var boolean whether the current mode is showing all data
      */
     protected $_isShowAll = false;
+
     private $className;
+
     private $allColumnNames;
+
     private $visible_columns;
+
     private $model;
+
     private $custom_columns;
 
     /**
@@ -1757,9 +1830,23 @@ HTML;
         $type = ArrayHelper::getValue($panel, 'type', empty($model['theme']) ? 'primary' : $model['theme']);
         $heading = ArrayHelper::getValue($panel, 'heading', $title);
         $footer = ArrayHelper::getValue($panel, 'footer', '');
-        $before = ArrayHelper::getValue($panel, 'before',
-            Html::a("<i class='glyphicon glyphicon-plus'></i> Create  $title", ['create'],
-                ['class' => 'btn btn-success']));
+
+        $beforeName = sprintf(
+            '%s %s  %s',
+            "<i class='glyphicon glyphicon-plus'></i>",
+            Yii::t('app', 'Create'),
+            Yii::t('app', $title)
+        );
+        $before =
+            ArrayHelper::getValue(
+                $panel,
+                'before',
+                Html::a(
+                    $beforeName,
+                    ['create'],
+                    ['class' => 'btn btn-success']
+                )
+            );
         $after = ArrayHelper::getValue($panel, 'after', '');
         $headingOptions = ArrayHelper::getValue($panel, 'headingOptions', []);
         $footerOptions = ArrayHelper::getValue($panel, 'footerOptions', []);

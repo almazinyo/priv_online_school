@@ -60,6 +60,11 @@ use yii\helpers\Url;
             <div class="col-xs-6"><?= $form->field($model, 'seo_description')->textarea(['row' => 3]) ?></div>
         </div>
     </div>
+
+    <div class="col-xs-12">
+        <?= $form->field($model, 'sortable_id')->textInput(['maxlength' => true]) ?>
+
+    </div>
     <div class="col-xs-12">
         <?= $form->field($model, 'description')
             ->widget(

@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use backend\modules\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SectionSubjectsControl */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -11,15 +12,8 @@ $this->title = Yii::t('app', 'Sections');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subjects-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Section'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -40,6 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+        'isValidActionColumn' => false,
+        'bordered' => true,
+        'pjax' => true,
+        'responsive' => true,
+        'hover' => true,
     ]); ?>
 
     <?php Pjax::end(); ?>

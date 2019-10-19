@@ -82,6 +82,10 @@ class SubjectsController extends Controller
         $model = new Subjects();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (empty($model->sortable_id)) {
+                $model->sortable_id = $model->id;
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
