@@ -159,8 +159,8 @@ class Subjects extends ActiveRecord
     {
         return
             self::find()
-                ->select('title, slug, icon, color')
-                ->where(['is_status' => true])
+                ->select('title, slug, icon, color, is_status')
+                ->where(['!=', 'is_status', 0])
                 ->orderBy(['sortable_id' => SORT_ASC])
                 ->asArray()
                 ->all()
