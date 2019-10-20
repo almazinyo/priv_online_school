@@ -60,7 +60,6 @@
                             ],
                         ],
                     ],
-                    ['label' => Yii::t('app', 'Menu'), 'icon' => 'fa fa-bars', 'url' => ['/menu']],
                     ['label' => Yii::t('app', 'Blog'), 'icon' => 'fa fa-clipboard', 'url' => ['/blog']],
                     [
                         'label' => Yii::t('app', 'Subjects'),
