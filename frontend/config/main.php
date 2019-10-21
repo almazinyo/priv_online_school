@@ -25,7 +25,7 @@ return [
             'baseUrl' => '',
         ],
         'response' => [
-//            'format' => yii\web\Response::FORMAT_JSON,
+            'format' => yii\web\Response::FORMAT_JSON,
             'charset' => 'UTF-8',
 
             // ...
