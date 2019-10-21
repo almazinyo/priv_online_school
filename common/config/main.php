@@ -9,6 +9,7 @@ return [
     'language' => 'ru',
     'sourceLanguage' => 'en',
     'components' => [
+
         'i18n'=>[
             'translations'=>[
                 'app*'=>[
@@ -30,6 +31,11 @@ return [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => 'facebook_client_id',
                     'clientSecret' => 'facebook_client_secret',
+                ],
+                'instagram' => [
+                    'class' => 'kotchuprik\authclient\Instagram',
+                    'clientId' => 'instagram_client_id',
+                    'clientSecret' => 'instagram_client_secret',
                 ],
                 // etc.
             ],

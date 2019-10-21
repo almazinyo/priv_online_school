@@ -9,6 +9,8 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -33,3 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$authClient = new \yii\authclient\clients\Facebook([
+    'httpClient' => [
+        'transport' => 'yii\httpclient\CurlTransport',
+    ],
+]);
+
+var_dump($authClient);
