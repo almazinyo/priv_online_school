@@ -111,12 +111,12 @@
                     ],
                     ['label' => Yii::t('app', 'Promotional Code'), 'icon' => '', 'url' => ['/promotional-code']],
                     [
-                        'label' => Yii::t('app', 'Options'),
+                        'label' => Yii::t('app', 'Settings'),
                         'icon' => 'fa fa-key',
                         'url' => ['#'],
                         'items' => [
                             [
-                                'label' => Yii::t('app', 'option'),
+                                'label' => Yii::t('app', 'Options'),
                                 'icon' => '',
                                 'url' => ['/options'],
                                 'active' => Yii::$app->controller->id == 'route',

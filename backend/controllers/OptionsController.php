@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\components\ImageHelper;
 use Yii;
 use common\models\Options;
 use backend\models\OptionsControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * OptionsController implements the CRUD actions for Options model.
@@ -65,8 +67,28 @@ class OptionsController extends Controller
     public function actionCreate()
     {
         $model = new Options();
+        $optionsData = [];
+        $optionsData['img_name'] = '';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $imgFile = UploadedFile::getInstance($model, "img_name");
+
+            if (!empty($imgFile)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/options/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $image->reSize($imgPath . $imgName, 800, 600);
+
+                $optionsData['img_name'] = $imgName;
+            }
+
+            $optionsData['name'] = $model->name;
+            $optionsData['description'] = $model->description;
+
+            $model->value = \Opis\Closure\serialize($optionsData);
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -85,14 +107,80 @@ class OptionsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $optionsData = \Opis\Closure\unserialize($model->value);
+        $model->name = $optionsData['name'];
+        $model->description = $optionsData['description'];
+        $model->img_name = $optionsData['img_name'];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $imgFile = UploadedFile::getInstance($model, "img_name");
+
+            if (!empty($imgFile)) {
+                $image = new ImageHelper();
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/options/";
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $image->reSize($imgPath . $imgName, 800, 600);
+                $optionsData['img_name'] = $imgName;
+            }
+
+            $optionsData['name'] = $model->name;
+            $optionsData['description'] = $model->description;
+
+            $model->value = \Opis\Closure\serialize($optionsData);
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUploadImages($id)
+    {
+        $model = $this->findModel($id);
+        $imgFile = UploadedFile::getInstance($model, "img_name");
+
+        if (!empty($imgFile)) {
+            $image = new ImageHelper();
+
+            $imgPath = Yii::getAlias("@frontend") . "/web/images/options/";
+            $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+            $imgFile->saveAs($imgPath . $imgName);
+
+            $image->reSize($imgPath . $imgName, 800, 600);
+
+            $model->img_name = $imgName;
+            $model->save();
+        }
+
+        return true;
+    }
+
+    public function actionDeleteFile($id)
+    {
+        $model = $this->findModel($id);
+        $optionsData = \Opis\Closure\unserialize($model->value);
+
+        if (!empty($optionsData['img_name'])) {
+            $imgPath = sprintf('%s/web/images/options/%s', Yii::getAlias('@frontend'), $optionsData['img_name']);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $optionsData['img_name'] = null;
+                $model->value = \Opis\Closure\serialize($optionsData);
+                $model->save();
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

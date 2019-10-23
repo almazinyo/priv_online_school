@@ -13,6 +13,12 @@ use Yii;
  */
 class Options extends \yii\db\ActiveRecord
 {
+    public $name;
+
+    public $description;
+
+    public $img_name;
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +34,7 @@ class Options extends \yii\db\ActiveRecord
     {
         return [
             [['key'], 'required'],
-            [['value'], 'string'],
+            [['value', 'name', 'description', 'img_name'], 'string'],
             [['key'], 'string', 'max' => 500],
         ];
     }
@@ -39,9 +45,12 @@ class Options extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'key' => 'Key',
-            'value' => 'Value',
+            'id' => Yii::t('app', 'ID'),
+            'key' => Yii::t('app', 'Key'),
+            'value' => Yii::t('app', 'Content'),
+            'name' => Yii::t('app', 'Name'),
+            'img_name' => Yii::t('app', 'Image'),
+            'description' => Yii::t('app', 'Description'),
         ];
     }
 }

@@ -20,6 +20,10 @@ class MapController extends Controller
                     $homeUrl . 'api/main/menu',
                 ],
 
+                'Options' => [
+                    $homeUrl . '/api/main/options',
+                ],
+
                 'Subjects' => [
                     $homeUrl . 'api/subjects',
                     $homeUrl . 'api/subjects/menu',

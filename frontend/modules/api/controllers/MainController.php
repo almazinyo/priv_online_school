@@ -5,6 +5,7 @@ namespace frontend\modules\api\controllers;
 ;
 
 use common\models\Menu;
+use common\models\Options;
 use frontend\modules\api\components\Select;
 use yii\base\Controller;
 use yii\web\Response;
@@ -71,5 +72,25 @@ class MainController extends Controller
             'status' => 200,
             'data' => $model,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function actionOptions()
+    {
+        $model = Options::find()->asArray()->all();
+
+        $optionsData = [];
+
+        foreach ($model as $option) {
+            $optionsData[$option['key']][] = \Opis\Closure\unserialize($option['value']);
+        }
+
+        return
+            [
+                'status' => 200,
+                'data' => $optionsData,
+            ];
     }
 }
