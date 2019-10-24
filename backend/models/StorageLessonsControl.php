@@ -18,7 +18,7 @@ class StorageLessonsControl extends StorageLessons
     {
         return [
             [['id', 'lesson_id', 'is_status'], 'integer'],
-            [['name', ], 'trim'],
+            [['name','type' ], 'trim'],
         ];
     }
 
@@ -40,7 +40,7 @@ class StorageLessonsControl extends StorageLessons
      */
     public function search($params)
     {
-        $query = StorageLessons::find();
+        $query = StorageLessons::find()->groupBy('lesson_id');
 
         // add conditions that should always apply here
 
