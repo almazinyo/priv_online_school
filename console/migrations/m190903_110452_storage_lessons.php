@@ -33,7 +33,7 @@ class m190903_110452_storage_lessons extends Migration
                 'id' => $this->primaryKey(),
                 'lesson_id' => $this->integer(11),
                 'name' => $this->string(500)->notNull(),
-//                'type' => 'ENUM("pdf","image","video")',
+                'type' => $this->string(500),
                 'is_status' => $this->tinyInteger(2),
             ],
             'ENGINE=InnoDB DEFAULT CHARSET=utf8'

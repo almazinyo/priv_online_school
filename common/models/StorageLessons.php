@@ -12,6 +12,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property int $lesson_id
  * @property string $name
+ * @property string $type
  * @property int $is_status
  *
  * @property Lessons $lesson
@@ -34,7 +35,7 @@ class StorageLessons extends \yii\db\ActiveRecord
         return [
             [['lesson_id', 'is_status'], 'integer'],
             [['name', 'lesson_id'], 'required'],
-            [['name'], 'string', 'max' => 500],
+            [['name','type'], 'string', 'max' => 500],
             [
                 ['lesson_id'],
                 'exist',

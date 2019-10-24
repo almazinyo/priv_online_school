@@ -95,6 +95,7 @@ class StorageLessonsController extends Controller
                     $file->saveAs($filePath . $fileName);
                     $model = new StorageLessons();
                     $model->name = $fileName;
+                    $model->type = preg_replace('~\/.*~sui', '', $file->type ?? '');
                     $model->lesson_id = $lessonId;
                     $model->is_status = $status;
                     $model->save();
@@ -130,6 +131,7 @@ class StorageLessonsController extends Controller
                     $file->saveAs($filePath . $fileName);
                     $model = new StorageLessons();
                     $model->name = $fileName;
+                    $model->type = preg_replace('~\/.*~sui', '', $file->type ?? '');
                     $model->lesson_id = $lessonId;
                     $model->is_status = $status;
                     $model->save();
@@ -190,6 +192,7 @@ class StorageLessonsController extends Controller
                 $file->saveAs($filePath . $fileName);
                 $model = new StorageLessons();
                 $model->name = $fileName;
+                $model->type = preg_replace('~\/.*~sui', '', $file->type ?? '');
                 $model->lesson_id = $lessonId;
                 $model->is_status = $status;
                 $model->save();

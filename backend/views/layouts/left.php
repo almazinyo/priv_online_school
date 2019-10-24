@@ -67,48 +67,50 @@
                         'items' =>
                             [
                                 ['label' => Yii::t('app', 'Subject'), 'icon' => '', 'url' => ['/subjects']],
-                                [
-                                    'label' => Yii::t('app', 'Sections'),
-                                    'icon' => 'fa fa-key',
-                                    'url' => ['/section-subjects'],
+                            ],
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Sections'),
+                        'icon' => 'fa fa-key',
+                        'url' => ['/section-subjects'],
 
-                                    'items' =>
-                                        [
-                                            [
-                                                'label' => Yii::t('app', 'Section'),
-                                                'icon' => '',
-                                                'url' => ['/section-subjects'],
-                                            ],
-                                            [
-                                                'label' => Yii::t('app', 'Teachers'),
-                                                'icon' => '',
-                                                'url' => ['/teachers'],
-                                            ],
-                                            [
-                                                'label' => Yii::t('app', 'Lessons'),
-                                                'icon' => 'fa fa-key',
-                                                'items' => [
-                                                    [
-                                                        'label' => Yii::t('app', 'Lessons'),
-                                                        'icon' => '',
-                                                        'url' => ['/lessons'],
-                                                    ],
-                                                    [
-                                                        'label' => Yii::t('app', 'Quiz'),
-                                                        'icon' => '',
-                                                        'url' => ['/quiz'],
-                                                    ],
-                                                    [
-                                                        'label' => Yii::t('app', 'Storage'),
-                                                        'icon' => '',
-                                                        'url' => ['/storage-lessons'],
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
+                        'items' =>
+                            [
+                                [
+                                    'label' => Yii::t('app', 'Section'),
+                                    'icon' => '',
+                                    'url' => ['/section-subjects'],
+                                ],
+                                [
+                                    'label' => Yii::t('app', 'Teachers'),
+                                    'icon' => '',
+                                    'url' => ['/teachers'],
                                 ],
                             ],
                     ],
+
+                    [
+                        'label' => Yii::t('app', 'Lessons'),
+                        'icon' => 'fa fa-key',
+                        'items' => [
+                            [
+                                'label' => Yii::t('app', 'Lessons'),
+                                'icon' => '',
+                                'url' => ['/lessons'],
+                            ],
+                            [
+                                'label' => Yii::t('app', 'Quiz'),
+                                'icon' => '',
+                                'url' => ['/quiz'],
+                            ],
+                            [
+                                'label' => Yii::t('app', 'Storage'),
+                                'icon' => '',
+                                'url' => ['/storage-lessons'],
+                            ],
+                        ],
+                    ],
+
                     ['label' => Yii::t('app', 'Promotional Code'), 'icon' => '', 'url' => ['/promotional-code']],
                     [
                         'label' => Yii::t('app', 'Settings'),
