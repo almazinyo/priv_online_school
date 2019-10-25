@@ -12,6 +12,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property int $subject_id
  * @property string $name
+ * @property string $price
  * @property string $slug
  * @property string $background
  * @property string $icon
@@ -44,7 +45,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
         return [
             [['subject_id', 'is_status', 'parent_id'], 'integer'],
             [['name', 'slug'], 'required'],
-            [['short_description', 'description'], 'string'],
+            [['short_description', 'description', 'price'], 'string'],
             [['name', 'slug', 'icon'], 'string', 'max' => 500],
             [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
             [
@@ -95,6 +96,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
             'subject_id' => Yii::t('app', 'Subject ID'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'name' => Yii::t('app', 'Name'),
+            'price' => Yii::t('app', 'price'),
             'slug' => Yii::t('app', 'Slug'),
             'background' => Yii::t('app', 'Background'),
             'icon' => Yii::t('app', 'Icon'),
@@ -132,6 +134,13 @@ class SectionSubjects extends \yii\db\ActiveRecord
         return $this->hasMany(Teachers::className(), ['section_id' => 'id']);
     }
 
+    public function getSections()
+
+    {
+
+        return $this->hasMany(self::className(), ['parent_id' => 'id'])->from(self::tableName() . ' sections');
+    }
+
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
@@ -152,6 +161,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
     {
         return
             self::find()
+                ->joinWith('sections')
                 ->joinWith('subject')
                 ->joinWith('teachers')
                 ->joinWith('lessons')

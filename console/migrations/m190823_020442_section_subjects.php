@@ -28,6 +28,7 @@ class m190823_020442_section_subjects extends Migration
                 'parent_id' => $this->integer(11),
                 'name' => $this->string(500)->notNull(),
                 'slug' => $this->string(500)->notNull(),
+                'price' => $this->string(500)->notNull(),
                 'background' => $this->string(300),
                 'icon' => $this->string(500),
                 'short_description' => $this->text(),
