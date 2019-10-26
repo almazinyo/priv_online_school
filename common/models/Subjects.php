@@ -139,17 +139,32 @@ class Subjects extends ActiveRecord
 
     public static function receiveSpecificData($slug)
     {
+
         return
             self::find()
-                ->joinWith('sectionSubjects')
-                ->joinWith('sectionSubjects.lessons')
-                ->joinWith('sectionSubjects.lessons.storageLessons')
-                ->where(
+                ->joinWith(
                     [
-                        'subjects.slug' => Html::encode($slug),
-                        'section_subjects.is_status' => true,
+                        'sectionSubjects' => function ($query) {
+                            $query->onCondition(
+                                [
+                                    'section_subjects.is_status' => SectionSubjects::STATUS_ACTIVE,
+                                    'section_subjects.parent_id' => 0,
+                                ]
+                            )->joinWith(
+                                [
+                                    'sections' => function ($query) {
+                                        $query->onCondition(
+                                                ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
+                                            )->with('lessons')
+                                        ;
+                                    },
+                                ]
+                            )
+                            ;
+                        },
                     ]
                 )
+                ->where(['subjects.slug' => Html::encode($slug)])
                 ->asArray()
                 ->all()
             ;

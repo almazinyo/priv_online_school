@@ -29,6 +29,9 @@ use yii\helpers\Html;
  */
 class SectionSubjects extends \yii\db\ActiveRecord
 {
+
+   const   STATUS_ACTIVE = 1;
+
     /**
      * {@inheritdoc}
      */
