@@ -45,6 +45,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
         return [
             [['subject_id', 'is_status', 'parent_id'], 'integer'],
             [['name', 'slug'], 'required'],
+            [['parent_id', 'price'], 'default', 'value' => '0'],
             [['short_description', 'description', 'price'], 'string'],
             [['name', 'slug', 'icon'], 'string', 'max' => 500],
             [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],

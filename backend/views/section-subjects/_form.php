@@ -62,6 +62,7 @@ use yii\helpers\ArrayHelper;
                         ArrayHelper::map(
                             \common\models\SectionSubjects::find()
                                 ->select('id,name')
+                                ->where(['parent_id' => 0])
                                 ->asArray()
                                 ->all(),
                             "id", "name"),

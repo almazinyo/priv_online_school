@@ -29,7 +29,7 @@ return [
     'Create Menu' => 'Создать меню',
     'Create Quiz' => 'Создать викторину',
     'Create Sections' => 'Создать разделы',
-    'Create Subjects' => 'Создать темы',
+    'Create Subjects' => 'Создать раздел',
     'Created At' => 'Создано ',
     'Delete' => 'Удалять',
     'Description' => 'Описание',
