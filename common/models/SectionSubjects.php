@@ -29,8 +29,7 @@ use yii\helpers\Html;
  */
 class SectionSubjects extends \yii\db\ActiveRecord
 {
-
-   const   STATUS_ACTIVE = 1;
+    const   STATUS_ACTIVE = 1;
 
     /**
      * {@inheritdoc}
@@ -122,6 +121,11 @@ class SectionSubjects extends \yii\db\ActiveRecord
         return $this->hasMany(Lessons::className(), ['section_id' => 'id']);
     }
 
+    public function getCountLessons()
+    {
+        return $this->hasOne(Lessons::className(), ['section_id' => 'id'])->count();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -165,10 +169,18 @@ class SectionSubjects extends \yii\db\ActiveRecord
     {
         return
             self::find()
-                ->joinWith('sections')
+                ->joinWith(
+                    [
+                        'sections' => function ($query) {
+                            $query->onCondition(
+                                ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
+                            )->with('lessons')
+                            ;
+                        },
+                    ]
+                )->joinWith('lessons')
                 ->joinWith('subject')
                 ->joinWith('teachers')
-                ->joinWith('lessons')
                 ->where(['section_subjects.slug' => Html::encode($slug)])
                 ->asArray()
                 ->one()

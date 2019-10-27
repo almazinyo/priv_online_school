@@ -166,7 +166,7 @@ class Subjects extends ActiveRecord
                 )
                 ->where(['subjects.slug' => Html::encode($slug)])
                 ->asArray()
-                ->all()
+                ->one()
             ;
     }
 
