@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 $userName = Yii::$app->user->identity['username'];
 $homeUrl = Yii::$app->homeUrl;
-Yii::$app->name = 'Online School'
+Yii::$app->name = 'Examator'
 ?>
 <header class="main-header">
     <?= Html::a('<span class="logo-mini">OS</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>

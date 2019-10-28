@@ -1,11 +1,11 @@
 <?php
 
-$this->title = 'Online School'
+$this->title = 'Examator'
 
 ?>
 
 <div class="site-index">
     <div class="jumbotron">
-        <h1>Online  School</h1>
+        <h1>Школа ЭКЗАМАТОР</h1>
     </div>
 </div>

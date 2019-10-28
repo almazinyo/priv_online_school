@@ -174,11 +174,20 @@ class SectionSubjects extends \yii\db\ActiveRecord
                         'sections' => function ($query) {
                             $query->onCondition(
                                 ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
-                            )->with('lessons')
+                            )->with('lessons')->limit(3)
                             ;
                         },
                     ]
-                )->joinWith('lessons')
+                )->joinWith(
+                [    'lessons'=>function ($query) {
+                    $query->onCondition(
+                        ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
+                    )->joinWith('storageLessons')->joinWith('quizzes')
+                    ;
+                },
+
+                ]
+                )
                 ->joinWith('subject')
                 ->joinWith('teachers')
                 ->where(['section_subjects.slug' => Html::encode($slug)])
