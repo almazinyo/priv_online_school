@@ -11,6 +11,7 @@ use yii\helpers\Html;
  *
  * @property int $id
  * @property int $subject_id
+ * @property int $parent_id
  * @property string $name
  * @property string $price
  * @property string $slug

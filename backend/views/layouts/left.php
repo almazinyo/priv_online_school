@@ -81,6 +81,12 @@
                                     'icon' => '',
                                     'url' => ['/section-subjects'],
                                 ],
+
+                                [
+                                    'label' => Yii::t('app', 'Sub Sections'),
+                                    'icon' => '',
+                                    'url' => ['/section-subjects/sub-sections'],
+                                ],
                                 [
                                     'label' => Yii::t('app', 'Teachers'),
                                     'icon' => '',

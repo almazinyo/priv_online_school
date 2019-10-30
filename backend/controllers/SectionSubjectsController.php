@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SubSectionsControl;
 use Yii;
 use common\models\SectionSubjects;
 use backend\models\SectionSubjectsControl;
@@ -29,7 +30,15 @@ class SectionSubjectsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view','delete'],
+                        'actions' => [
+                            'index',
+                            'create',
+                            'update',
+                            'view',
+                            'delete',
+                            'sub-sections',
+                            'create-sub-section',
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,6 +68,17 @@ class SectionSubjectsController extends Controller
         ]);
     }
 
+    public function actionSubSections()
+    {
+        $searchModel = new SubSectionsControl();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('sub-sections', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Subjects model.
      * @param integer $id
@@ -81,11 +101,28 @@ class SectionSubjectsController extends Controller
     {
         $model = new SectionSubjects();
 
+        if ($model->load(Yii::$app->request->post())) {
+            $model->parent_id = 0;
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionCreateSubSection()
+    {
+        $model = new SectionSubjects();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->render('create-sub-section', [
             'model' => $model,
         ]);
     }

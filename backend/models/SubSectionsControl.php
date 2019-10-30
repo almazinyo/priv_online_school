@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 /**
  * SectionSubjectsControl represents the model behind the search form of `common\models\Subjects`.
  */
-class SectionSubjectsControl extends SectionSubjects
+class SubSectionsControl extends SectionSubjects
 {
     /**
      * {@inheritdoc}
@@ -52,7 +52,7 @@ class SectionSubjectsControl extends SectionSubjects
      */
     public function search($params)
     {
-        $query = SectionSubjects::find()->where(['parent_id' => 0]);
+        $query = SectionSubjects::find()->andWhere(['!=', 'parent_id','0'] );
 
         // add conditions that should always apply here
 

@@ -37,43 +37,79 @@ use yii\helpers\ArrayHelper;
         ?>
     </div>
 
-    <div class="col-xs-12">
-        <div class="row">
-            <div class="col-xs-6">
-                <?= $form->field($model, 'subject_id')->widget(
-                    Select2::classname(), [
-                    'data' =>
-                        ArrayHelper::map(
-                            Subjects::find()
-                                ->select('id,title')
-                                ->asArray()
-                                ->all(),
-                            "id", "title"),
-                    'options' => ['placeholder' => 'Parent'],
-                    'pluginOptions' => ['allowClear' => true],
-                ])
-                ;
-                ?>
-            </div>
-            <div class="col-xs-6">
-                <?= $form->field($model, 'parent_id')->widget(
-                    Select2::classname(), [
-                    'data' =>
-                        ArrayHelper::map(
-                            \common\models\SectionSubjects::find()
-                                ->select('id,name')
-                                ->where(['parent_id' => 0])
-                                ->asArray()
-                                ->all(),
-                            "id", "name"),
-                    'options' => ['placeholder' => 'Parent'],
-                    'pluginOptions' => ['allowClear' => true],
-                ])
-                ;
-                ?>
+    <?php
+
+    if (Yii::$app->controller->action->id == 'create-sub-section') {
+        ?>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6">
+                    <?= $form->field($model, 'subject_id')->widget(
+                        Select2::classname(), [
+                        'data' =>
+                            ArrayHelper::map(
+                                Subjects::find()
+                                    ->select('id,title')
+                                    ->asArray()
+                                    ->all(),
+                                "id", "title"),
+                        'options' => ['placeholder' => 'Parent'],
+                        'pluginOptions' => ['allowClear' => true],
+                    ])
+                    ;
+                    ?>
+                </div>
+                <div class="col-xs-6">
+                    <?= $form->field($model, 'parent_id')->widget(
+                        Select2::classname(), [
+                        'data' =>
+                            ArrayHelper::map(
+                                \common\models\SectionSubjects::find()
+                                    ->select('id,name')
+                                    ->where(['parent_id' => 0])
+                                    ->asArray()
+                                    ->all(),
+                                "id", "name"),
+                        'options' => ['placeholder' => 'Parent'],
+                        'pluginOptions' => ['allowClear' => true],
+                    ])
+                    ;
+                    ?>
+                </div>
             </div>
         </div>
-    </div>
+
+        <?php
+
+    } else {
+
+        ?>
+
+        <div class="col-xs-12">
+
+            <?= $form->field($model, 'subject_id')->widget(
+                Select2::classname(), [
+                'data' =>
+                    ArrayHelper::map(
+                        Subjects::find()
+                            ->select('id,title')
+                            ->asArray()
+                            ->all(),
+                        "id", "title"),
+                'options' => ['placeholder' => 'Parent'],
+                'pluginOptions' => ['allowClear' => true],
+            ])
+            ;
+            ?>
+
+        </div>
+        <?php
+
+    }
+
+    ?>
+
+
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?></div>
