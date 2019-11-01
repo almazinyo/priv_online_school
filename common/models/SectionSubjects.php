@@ -2,8 +2,10 @@
 
 namespace common\models;
 
+use phpDocumentor\Reflection\Types\Self_;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -166,6 +168,17 @@ class SectionSubjects extends \yii\db\ActiveRecord
             ;
     }
 
+    /**
+     * @return mixed[]
+     */
+    public static function receiveTitles()
+    {
+        return
+            ArrayHelper::map(
+                self::find()->all(), 'id', 'name'
+            );
+    }
+
     public static function receiveSpecificData($slug)
     {
         return
@@ -180,14 +193,15 @@ class SectionSubjects extends \yii\db\ActiveRecord
                         },
                     ]
                 )->joinWith(
-                [    'lessons'=>function ($query) {
-                    $query->onCondition(
-                        ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
-                    )->joinWith('storageLessons')->joinWith('quizzes')
-                    ;
-                },
+                    [
+                        'lessons' => function ($query) {
+                            $query->onCondition(
+                                ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
+                            )->joinWith('storageLessons')->joinWith('quizzes')
+                            ;
+                        },
 
-                ]
+                    ]
                 )
                 ->joinWith('subject')
                 ->joinWith('teachers')

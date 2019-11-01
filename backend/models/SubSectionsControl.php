@@ -22,6 +22,7 @@ class SubSectionsControl extends SectionSubjects
                 [
                     'name',
                     'slug',
+                    'subject_id',
                     'short_description',
                     'description',
                     'seo_keywords',
@@ -74,6 +75,7 @@ class SubSectionsControl extends SectionSubjects
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'subject_id', $this->subject_id])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'seo_keywords', $this->seo_keywords])

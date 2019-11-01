@@ -6,6 +6,7 @@ use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\String_;
 use Yii;
 use \yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -124,6 +125,9 @@ class Subjects extends ActiveRecord
         return $this->hasMany(Blog::className(), ['subject_id' => 'id']);
     }
 
+    /**
+     * @return array|ActiveRecord[]
+     */
     public static function receiveAllData()
     {
         return
@@ -137,6 +141,10 @@ class Subjects extends ActiveRecord
             ;
     }
 
+    /**
+     * @param $slug
+     * @return array|ActiveRecord|null
+     */
     public static function receiveSpecificData($slug)
     {
 
@@ -170,6 +178,9 @@ class Subjects extends ActiveRecord
             ;
     }
 
+    /**
+     * @return array|ActiveRecord[]
+     */
     public static function receiveMenu()
     {
         return
@@ -180,5 +191,16 @@ class Subjects extends ActiveRecord
                 ->asArray()
                 ->all()
             ;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public static function receiveTitles()
+    {
+        return
+            ArrayHelper::map(
+                self::find()->all(), 'id', 'title'
+            );
     }
 }

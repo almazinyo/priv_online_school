@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use backend\modules\grid\GridView;
 use yii\widgets\Pjax;
+use \common\models\Subjects;
+use  \yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SectionSubjectsControl */
@@ -24,6 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'slug',
+            [
+                'attribute' => 'subject_id',
+                'filter' => Subjects::receiveTitles(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app', 'Subjects'), 'multiple' => false],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Subjects::findOne(['id' => $model->subject_id])->title;
+                },
+            ],
             'short_description',
             'description:html',
             'seo_keywords',

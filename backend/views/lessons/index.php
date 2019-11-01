@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use backend\modules\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use common\models\SectionSubjects;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\LessonsControl */
@@ -15,35 +17,60 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Lessons'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'id',
-            'sort_lessons',
-            'name',
-            'section_id',
-            'background',
-            'logo',
-            'slug',
-            'short_description:ntext',
-            'description:ntext',
-            'seo_keywords',
-            'seo_description',
-            'created_at:datetime',
-            'updated_at:datetime',
-            'is_status',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+    $attributeSections =
+        [
+            'attribute' => 'section_id',
+            'filter' => SectionSubjects::receiveTitles(),
+            'filterType' => GridView::FILTER_SELECT2,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => [
+                'placeholder' =>
+                    Yii::t('app', 'Sections'),
+                'multiple' => false,
+            ],
+            'value' => function ($model) {
+                return SectionSubjects::findOne(['id' => $model->section_id])->name;
+            },
+        ];
+
+    ?>
+
+    <?= GridView::widget(
+        [
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' =>
+                [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'sort_lessons',
+                    'name',
+                    $attributeSections,
+                    'background',
+                    'logo',
+                    'slug',
+//                    'short_description:html',
+//                    'description:html',
+                    'seo_keywords',
+                    'seo_description',
+                    'created_at:datetime',
+                    'updated_at:datetime',
+                    'is_status',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            'isValidActionColumn' => false,
+            'bordered' => true,
+            'pjax' => true,
+            'responsive' => true,
+            'hover' => true,
+        ]
+    ); ?>
 
     <?php Pjax::end(); ?>
 
