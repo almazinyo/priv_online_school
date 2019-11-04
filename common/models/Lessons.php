@@ -145,7 +145,6 @@ class Lessons extends ActiveRecord
             ;
     }
 
-
     public static function receiveSpecificData($slug)
     {
         return
@@ -156,6 +155,21 @@ class Lessons extends ActiveRecord
                 ->where(['lessons.slug' => Html::encode($slug)])
                 ->asArray()
                 ->one()
+            ;
+    }
+
+    public static function receiveLessonsForSection($sectionId)
+    {
+        return
+            self::find()
+                ->select('id, name, slug, section_id, is_status')
+                ->where(
+                    [
+                        'section_id' => Html::encode($sectionId),
+                        'is_status' => true,
+                    ])
+                ->asArray()
+                ->all()
             ;
     }
 }

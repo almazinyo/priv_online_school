@@ -179,7 +179,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
             );
     }
 
-    public static function receiveSpecificData($slug)
+    public static function receiveSpecificData($slug,$sluglesson)
     {
         return
             self::find()
@@ -197,7 +197,10 @@ class SectionSubjects extends \yii\db\ActiveRecord
                         'lessons' => function ($query) {
                             $query->onCondition(
                                 ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
-                            )->joinWith('storageLessons')->joinWith('quizzes')
+                            )
+                                ->limit(1)
+                                ->joinWith('storageLessons')
+                                ->joinWith('quizzes')
                             ;
                         },
 

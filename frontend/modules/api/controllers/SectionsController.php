@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Lessons;
 use common\models\SectionSubjects;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -41,16 +42,16 @@ class SectionsController extends Controller
         );
     }
 
-    public function actionDetails($slug)
+    public function actionDetails($slugSection, $slugLesson = '')
     {
 
-
-
-        $model = SectionSubjects::receiveSpecificData($slug);
+        $model = SectionSubjects::receiveSpecificData($slugSection, $slugLesson);
 
         if (empty($model)) {
             throw new NotFoundHttpException();
         }
+
+        $model['allLessons'] = Lessons::receiveLessonsForSection($model['id']);
 
         return [
             'status' => 200,

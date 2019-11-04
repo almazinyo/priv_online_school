@@ -162,8 +162,8 @@ class Subjects extends ActiveRecord
                                 [
                                     'sections' => function ($query) {
                                         $query->onCondition(
-                                                ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
-                                            )->with('lessons')
+                                            ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
+                                        )->with('lessons')
                                         ;
                                     },
                                 ]
@@ -185,8 +185,21 @@ class Subjects extends ActiveRecord
     {
         return
             self::find()
-                ->select('title, slug, icon, color, is_status')
-                ->where(['!=', 'is_status', 0])
+                ->select(
+                    [
+                        'subjects.id',
+                        'subjects.title',
+                        'subjects.slug',
+                        'subjects.icon',
+                        'subjects.color',
+                        'subjects.is_status',
+                        'section_subjects.name as  sectionName',
+                        'section_subjects.slug sectionSlug',
+                    ]
+                )
+                ->joinWith('sectionSubjects')
+                ->where([' != ', 'subjects.is_status', 0])
+                ->orWhere([' != ', 'section_subjects.is_status', 0])
                 ->orderBy(['sortable_id' => SORT_ASC])
                 ->asArray()
                 ->all()
