@@ -85,7 +85,7 @@ return [
     'Updated At' => 'Обновлен',
     'Users Access' => 'Доступ пользователя',
     'not visible to anyone' => 'Никому Не Виден',
-    'prohibition of visibility' => 'Запрет На Видимость',
+    'prohibition of visibility' => 'Некликабельна',
     'visible to everyone' => 'Виден Всем',
     'Abort any changes and reset settings' => '',
     'All' => '',
