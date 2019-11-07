@@ -10,10 +10,10 @@ return [
     'sourceLanguage' => 'en',
     'components' => [
 
-        'i18n'=>[
-            'translations'=>[
-                'app*'=>[
-                    'class'=>'yii\i18n\PhpMessageSource',
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'en',
                     'basePath' => '@common/messages',
                 ],
@@ -22,6 +22,11 @@ return [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '7200615',
+                    'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
+                ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     'clientId' => 'google_client_id',
@@ -34,10 +39,10 @@ return [
                 ],
                 'instagram' => [
                     'class' => 'kotchuprik\authclient\Instagram',
-                    'clientId' => 'instagram_client_id',
+                    'clientId' => '7200615',
                     'clientSecret' => 'instagram_client_secret',
                 ],
-                // etc.
+
             ],
         ],
         'cache' => [

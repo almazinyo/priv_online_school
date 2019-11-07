@@ -33,7 +33,7 @@ $homeUrl = Yii::$app->homeUrl;
 </head>
 <body class=" d-flex flex-column">
 <?php $this->beginBody(); ?>
-<?= $this->render('/partials/header', ['homeUrl' => $homeUrl]) ?>
+<?//= $this->render('/partials/header', ['homeUrl' => $homeUrl]) ?>
 <?= $content ?>
 <?= $this->render('/partials/footer', ['homeUrl' => $homeUrl]) ?>
 

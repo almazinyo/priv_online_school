@@ -20,16 +20,46 @@ return [
         ],
     ],
     'components' => [
+//        'vk' => [
+//            'class' => 'jumper423\VK',
+//            'clientId' => '7200615',
+//            'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
+//            'delay' => 0.7, // Минимальная задержка между запросами
+//            'delayExecute' => 120, // Задержка между группами инструкций в очереди
+//            'limitExecute' => 1, // Количество инструкций на одно выполнении в очереди
+//            'captcha' => 'captcha', // Компонент по распознованию капчи
+//        ],
+//        'captcha' => [
+//            'class' => 'jumper423\Captcha',
+//            'pathTmp' => '@imagescache/captcha',
+//            'apiKey' => '42eab4119020dbc729f657',
+//        ],
+//        'authClientCollection' => [
+//            'class' => 'yii\authclient\Collection',
+//            'clients' => [
+//                'vkontakte' => [
+//                    'class' => 'jumper423\VK',
+//                    'clientId' => '7200615',
+//                    'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
+//                    'delay' => 0.7,
+//                    'delayExecute' => 120,
+//                    'limitExecute' => 1,
+//                    'captcha' => 'captcha',
+//                    'scope' => 'friends,photos,pages,wall,groups,email,stats,ads,offline,notifications', //,messages,nohttps
+//                    'title' => 'ВКонтакте'
+//                ],
+//            ],
+//        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
         ],
-        'response' => [
-            'format' => yii\web\Response::FORMAT_JSON,
-            'charset' => 'UTF-8',
-
-            // ...
-        ],
+//        'response' => [
+//            'format' => yii\web\Response::FORMAT_JSON,
+//            'charset' => 'UTF-8',
+//
+//            // ...
+//        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => false,
