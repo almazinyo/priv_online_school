@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use app\components\AuthHandler;
+use frontend\components\AuthHandler;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
