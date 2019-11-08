@@ -61,6 +61,12 @@ class SubjectsController extends Controller
         ];
     }
 
+    public function init()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        parent::init();
+    }
+
     /**
      * @return mixed[]
      */

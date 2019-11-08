@@ -6,6 +6,7 @@ use common\models\Lessons;
 use common\models\SectionSubjects;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class LessonsController extends Controller
 {
@@ -41,6 +42,13 @@ class LessonsController extends Controller
             parent::behaviors()
         );
     }
+
+    public function init()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        parent::init();
+    }
+
 
     /**
      * @param $slug
