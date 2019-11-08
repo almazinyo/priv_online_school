@@ -37,11 +37,11 @@ return [
                     'clientId' => 'facebook_client_id',
                     'clientSecret' => 'facebook_client_secret',
                 ],
-                'instagram' => [
-                    'class' => 'kotchuprik\authclient\Instagram',
-                    'clientId' => '7200615',
-                    'clientSecret' => 'instagram_client_secret',
-                ],
+//                'instagram' => [
+//                    'class' => 'kotchuprik\authclient\Instagram',
+//                    'clientId' => '7200615',
+//                    'clientSecret' => 'instagram_client_secret',
+//                ],
 
             ],
         ],
