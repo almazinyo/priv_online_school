@@ -19,32 +19,6 @@ return [
                 ],
             ],
         ],
-        'authClientCollection' => [
-            'class' => 'yii\authclient\Collection',
-            'clients' => [
-                'vkontakte' => [
-                    'class' => 'yii\authclient\clients\VKontakte',
-                    'clientId' => '7200615',
-                    'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
-                ],
-                'google' => [
-                    'class' => 'yii\authclient\clients\Google',
-                    'clientId' => 'google_client_id',
-                    'clientSecret' => 'google_client_secret',
-                ],
-                'facebook' => [
-                    'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => 'facebook_client_id',
-                    'clientSecret' => 'facebook_client_secret',
-                ],
-//                'instagram' => [
-//                    'class' => 'kotchuprik\authclient\Instagram',
-//                    'clientId' => '7200615',
-//                    'clientSecret' => 'instagram_client_secret',
-//                ],
-
-            ],
-        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

@@ -20,36 +20,32 @@ return [
         ],
     ],
     'components' => [
-//        'vk' => [
-//            'class' => 'jumper423\VK',
-//            'clientId' => '7200615',
-//            'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
-//            'delay' => 0.7, // Минимальная задержка между запросами
-//            'delayExecute' => 120, // Задержка между группами инструкций в очереди
-//            'limitExecute' => 1, // Количество инструкций на одно выполнении в очереди
-//            'captcha' => 'captcha', // Компонент по распознованию капчи
-//        ],
-//        'captcha' => [
-//            'class' => 'jumper423\Captcha',
-//            'pathTmp' => '@imagescache/captcha',
-//            'apiKey' => '42eab4119020dbc729f657',
-//        ],
-//        'authClientCollection' => [
-//            'class' => 'yii\authclient\Collection',
-//            'clients' => [
-//                'vkontakte' => [
-//                    'class' => 'jumper423\VK',
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '7200615',
+                    'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
+                ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => 'google_client_id',
+                    'clientSecret' => 'google_client_secret',
+                ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => 'facebook_client_id',
+                    'clientSecret' => 'facebook_client_secret',
+                ],
+//                'instagram' => [
+//                    'class' => 'kotchuprik\authclient\Instagram',
 //                    'clientId' => '7200615',
-//                    'clientSecret' => 'LMdG6Z403NdoknGG7PY1',
-//                    'delay' => 0.7,
-//                    'delayExecute' => 120,
-//                    'limitExecute' => 1,
-//                    'captcha' => 'captcha',
-//                    'scope' => 'friends,photos,pages,wall,groups,email,stats,ads,offline,notifications', //,messages,nohttps
-//                    'title' => 'ВКонтакте'
+//                    'clientSecret' => 'instagram_client_secret',
 //                ],
-//            ],
-//        ],
+
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
@@ -61,7 +57,7 @@ return [
 //            // ...
 //        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => false,
             'enableSession' => false,
         ],
