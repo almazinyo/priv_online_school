@@ -93,7 +93,7 @@ class AuthHandler
     {
         return new User([
             'username' => $name ?: $firstName,
-            'email' => $email ?: 'test@test.ru',
+            'email' => $email ?: ' ',
             'auth_key' => Yii::$app->security->generateRandomString(),
             'password_hash' => Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString()),
             'created_at' => $time = time(),

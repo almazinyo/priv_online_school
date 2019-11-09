@@ -54,8 +54,8 @@ class m190910_070454_teachers extends Migration
         $this->addForeignKey(
             'FK_teachers',
             'teachers',
-            'section_id',
-            'section_subjects',
+            'subject_id',
+            'subjects',
             'id',
             'CASCADE',
             'CASCADE'
