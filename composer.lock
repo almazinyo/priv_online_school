@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ada1336c307fec4014e2d86ebb6cafd0",
+    "content-hash": "f3e4d755196c5b5f632e1ac62476bc02",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -76,7 +76,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -754,95 +754,6 @@
                 "laravel"
             ],
             "time": "2019-09-09T11:59:51+00:00"
-        },
-        {
-            "name": "jumper423/yii2-captcha",
-            "version": "1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jumper423/yii2-captcha.git",
-                "reference": "b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jumper423/yii2-captcha/zipball/b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04",
-                "reference": "b04bdd2fc5fdbbdbd8d4df365c150fa4a56c6f04",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "yiisoft/yii2": "*"
-            },
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "jumper423\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache License 2.0"
-            ],
-            "description": "Распознавание капч для всех популярных сервисов rucaptcha.com, 2captcha.com, pixodrom.com, captcha24.com, socialink.ru, anti-captcha.com",
-            "homepage": "http://infoblog1.ru/learn/cms/yii/raspoznavanie-kapch-na-yii2",
-            "keywords": [
-                "2captcha",
-                "2captcha.com",
-                "anti-captcha",
-                "anti-captcha.com",
-                "captcha",
-                "captcha24",
-                "captcha24.com",
-                "pixodrom",
-                "pixodrom.com",
-                "recognition",
-                "rucaptcha",
-                "rucaptcha.com",
-                "socialink",
-                "socialink.ru",
-                "yii2"
-            ],
-            "time": "2016-03-06T22:11:06+00:00"
-        },
-        {
-            "name": "jumper423/yii2-vk",
-            "version": "2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jumper423/yii2-vk.git",
-                "reference": "11e1053d53894ec3559082d77231434f58004a81"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jumper423/yii2-vk/zipball/11e1053d53894ec3559082d77231434f58004a81",
-                "reference": "11e1053d53894ec3559082d77231434f58004a81",
-                "shasum": ""
-            },
-            "require": {
-                "jumper423/yii2-captcha": "*",
-                "php": ">=5.4.0",
-                "yiisoft/yii2": "*",
-                "yiisoft/yii2-authclient": "~2.0"
-            },
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "jumper423\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache License 2.0"
-            ],
-            "keywords": [
-                "api",
-                "vk",
-                "vkontakte",
-                "yii2",
-                "апи",
-                "вконтакте"
-            ],
-            "time": "2015-10-25T00:24:37+00:00"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
@@ -6559,16 +6470,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v1.1.7",
+            "version": "v1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "ffcde9615dc5bb4825b9f6aed07716f1f57faae0"
+                "reference": "ffc7f5692092df31515df2a5ecf3b7302b3ddacf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/ffcde9615dc5bb4825b9f6aed07716f1f57faae0",
-                "reference": "ffcde9615dc5bb4825b9f6aed07716f1f57faae0",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/ffc7f5692092df31515df2a5ecf3b7302b3ddacf",
+                "reference": "ffc7f5692092df31515df2a5ecf3b7302b3ddacf",
                 "shasum": ""
             },
             "require": {
@@ -6613,7 +6524,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-09-17T11:12:18+00:00"
+            "time": "2019-10-14T12:27:06+00:00"
         },
         {
             "name": "symfony/yaml",

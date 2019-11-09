@@ -1,6 +1,6 @@
 <?php
 
-use common\models\SectionSubjects;
+use common\models\Subjects;
 use kartik\file\FileInput;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
@@ -30,8 +30,8 @@ use yii\widgets\ActiveForm;
                             'size' => 'large',
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => Yii::t('app','Active'),
-                            'offText' => Yii::t('app','Inactive'),
+                            'onText' => Yii::t('app', 'Active'),
+                            'offText' => Yii::t('app', 'Inactive'),
                         ],
                 ]
             )
@@ -39,26 +39,32 @@ use yii\widgets\ActiveForm;
         ?>
     </div>
     <div class="col-xs-12">
-        <?= $form->field($model, 'section_id')->widget(
-            Select2::classname(), [
-            'data' =>
-                ArrayHelper::map(
-                    SectionSubjects::find()
-                        ->select('id,name')
-                        ->asArray()
-                        ->all(),
-                    "id", "name"),
-            'options' => ['placeholder' => 'Parent'],
-            'pluginOptions' => ['allowClear' => true],
-        ])
-        ;
-        ?>
+        <div class="row">
+            <div class="col-xs-6">
+                <?= $form->field($model, 'subject_id')->widget(
+                    Select2::classname(), [
+                    'data' =>
+                        ArrayHelper::map(
+                            Subjects::find()
+                                ->select('id,title')
+                                ->asArray()
+                                ->all(),
+                            "id", "title"),
+                    'options' => ['placeholder' => 'Parent'],
+                    'pluginOptions' => ['allowClear' => true],
+                ])
+                ;
+                ?>
+            </div>
+            <div class="col-xs-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?></div>
+
+        </div>
     </div>
 
     <div class="col-xs-12">
         <div class="row">
-            <div class="col-xs-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?></div>
-            <div class="col-xs-6"><?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'social_link')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'work_experience')->textInput(['maxlength' => true]) ?></div>
         </div>
     </div>
 

@@ -39,8 +39,7 @@
     "kartik-v/yii2-dialog": "@dev",
     "kartik-v/yii2-sortable": "@dev",
     "kartik-v/yii2-grid": "dev-master",
-    "kotchuprik/yii2-instagram-authclient": "*",
-
+    "kotchuprik/yii2-instagram-authclient": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

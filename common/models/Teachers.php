@@ -10,17 +10,21 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name
- * @property string $position
- * @property int $section_id
+ * @property int $subject_id
+ * @property string $social_link
+ * @property int $work_experience
  * @property string $img_name
+ * @property string $small_img_path
+ * @property string $large_img_path
+ * @property string $slug
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
  * @property int $is_status
  *
- * @property SectionSubjects $section
+ * @property Subjects $subject
  */
-class Teachers extends ActiveRecord
+class Teachers extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,18 +40,12 @@ class Teachers extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'section_id'], 'required'],
-            [['section_id', 'is_status'], 'integer'],
+            [['name', 'subject_id'], 'required'],
+            [['subject_id', 'work_experience', 'is_status'], 'integer'],
             [['description'], 'string'],
-            [['name', 'position', 'img_name', 'short_description', 'slug'], 'string', 'max' => 500],
+            [['name', 'social_link', 'img_name', 'small_img_path', 'large_img_path', 'slug'], 'string', 'max' => 500],
             [['created_at', 'updated_at'], 'string', 'max' => 300],
-            [
-                ['section_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => SectionSubjects::className(),
-                'targetAttribute' => ['section_id' => 'id'],
-            ],
+            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
         ];
     }
 
@@ -87,10 +85,12 @@ class Teachers extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'position' => Yii::t('app', 'Position'),
-            'section_id' => Yii::t('app', 'Section ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
+            'social_link' => Yii::t('app', 'Social Link'),
+            'work_experience' => Yii::t('app', 'Work Experience'),
             'img_name' => Yii::t('app', 'Img Name'),
-            'short_description' => Yii::t('app', 'Short Description'),
+            'small_img_path' => Yii::t('app', 'Small Img Path'),
+            'large_img_path' => Yii::t('app', 'Large Img Path'),
             'slug' => Yii::t('app', 'Slug'),
             'description' => Yii::t('app', 'Description'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -102,8 +102,8 @@ class Teachers extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSection()
+    public function getSubject()
     {
-        return $this->hasOne(SectionSubjects::className(), ['id' => 'section_id']);
+        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
     }
 }

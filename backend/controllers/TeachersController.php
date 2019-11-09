@@ -8,6 +8,7 @@ use Yii;
 use common\models\Teachers;
 use backend\models\TeachersControl;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -97,6 +98,14 @@ class TeachersController extends Controller
                 $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
 
                 $model->img_name = $imgName;
+                $model->large_img_path =
+                    Url::to(
+                        sprintf('http://%s/images/teachers/%s', $_SERVER['HTTP_HOST'], $imgName)
+                    );
+                $model->small_img_path =
+                    Url::to(
+                        sprintf('http://%s/images/teachers/small/%s', $_SERVER['HTTP_HOST'], $imgName)
+                    );
             }
 
             if ($model->save()) {
@@ -119,6 +128,8 @@ class TeachersController extends Controller
     {
         $model = $this->findModel($id);
         $oldImgName = $model->img_name;
+        $oldLargeImgName = $model->large_img_path;
+        $oldSmallImgName = $model->small_img_path;
 
         if ($model->load(Yii::$app->request->post())) {
             $imgFile = UploadedFile::getInstance($model, "img_name");
@@ -131,9 +142,20 @@ class TeachersController extends Controller
 
                 $image->reSize($imgPath . $imgName, 800, 600);
                 $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
+
                 $model->img_name = $imgName;
+                $model->large_img_path =
+                    Url::to(
+                        sprintf('http://%s/images/teachers/%s', $_SERVER['HTTP_HOST'], $imgName)
+                    );
+                $model->small_img_path =
+                    Url::to(
+                        sprintf('http://%s/images/teachers/small/%s', $_SERVER['HTTP_HOST'], $imgName)
+                    );
             } else {
                 $model->img_name = $oldImgName;
+                $model->large_img_path = $oldLargeImgName;
+                $model->small_img_path = $oldSmallImgName;
             }
 
             if ($model->save()) {
@@ -168,6 +190,14 @@ class TeachersController extends Controller
             $image->reSize($imgPath . $imgName, 400, 300, sprintf('%ssmall/%s', $imgPath, $imgName));
 
             $model->img_name = $imgName;
+            $model->large_img_path =
+                Url::to(
+                    sprintf('http://%s/images/teachers/%s', $_SERVER['HTTP_HOST'], $imgName)
+                );
+            $model->small_img_path =
+                Url::to(
+                    sprintf('http://%s/images/teachers/small/%s', $_SERVER['HTTP_HOST'], $imgName)
+                );
             $model->save();
         }
 
@@ -195,6 +225,8 @@ class TeachersController extends Controller
                 unlink($imgPath);
 
                 $model->img_name = null;
+                $model->small_img_path = null;
+                $model->large_img_path = null;
                 $model->save();
 
                 return true;

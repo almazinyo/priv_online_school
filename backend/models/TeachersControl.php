@@ -17,20 +17,8 @@ class TeachersControl extends Teachers
     public function rules()
     {
         return [
-            [['id', 'section_id', 'is_status'], 'integer'],
-            [
-                [
-                    'name',
-                    'position',
-                    'img_name',
-                    'short_description',
-                    'slug',
-                    'description',
-                    'created_at',
-                    'updated_at',
-                ],
-                'trim',
-            ],
+            [['id', 'subject_id', 'work_experience', 'is_status'], 'integer'],
+            [['name', 'social_link', 'img_name', 'small_img_path', 'large_img_path', 'slug', 'description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -71,17 +59,20 @@ class TeachersControl extends Teachers
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'section_id' => $this->section_id,
+            'subject_id' => $this->subject_id,
+            'work_experience' => $this->work_experience,
             'is_status' => $this->is_status,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'position', $this->position])
+            ->andFilterWhere(['like', 'social_link', $this->social_link])
             ->andFilterWhere(['like', 'img_name', $this->img_name])
+            ->andFilterWhere(['like', 'small_img_path', $this->small_img_path])
+            ->andFilterWhere(['like', 'large_img_path', $this->large_img_path])
+            ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
-        ;
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
 
         return $dataProvider;
     }
