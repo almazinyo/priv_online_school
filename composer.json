@@ -40,7 +40,6 @@
     "kartik-v/yii2-sortable": "@dev",
     "kartik-v/yii2-grid": "dev-master",
     "kotchuprik/yii2-instagram-authclient": "*",
-    "jumper423/yii2-vk": "2.*"
 
   },
   "require-dev": {

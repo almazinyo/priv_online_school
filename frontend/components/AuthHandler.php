@@ -13,7 +13,6 @@ use yii\helpers\ArrayHelper;
  */
 class AuthHandler
 {
-
     /**
      * @var ClientInterface
      */
@@ -67,12 +66,17 @@ class AuthHandler
         $email = ArrayHelper::getValue($attributes, 'email');
         $id = ArrayHelper::getValue($attributes, 'id');
         $name = ArrayHelper::getValue($attributes, 'name');
+        $firstName = ArrayHelper::getValue($attributes, 'first_name');
+
+        if (empty($name)) {
+            $name = ArrayHelper::getValue($attributes, 'screen_name');
+        }
 
         if ($email !== null && User::find()->where(['email' => $email])->exists()) {
             return;
         }
 
-        $user = $this->createUser($email, $name);
+        $user = $this->createUser($email, $name, $firstName);
 
         $transaction = User::getDb()->beginTransaction();
         if ($user->save()) {
@@ -85,11 +89,11 @@ class AuthHandler
         $transaction->rollBack();
     }
 
-    private function createUser($email, $name)
+    private function createUser($email, $name, $firstName)
     {
         return new User([
-            'username' => $name,
-            'email' => $email,
+            'username' => $name ?: $firstName,
+            'email' => $email ?: 'test@test.ru',
             'auth_key' => Yii::$app->security->generateRandomString(),
             'password_hash' => Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString()),
             'created_at' => $time = time(),
