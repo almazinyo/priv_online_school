@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "teachers".
@@ -45,7 +46,13 @@ class Teachers extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['name', 'social_link', 'img_name', 'small_img_path', 'large_img_path', 'slug'], 'string', 'max' => 500],
             [['created_at', 'updated_at'], 'string', 'max' => 300],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            [
+                ['subject_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subject_id' => 'id'],
+            ],
         ];
     }
 
@@ -105,5 +112,36 @@ class Teachers extends \yii\db\ActiveRecord
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+
+    public static function receiveAllData(): array
+    {
+        $select =
+            sprintf(
+                'teachers.*, %s, %s, subjects.title, subjects.id',
+                self::tableName(),
+                'DATE(FROM_UNIXTIME(created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(updated_at)) as updated_at'
+            );
+
+        return
+            self::find()
+                ->select('teachers.*, subjects.title as  subject_name, subjects.id')
+                ->joinWith('subject')
+                ->asArray()
+                ->all()
+            ;
+    }
+
+    public static function receiveSpecificData($slug): array
+    {
+        return
+            self::find()
+                ->select('teachers.*, subjects.title as  subject_name, subjects.id')
+                ->joinWith('subject')
+                ->where(['teachers.slug' => Html::encode($slug)])
+                ->asArray()
+                ->one()
+            ;
     }
 }

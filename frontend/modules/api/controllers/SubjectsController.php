@@ -138,7 +138,7 @@ class SubjectsController extends Controller
      */
     public function actionTeachers()
     {
-        $model = Select::receiveAllData(new Teachers());
+        $model = Teachers::receiveAllData();
 
         return [
             'status' => 200,
@@ -152,7 +152,7 @@ class SubjectsController extends Controller
      */
     public function actionTeacher($slug)
     {
-        $model = Select::receiveSpecificData(new Teachers(), ['slug' => Html::encode($slug)]);
+        $model = Teachers::receiveSpecificData($slug);
 
         if (empty($model)) {
             throw new NotFoundHttpException();
