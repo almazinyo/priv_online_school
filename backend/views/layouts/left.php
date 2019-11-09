@@ -35,6 +35,12 @@
                         'url' => ['#'],
                         'items' => [
                             [
+                                'label' => Yii::t('app', 'Users'),
+                                'icon' => '',
+                                'url' => ['/user/'],
+                                'active' => Yii::$app->controller->id == 'route',
+                            ],
+                            [
                                 'label' => Yii::t('app', 'Route'),
                                 'icon' => '',
                                 'url' => ['/admin/route/'],
