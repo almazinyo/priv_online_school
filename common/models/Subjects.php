@@ -126,6 +126,14 @@ class Subjects extends ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTeachers()
+    {
+        return $this->hasMany(Teachers::className(), ['subject_id' => 'id']);
+    }
+
+    /**
      * @return array|ActiveRecord[]
      */
     public static function receiveAllData()

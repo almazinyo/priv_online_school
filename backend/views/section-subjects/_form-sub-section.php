@@ -39,6 +39,11 @@ use yii\helpers\ArrayHelper;
 
 
     <div class="col-xs-12">
+        <?= $form->field($model, 'sortable_id')->textInput(['maxlength' => true]) ?>
+
+    </div>
+
+    <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-6">
                 <?= $form->field($model, 'subject_id')->widget(
@@ -55,12 +60,30 @@ use yii\helpers\ArrayHelper;
                 ])
                 ;
                 ?>
-
             </div>
-            <div class="col-xs-6"><?= $form->field($model, 'sortable_id')->textInput(['maxlength' => true]) ?></div>
-
+            <div class="col-xs-6">
+                <?= $form->field($model, 'parent_id')->widget(
+                    Select2::classname(), [
+                    'data' =>
+                        ArrayHelper::map(
+                            \common\models\SectionSubjects::find()
+                                ->select('id,name')
+                                ->where(['parent_id' => 0])
+                                ->asArray()
+                                ->all(),
+                            "id", "name"),
+                    'options' => ['placeholder' => 'Parent'],
+                    'pluginOptions' => ['allowClear' => true],
+                ])
+                ;
+                ?>
+            </div>
         </div>
     </div>
+
+    <?php
+
+    ?>
 
 
     <div class="col-xs-12">
@@ -71,8 +94,7 @@ use yii\helpers\ArrayHelper;
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <div class="col-xs-6"><?= $form->field($model,
-                    'seo_keywords')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?></div>
             <div class="col-xs-6"><?= $form->field($model, 'seo_description')->textarea(['row' => 3]) ?></div>
         </div>
     </div>
@@ -112,71 +134,6 @@ use yii\helpers\ArrayHelper;
             )
         ; ?>
     </div>
-    <div class="col-xs-12">
-        <?php
-
-        $modelId = $model->id;
-        $uploadImagesUrl = Url::to(['/blog/upload-images?id=' . $modelId]);
-
-        $imagesOptions = [];
-        $imgPath = [];
-
-        if (!$model->isNewRecord) {
-            $imgName = $model->img_name;
-            $imgFullPath = Yii::getAlias("@frontend") . "/web/images/blog/" . $imgName;
-
-            if (!empty($imgName)) {
-                $deleteUrl = Url::to(["/blog/delete-file?id=" . $modelId]);
-
-                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/blog/') . $imgName;
-                $size = 0;
-                if (file_exists($imgFullPath)) {
-                    $size = filesize($imgFullPath);
-                }
-                $imagesOptions[] = [
-//                'caption' => $model->title,
-                    'url' => $deleteUrl,
-                    'size' => $size,
-                    'key' => $modelId,
-                ];
-            }
-        }
-        ?>
-
-    <?=
-    $form->field($model, 'img_path')
-        ->widget(
-            \kartik\file\FileInput::class,
-            [
-                'attribute' => 'img_path',
-                'name' => 'img_path',
-                'options' =>
-                    [
-                        'accept' => 'image/*',
-                        'multiple' => false,
-                    ],
-                'pluginOptions' =>
-                    [
-                        'previewFileType' => 'image',
-                        "uploadAsync" => true,
-                        'showPreview' => true,
-                        'showUpload' => $model->isNewRecord ? false : true,
-                        'showCaption' => false,
-                        'showDrag' => false,
-                        'uploadUrl' => $uploadImagesUrl,
-                        'initialPreviewConfig' => $imagesOptions,
-                        'initialPreview' => $imgPath,
-                        'initialPreviewAsData' => true,
-                        'initialPreviewShowDelete' => true,
-                        'overwriteInitial' => true,
-                        'resizeImages' => true,
-                        'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
-                    ],
-            ]);
-    ?>
-
-</div>
-
     <div class="form-group">
         <?=
         Html::submitButton(
