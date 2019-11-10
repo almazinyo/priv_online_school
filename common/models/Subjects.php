@@ -208,7 +208,7 @@ class Subjects extends ActiveRecord
                 ->joinWith('sectionSubjects')
                 ->where([' != ', 'subjects.is_status', 0])
                 ->orWhere([' != ', 'section_subjects.is_status', 0])
-                ->orderBy(['sortable_id' => SORT_ASC])
+                ->orderBy(['subjects.sortable_id' => SORT_ASC])
                 ->asArray()
                 ->all()
             ;
