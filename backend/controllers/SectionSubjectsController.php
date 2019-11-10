@@ -118,7 +118,7 @@ class SectionSubjectsController extends Controller
 
                 $model->img_path =
                     Url::to(
-                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'],  $imgName)
                     );
             }
 
@@ -167,7 +167,7 @@ class SectionSubjectsController extends Controller
 
                 $model->img_path =
                     Url::to(
-                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'],  $imgName)
                     );
             } else {
                 $model->img_path = $oldImgPath;
@@ -196,7 +196,7 @@ class SectionSubjectsController extends Controller
 
             $model->img_path =
                 Url::to(
-                    sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                    sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'],  $imgName)
                 );
             $model->save();
         }
