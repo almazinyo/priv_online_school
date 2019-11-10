@@ -2,14 +2,17 @@
 
 namespace backend\controllers;
 
+use backend\components\ImageHelper;
 use backend\models\SubSectionsControl;
 use Yii;
 use common\models\SectionSubjects;
 use backend\models\SectionSubjectsControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * SectionSubjectsController implements the CRUD actions for Subjects model.
@@ -38,6 +41,8 @@ class SectionSubjectsController extends Controller
                             'delete',
                             'sub-sections',
                             'create-sub-section',
+                            'upload-images',
+                            'delete-file',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -104,6 +109,19 @@ class SectionSubjectsController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->parent_id = 0;
 
+            $imgFile = UploadedFile::getInstance($model, 'img_path');
+
+            if (!empty($imgFile)) {
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/sections/';
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $model->img_path =
+                    Url::to(
+                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                    );
+            }
+
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -137,14 +155,74 @@ class SectionSubjectsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldImgPath = $model->img_path;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $imgFile = UploadedFile::getInstance($model, 'img_path');
+
+            if (!empty($imgFile)) {
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/sections/';
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+                $imgFile->saveAs($imgPath . $imgName);
+
+                $model->img_path =
+                    Url::to(
+                        sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                    );
+            } else {
+                $model->img_path = $oldImgPath;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUploadImages($id)
+    {
+        $model = $this->findModel($id);
+
+        $imgFile = UploadedFile::getInstance($model, 'img_path');
+
+        if (!empty($imgFile)) {
+            $imgPath = Yii::getAlias('@frontend') . '/web/images/sections/';
+            $imgName = Yii::$app->security->generateRandomString() . '.' . $imgFile->extension;
+            $imgFile->saveAs($imgPath . $imgName);
+
+            $model->img_path =
+                Url::to(
+                    sprintf('http://%s/images/sections/%s', $_SERVER['HTTP_HOST'], $imgPath . $imgName)
+                );
+            $model->save();
+        }
+
+        return true;
+    }
+
+    public function actionDeleteFile($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!empty($model->img_path)) {
+            $imageName = preg_replace('~.*\/~sui', '', $model->img_path);
+            $imgPath = sprintf('%s/web/images/sections/%s', Yii::getAlias('@frontend'), $imageName);
+
+            if (file_exists($imgPath)) {
+                unlink($imgPath);
+
+                $model->img_path = null;
+                $model->save();
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -116,19 +116,19 @@ use yii\helpers\ArrayHelper;
         <?php
 
         $modelId = $model->id;
-        $uploadImagesUrl = Url::to(['/blog/upload-images?id=' . $modelId]);
+        $uploadImagesUrl = Url::to(['/section-subjects/upload-images?id=' . $modelId]);
 
         $imagesOptions = [];
         $imgPath = [];
 
         if (!$model->isNewRecord) {
-            $imgName = $model->img_name;
+            $imgName = $model->img_path;
             $imgFullPath = Yii::getAlias("@frontend") . "/web/images/blog/" . $imgName;
 
-            if (!empty($imgName)) {
-                $deleteUrl = Url::to(["/blog/delete-file?id=" . $modelId]);
+            if (!empty($model->img_path)) {
+                $deleteUrl = Url::to(["/section-subjects/delete-file?id=" . $modelId]);
 
-                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/blog/') . $imgName;
+                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/sections/') . $imgName;
                 $size = 0;
                 if (file_exists($imgFullPath)) {
                     $size = filesize($imgFullPath);
@@ -157,7 +157,7 @@ use yii\helpers\ArrayHelper;
                     ],
                 'pluginOptions' =>
                     [
-                        'previewFileType' => 'image',
+                        'previewFileType' => '*',
                         "uploadAsync" => true,
                         'showPreview' => true,
                         'showUpload' => $model->isNewRecord ? false : true,
