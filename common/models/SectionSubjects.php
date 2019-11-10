@@ -38,6 +38,8 @@ class SectionSubjects extends \yii\db\ActiveRecord
 {
     const   STATUS_ACTIVE = 1;
 
+    private static $slugLesson;
+
     /**
      * {@inheritdoc}
      */
@@ -56,8 +58,18 @@ class SectionSubjects extends \yii\db\ActiveRecord
             [['name', 'price', 'slug'], 'required'],
             [['short_description', 'description'], 'string'],
             [['name', 'price', 'slug', 'icon', 'img_path'], 'string', 'max' => 500],
-            [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'stock'], 'string', 'max' => 300],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            [
+                ['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'stock'],
+                'string',
+                'max' => 300,
+            ],
+            [
+                ['subject_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subject_id' => 'id'],
+            ],
         ];
     }
 
@@ -161,8 +173,6 @@ class SectionSubjects extends \yii\db\ActiveRecord
         return $this->hasOne(Lessons::className(), ['section_id' => 'id'])->count();
     }
 
-
-
     public function getSections()
 
     {
@@ -197,8 +207,10 @@ class SectionSubjects extends \yii\db\ActiveRecord
             );
     }
 
-    public static function receiveSpecificData($slug, $sluglesson)
+    public static function receiveSpecificData($slug, $slugLesson)
     {
+
+        self::$slugLesson = $slugLesson;
         return
             self::find()
                 ->joinWith(
@@ -213,6 +225,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
                 )->joinWith(
                     [
                         'lessons' => function ($query) {
+
                             $query->onCondition(
                                 ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
                             )
@@ -220,6 +233,10 @@ class SectionSubjects extends \yii\db\ActiveRecord
                                 ->joinWith('storageLessons')
                                 ->joinWith('quizzes')
                             ;
+
+                            if (!empty(self::$slugLesson)) {
+                                $query->andWhere(['lessons.slug' => self::$slugLesson]);
+                            }
                         },
 
                     ]
