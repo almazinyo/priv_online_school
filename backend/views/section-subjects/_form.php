@@ -122,8 +122,8 @@ use yii\helpers\ArrayHelper;
         $imgPath = [];
 
         if (!$model->isNewRecord) {
-            $imgName = $model->img_path;
-            $imgFullPath = Yii::getAlias("@frontend") . "/web/images/blog/" . $imgName;
+            $imgName = preg_replace('~.*\/~sui', '', $model->img_path);
+            $imgFullPath = Yii::getAlias("@frontend") . "/web/images/sections/" . $imgName;
 
             if (!empty($model->img_path)) {
                 $deleteUrl = Url::to(["/section-subjects/delete-file?id=" . $modelId]);
@@ -143,39 +143,40 @@ use yii\helpers\ArrayHelper;
         }
         ?>
 
-    <?=
-    $form->field($model, 'img_path')
-        ->widget(
-            \kartik\file\FileInput::class,
-            [
-                'attribute' => 'img_path',
-                'name' => 'img_path',
-                'options' =>
-                    [
-                        'accept' => 'image/*',
-                        'multiple' => false,
-                    ],
-                'pluginOptions' =>
-                    [
-                        'previewFileType' => '*',
-                        "uploadAsync" => true,
-                        'showPreview' => true,
-                        'showUpload' => $model->isNewRecord ? false : true,
-                        'showCaption' => false,
-                        'showDrag' => false,
-                        'uploadUrl' => $uploadImagesUrl,
-                        'initialPreviewConfig' => $imagesOptions,
-                        'initialPreview' => $imgPath,
-                        'initialPreviewAsData' => true,
-                        'initialPreviewShowDelete' => true,
-                        'overwriteInitial' => true,
-                        'resizeImages' => true,
-                        'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
-                    ],
-            ]);
-    ?>
+        <?=
+        $form->field($model, 'img_path')
+            ->widget(
+                \kartik\file\FileInput::class,
+                [
+                    'attribute' => 'img_path',
+                    'name' => 'img_path',
+                    'options' =>
+                        [
+                            'accept' => 'image/*',
+                            'multiple' => false,
+                        ],
+                    'pluginOptions' =>
+                        [
+                            'previewFileType' => '*',
+                            "uploadAsync" => true,
+                            'showPreview' => true,
+                            'showUpload' => $model->isNewRecord ? false : true,
+                            'showCaption' => false,
+                            'showDrag' => false,
+                            'uploadUrl' => $uploadImagesUrl,
+                            'initialPreviewConfig' => $imagesOptions,
+                            'initialPreview' => $imgPath,
+                            'initialPreviewAsData' => true,
+                            'initialPreviewShowDelete' => true,
+                            'overwriteInitial' => true,
+                            'resizeImages' => true,
+                            'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
+                        ],
+                ])
+        ;
+        ?>
 
-</div>
+    </div>
 
     <div class="form-group">
         <?=
