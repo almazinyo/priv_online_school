@@ -14,23 +14,26 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $verification_token
  * @property string $email
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $about
+ * @property integer $type
+ * @property string $nickname
+ * @property string $picture
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const DEFAULT_IMAGE = '/img/profile_default_image.jpg';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -38,7 +41,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -48,18 +51,18 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function findIdentity($id)
     {
@@ -67,7 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -75,14 +78,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by email
      *
-     * @param string $username
+     * @param string $email
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -104,19 +107,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by verification email token
-     *
-     * @param string $token verify email token
-     * @return static|null
-     */
-    public static function findByVerificationToken($token) {
-        return static::findOne([
-            'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
-        ]);
-    }
-
-    /**
      * Finds out if password reset token is valid
      *
      * @param string $token password reset token
@@ -134,7 +124,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getId()
     {
@@ -142,7 +132,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAuthKey()
     {
@@ -150,7 +140,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function validateAuthKey($authKey)
     {
@@ -194,11 +184,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
-    public function generateEmailVerificationToken()
-    {
-        $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
     /**
      * Removes password reset token
      */
@@ -206,4 +191,153 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNickname()
+    {
+        return ($this->nickname) ? $this->nickname : $this->getId();
+    }
+
+    /**
+     * Subscribe current user to given user
+     * @param \frontend\models\User $user
+     */
+    public function followUser(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->sadd("user:{$this->getId()}:subscriptions", $user->getId());
+        $redis->sadd("user:{$user->getId()}:followers", $this->getId());
+    }
+
+    /**
+     * Unsubscribe current user from given user
+     * @param \frontend\models\User $user
+     */
+    public function unfollowUser(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->srem("user:{$this->getId()}:subscriptions", $user->getId());
+        $redis->srem("user:{$user->getId()}:followers", $this->getId());
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubscriptions()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "user:{$this->getId()}:subscriptions";
+        $ids = $redis->smembers($key);
+        return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
+    }
+
+    /**
+     * @return array
+     */
+    public function getFollowers()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "user:{$this->getId()}:followers";
+        $ids = $redis->smembers($key);
+        return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countFollowers()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("user:{$this->getId()}:followers");
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countSubscriptions()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("user:{$this->getId()}:subscriptions");
+    }
+
+    /**
+     * @param \frontend\models\User $user
+     * @return array
+     */
+    public function getMutualSubscriptionsTo(User $user)
+    {
+        // Current user subscriptions
+        $key1 = "user:{$this->getId()}:subscriptions";
+        // Given user followers
+        $key2 = "user:{$user->getId()}:followers";
+
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+
+        $ids = $redis->sinter($key1, $key2);
+        return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
+    }
+
+    /**
+     * Get profile picture
+     * @return string
+     */
+    public function getPicture()
+    {
+        if ($this->picture) {
+            return Yii::$app->storage->getFile($this->picture);
+        }
+        return self::DEFAULT_IMAGE;
+    }
+
+    /**
+     * Get data for newsfeed
+     * @param integer $limit
+     * @return array
+     */
+    public function getFeed(int $limit)
+    {
+        $order = ['post_created_at' => SORT_DESC];
+        return $this->hasMany(Feed::className(), ['user_id' => 'id'])->orderBy($order)->limit($limit)->all();
+    }
+
+    /**
+     * Check whether current user likes post with given id
+     * @param integer $postId
+     * @return boolean
+     */
+    public function likesPost(int $postId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("user:{$this->getId()}:likes", $postId);
+    }
+
+    /**
+     * Get post count
+     * @return integer
+     */
+    public function getPostCount()
+    {
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])->count();
+    }
+
+    /**
+     * Get post count
+     * @return Post[]
+     */
+    public function getPosts()
+    {
+        $order = ['created_at' => SORT_DESC];
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])->orderBy($order)->all();
+    }
+
 }
