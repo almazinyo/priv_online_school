@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru',
-    'defaultRoute' => 'main/index',
+    'defaultRoute' => 'site/authentication',
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'api' => [
@@ -82,7 +82,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'api/map/index',
+                '' => 'site/authentication',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/lessons/details/<slug>' => 'api/lessons/details/',
