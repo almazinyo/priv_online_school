@@ -216,9 +216,15 @@ class SectionSubjects extends \yii\db\ActiveRecord
                 ->joinWith(
                     [
                         'sections' => function ($query) {
-                            $query->onCondition(
-                                ['sections.is_status' => SectionSubjects::STATUS_ACTIVE]
-                            )->with('lessons')->limit(3)
+                            $query->onCondition(['sections.is_status' => SectionSubjects::STATUS_ACTIVE])
+                                ->orderBy(['sections.sortable_id' => SORT_ASC])
+                                ->with(
+                                    [
+                                        'lessons' => function ($query) {
+                                            $query->orderBy(['lessons.sort_lessons' => SORT_ASC])->limit(3);
+                                        },
+                                    ]
+                                )
                             ;
                         },
                     ]

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Subjects */
+/* @var $model common\models\SectionSubjects */
 
 $this->title = Yii::t('app', 'Update Section: {name}', [
     'name' => $model->name,
@@ -16,7 +16,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?php
+
+    $pathForm = '_form';
+
+    if ($model->parent_id !=0){
+        $pathForm = '_form-sub-section';
+    }
+
+    ?>
+
+    <?= $this->render($pathForm, [
         'model' => $model,
     ]) ?>
 
