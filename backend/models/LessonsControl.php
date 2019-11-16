@@ -54,7 +54,7 @@ class LessonsControl extends Lessons
      */
     public function search($params)
     {
-        $query = Lessons::find();
+        $query = Lessons::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 

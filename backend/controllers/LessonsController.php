@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\Subjects;
 use Yii;
 use common\models\Lessons;
 use backend\models\LessonsControl;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +22,20 @@ class LessonsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete','duplicate'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -123,5 +139,20 @@ class LessonsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDuplicate($id)
+    {
+        $model = $this->findModel($id);
+        $modelDuplicate = new  Lessons();
+        $modelDuplicate->attributes = $model->attributes;
+        $modelDuplicate->save();
+
+        return $this->redirect(['index']);
     }
 }

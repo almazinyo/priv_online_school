@@ -53,7 +53,7 @@ class SubSectionsControl extends SectionSubjects
      */
     public function search($params)
     {
-        $query = SectionSubjects::find()->andWhere(['!=', 'parent_id','0'] );
+        $query = SectionSubjects::find()->andWhere(['!=', 'parent_id', '0'])->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

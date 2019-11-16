@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\components\ImageHelper;
 use backend\models\SubSectionsControl;
+use common\models\Lessons;
 use Yii;
 use common\models\SectionSubjects;
 use backend\models\SectionSubjectsControl;
@@ -43,6 +44,7 @@ class SectionSubjectsController extends Controller
                             'create-sub-section',
                             'upload-images',
                             'delete-file',
+                            'duplicate',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -75,6 +77,7 @@ class SectionSubjectsController extends Controller
 
     public function actionSubSections()
     {
+        var_dump(Yii::$app->controller->action->id);
         $searchModel = new SubSectionsControl();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -234,9 +237,17 @@ class SectionSubjectsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->delete();
 
-        return $this->redirect(['index']);
+        $pathRedirect = 'index';
+
+        if ($model->parent_id != 0) {
+            $pathRedirect = 'sub-sections';
+        }
+
+
+        return $this->redirect([$pathRedirect]);
     }
 
     /**
@@ -253,5 +264,26 @@ class SectionSubjectsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDuplicate($id)
+    {
+        $model = $this->findModel($id);
+        $modelDuplicate = new  SectionSubjects();
+        $modelDuplicate->attributes = $model->attributes;
+        $modelDuplicate->save();
+
+        $pathRedirect = 'index';
+
+        if ($model->parent_id != 0) {
+            $pathRedirect = 'sub-sections';
+        }
+
+        return $this->redirect([$pathRedirect]);
     }
 }
