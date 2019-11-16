@@ -29,7 +29,7 @@ class SubjectsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view','delete'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete','duplicate'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -142,5 +142,20 @@ class SubjectsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDuplicate($id)
+    {
+        $model = $this->findModel($id);
+        $modelDuplicate = new  Subjects();
+        $modelDuplicate->attributes = $model->attributes;
+        $modelDuplicate->save();
+
+        return $this->redirect(['index']);
     }
 }

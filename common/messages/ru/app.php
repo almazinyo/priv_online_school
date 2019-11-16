@@ -37,7 +37,7 @@ return [
     'Description' => 'Описание',
     'First Name' => 'Имя',
     'Hint' => 'Подсказка',
-    'Icon' => 'Икона',
+    'Icon' => 'Иконка',
     'Img Name' => 'Изображения',
     'Inactive' => 'Неактивный',
     'Is Status' => 'Статус',

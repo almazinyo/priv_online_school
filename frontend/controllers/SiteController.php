@@ -122,18 +122,15 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function init()
-    {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-        parent::init();
-    }
     public function actionAuthentication()
     {
-        if (!Yii::$app->user->isGuest){
-            return Yii::$app->user->identity['auth_key'];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (!Yii::$app->user->isGuest) {
+            return ['token' => Yii::$app->user->identity['auth_key']];
         }
 
-       throw new ForbiddenHttpException();
+        throw new ForbiddenHttpException();
     }
 
     /**
