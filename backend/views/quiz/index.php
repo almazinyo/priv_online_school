@@ -38,7 +38,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at:datetime',
             'is_status',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{duplicate}  {view} {update} {delete}',
+                'buttons' =>
+                    [
+                        'duplicate' => function ($url, $model) {
+                            return Html::a('<span  class="fa fa-files-o" aria-hidden="true""></span>', $url, [
+                                'title' => Yii::t('app', 'Duplicate'),
+                            ]);
+                        },
+                    ],
+            ],
         ],
     ]); ?>
 

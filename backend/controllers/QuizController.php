@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use backend\components\ImageHelper;
+use common\models\Lessons;
 use Yii;
 use common\models\Quiz;
 use backend\models\QuizControl;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -252,5 +254,21 @@ class QuizController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionDuplicate($id)
+    {
+        $model = $this->findModel($id);
+        $modelDuplicate = new  Quiz();
+        $modelDuplicate->attributes = $model->attributes;
+        $modelDuplicate->save();
+
+        return $this->redirect(['index']);
     }
 }
