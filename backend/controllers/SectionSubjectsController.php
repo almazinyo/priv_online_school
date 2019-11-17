@@ -77,7 +77,6 @@ class SectionSubjectsController extends Controller
 
     public function actionSubSections()
     {
-        var_dump(Yii::$app->controller->action->id);
         $searchModel = new SubSectionsControl();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
