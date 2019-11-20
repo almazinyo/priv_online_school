@@ -32,8 +32,9 @@ class m130524_201442_init extends Migration
         $user = new \common\models\User();
         $user->username = 'admin';
         $user->email = 'admin@example.com';
+        $user->status = 10;
         $user->generateAuthKey();
-        $user->setPassword('demo');
+        $user->setPassword('admin1234');
         $user->save(false);
 
         $this->createTable(

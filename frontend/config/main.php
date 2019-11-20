@@ -62,8 +62,14 @@ return [
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'class' => 'yii\web\DbSession',
+            'writeCallback' => function($session){
+                return [
+                    'user_id' => Yii::$app->user->id
+                ];
+            }
+            // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
+            // 'sessionTable' => 'my_session', // session table name. Defaults to 'session'.
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
