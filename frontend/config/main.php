@@ -48,6 +48,7 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'enableCookieValidation' => false,
             'baseUrl' => '',
         ],
 //        'response' => [
@@ -58,15 +59,15 @@ return [
 //        ],
         'user' => [
             'identityClass' => 'frontend\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'enableSession' => false,
+            'loginUrl' => null,
         ],
         'session' => [
             'class' => 'yii\web\DbSession',
             'writeCallback' => function($session){
                 return [
                     'user_id' => Yii::$app->user->id,
-                    'token' => Yii::$app->security->generateRandomKey()
+                    'token' => Yii::$app->security->generateRandomString()
                 ];
             }
             // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
