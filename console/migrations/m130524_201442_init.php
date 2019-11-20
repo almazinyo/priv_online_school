@@ -43,7 +43,9 @@ class m130524_201442_init extends Migration
                 'id' => $this->char(40)->notNull(),
                 'expire' => $this->integer(),
                 'data' => $this->binary(),
+                'token'=>$this->string('500'),
                 'user_id' => $this->integer(),
+                'status'=>$this->smallInteger(1)->defaultValue(0),
             ]
         );
 
