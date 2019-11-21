@@ -49,7 +49,7 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
 //            'enableCookieValidation' => false,
-//            'baseUrl' => '',
+            'baseUrl' => '',
         ],
 //        'response' => [
 //            'format' => yii\web\Response::FORMAT_JSON,
@@ -95,7 +95,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-//                '' => 'site/authentication',
+                '' => 'site/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/lessons/details/<slug>' => 'api/lessons/details/',
