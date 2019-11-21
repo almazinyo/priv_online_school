@@ -35,7 +35,8 @@ class AuthHandler
         if ($auth) {
             /* @var User $user */
             $user = $auth->user;
-            return Yii::$app->user->login($user);
+            Yii::$app->user->login($user);
+            return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
         }
         if ($user = $this->createAccount($attributes)) {
             return Yii::$app->user->login($user);

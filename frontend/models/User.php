@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
@@ -27,9 +28,10 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    public $loginUrl = ['site/test'];
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-
     const DEFAULT_IMAGE = '/img/profile_default_image.jpg';
 
     /**
@@ -48,6 +50,14 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSessions()
+    {
+        return $this->hasMany(Session::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -339,5 +349,4 @@ class User extends ActiveRecord implements IdentityInterface
         $order = ['created_at' => SORT_DESC];
         return $this->hasMany(Post::className(), ['user_id' => 'id'])->orderBy($order)->all();
     }
-
 }

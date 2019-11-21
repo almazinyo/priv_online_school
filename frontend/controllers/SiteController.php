@@ -44,8 +44,23 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+
+                    [
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return Yii::$app->response->redirect(['/your/login/url']);
+                    },
                 ],
             ],
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -57,6 +72,7 @@ class SiteController extends Controller
 
     public function actions()
     {
+
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -84,6 +100,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         return $this->render('index');
     }
 
@@ -94,13 +111,14 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
         } else {
             $model->password = '';
 
@@ -122,16 +140,16 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionAuthentication()
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        if (!Yii::$app->user->isGuest) {
-            return ['token' => Yii::$app->user->identity['auth_key']];
-        }
-
-        throw new ForbiddenHttpException();
-    }
+//    public function actionAuthentication()
+//    {
+//        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//
+//        if (!Yii::$app->user->isGuest) {
+//            return ['token' => Yii::$app->user->identity['auth_key']];
+//        }
+//
+//        throw new ForbiddenHttpException();
+//    }
 
     /**
      * Displays contact page.

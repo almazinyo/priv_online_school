@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru',
-    'defaultRoute' => 'site/authentication',
+    'defaultRoute' => 'site/index',
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'api' => [
@@ -48,8 +48,8 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'enableCookieValidation' => false,
-            'baseUrl' => '',
+//            'enableCookieValidation' => false,
+//            'baseUrl' => '',
         ],
 //        'response' => [
 //            'format' => yii\web\Response::FORMAT_JSON,
@@ -59,15 +59,18 @@ return [
 //        ],
         'user' => [
             'identityClass' => 'frontend\models\User',
-            'enableSession' => false,
-            'loginUrl' => null,
+            'enableSession' => true,
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
+
         'session' => [
             'class' => 'yii\web\DbSession',
-            'writeCallback' => function($session){
+            'writeCallback' => function ($session) {
                 return [
                     'user_id' => Yii::$app->user->id,
-                    'token' => Yii::$app->security->generateRandomString()
+                    'status' => 1,
+                    'token' => Yii::$app->security->generateRandomString(),
                 ];
             }
             // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
@@ -90,7 +93,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'site/authentication',
+//                '' => 'site/authentication',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/lessons/details/<slug>' => 'api/lessons/details/',
