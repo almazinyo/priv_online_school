@@ -2,6 +2,7 @@
 
 namespace frontend\components;
 
+use common\models\Session;
 use Yii;
 use frontend\models\Auth;
 use frontend\models\User;
@@ -36,7 +37,14 @@ class AuthHandler
             /* @var User $user */
             $user = $auth->user;
             Yii::$app->user->login($user);
-            return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
+            $session = new Session();
+            $session->id = Yii::$app->security->generateRandomString(40);
+            $session->expire = time();
+            $session->user_id = $user->id;
+            $session->status = 1;
+            $session->token = Yii::$app->security->generateRandomString();
+            $session->save(false);
+            return  Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
         }
         if ($user = $this->createAccount($attributes)) {
             return Yii::$app->user->login($user);
