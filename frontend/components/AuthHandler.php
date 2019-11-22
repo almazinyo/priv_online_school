@@ -34,21 +34,32 @@ class AuthHandler
 
         $auth = $this->findAuth($attributes);
         if ($auth) {
-            /* @var User $user */
-            $user = $auth->user;
-            Yii::$app->user->login($user);
-            $session = new Session();
-            $session->id = Yii::$app->security->generateRandomString(40);
-            $session->expire = time();
-            $session->user_id = $user->id;
-            $session->status = 1;
-            $session->token = Yii::$app->security->generateRandomString();
-            $session->save(false);
-            return  Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
+            return $this->auth($auth->user);
         }
         if ($user = $this->createAccount($attributes)) {
-            return Yii::$app->user->login($user);
+            return $this->auth($user);
         }
+    }
+
+    /**
+     * @param $user
+     * @return \yii\console\Response|\yii\web\Response
+     * @throws \yii\base\Exception
+     */
+    private function auth($user)
+    {
+        Yii::$app->user->login($user);
+
+        $session = new Session();
+        $session->id = Yii::$app->security->generateRandomString(40);
+        $session->expire = time();
+        $session->user_id = $user->id;
+        $session->status = 1;
+        $session->token = Yii::$app->security->generateRandomString();
+
+        $session->save(false);
+
+        return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('/api/main/user'));
     }
 
     /**
