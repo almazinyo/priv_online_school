@@ -56,6 +56,7 @@ class MainController extends Controller
         \Yii::$app->response->format = Response::FORMAT_JSON;
         parent::init();
     }
+
     public function actions()
     {
         \Yii::$app->user->loginUrl = '/site/test/';
@@ -108,9 +109,9 @@ class MainController extends Controller
         ];
     }
 
-
-    public function actionInit(){
-        var_dump(Yii::$app->request->queryParams);
+    public function actionInit()
+    {
+        return \Yii::$app->request->queryParams;
     }
 
     /**
