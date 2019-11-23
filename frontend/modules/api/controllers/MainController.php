@@ -108,6 +108,11 @@ class MainController extends Controller
         ];
     }
 
+
+    public function actionInit(){
+        var_dump(Yii::$app->request->queryParams);
+    }
+
     /**
      * @return string
      */
