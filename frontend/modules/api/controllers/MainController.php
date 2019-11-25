@@ -3,15 +3,18 @@
 namespace frontend\modules\api\controllers;
 
 use Cassandra\Exception\UnauthorizedException;
+use common\models\Auth;
 use common\models\Menu;
 use common\models\Options;
 use common\models\Session;
+use frontend\models\User;
 use frontend\modules\api\components\Select;
 use yii\base\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
+use  Yii;
 
 class MainController extends Controller
 {
@@ -103,15 +106,55 @@ class MainController extends Controller
     public function actionMenu()
     {
         $model = Select::receiveAllData(new Menu());
-        return [
-            'status' => 200,
-            'data' => $model,
-        ];
+        return
+            [
+                'status' => 200,
+                'data' => $model,
+            ];
     }
 
+    /**
+     *
+     */
     public function actionInit()
     {
-        return \Yii::$app->request->queryParams;
+        $access_token = '';
+        $getRequest = \Yii::$app->request->get();
+        $mid = $getRequest['mid'];
+        $sid = $getRequest['sid'];
+
+        $auth = Auth::find()->where(['source_id' => $getRequest['mid']])->one();
+
+        if ($auth) {
+            return ['token' => $auth->user->auth_key];
+        }
+
+        $user =
+            new User(
+                [
+                    'username' => $mid,
+                    'email' => ' ',
+                    'status' => 10,
+                    'auth_key' => md5($sid),
+                    'password_hash' => Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString()),
+                    'created_at' => $time = time(),
+                    'updated_at' => $time,
+                ]
+            );
+
+        if ($user->save(false)) {
+            $auth =
+                new Auth(
+                    [
+                        'user_id' => $user->id,
+                        'source' => 'vkontakte',
+                        'source_id' => (string) $mid,
+                    ]
+                );
+            $auth->save(false);
+        }
+
+        return ['token' => $user->auth_key];
     }
 
     /**
