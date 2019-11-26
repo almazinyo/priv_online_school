@@ -9,7 +9,9 @@ use common\models\Options;
 use common\models\Session;
 use frontend\models\User;
 use frontend\modules\api\components\Select;
+use frontend\modules\api\controllers\service\MainService;
 use yii\base\Controller;
+use yii\helpers\Html;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
 use yii\web\Response;
@@ -18,6 +20,11 @@ use  Yii;
 
 class MainController extends Controller
 {
+    /**
+     * @var MainService
+     */
+    private $mainService;
+
     /**
      * {@inheritDoc}
      */
@@ -56,6 +63,7 @@ class MainController extends Controller
      */
     public function init()
     {
+        $this->mainService = new MainService();
         \Yii::$app->response->format = Response::FORMAT_JSON;
         parent::init();
     }
@@ -76,7 +84,6 @@ class MainController extends Controller
 
     public function actionUser()
     {
-//        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $session =
             Session::find()
@@ -114,47 +121,22 @@ class MainController extends Controller
     }
 
     /**
-     *
+     * @return array
      */
     public function actionInit()
     {
-        $access_token = '';
+        $mainService = $this->mainService;
         $getRequest = \Yii::$app->request->get();
-        $mid = $getRequest['mid'];
-        $sid = $getRequest['sid'];
 
-        $auth = Auth::find()->where(['source_id' => $getRequest['mid']])->one();
+        $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
 
         if ($auth) {
-            return ['token' => $auth->user->auth_key];
+            return [$mainService->receiveCurrentUser($auth->user)];
         }
 
-        $user =
-            new User(
-                [
-                    'username' => $mid,
-                    'email' => ' ',
-                    'status' => 10,
-                    'auth_key' => md5($sid),
-                    'password_hash' => Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString()),
-                    'created_at' => $time = time(),
-                    'updated_at' => $time,
-                ]
-            );
+        $user = $mainService->createAccount($getRequest['mid']);
 
-        if ($user->save(false)) {
-            $auth =
-                new Auth(
-                    [
-                        'user_id' => $user->id,
-                        'source' => 'vkontakte',
-                        'source_id' => (string) $mid,
-                    ]
-                );
-            $auth->save(false);
-        }
-
-        return ['token' => $user->auth_key];
+        return $mainService->receiveCurrentUser($user);
     }
 
     /**

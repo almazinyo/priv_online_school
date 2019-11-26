@@ -86,6 +86,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSessions()
+    {
+        return $this->hasMany(Session::className(), ['user_id' => 'id']);
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
