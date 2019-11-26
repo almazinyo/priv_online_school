@@ -89,8 +89,7 @@ class MainController extends Controller
             Session::find()
                 ->where(['user_id' => \Yii::$app->user->id])
                 ->andWhere(['!=', 'user_id', ''])
-                ->orderBy(['expire' => SORT_DESC])->asArray()->one()
-        ;
+                ->orderBy(['expire' => SORT_DESC])->asArray()->one();
 
         if (empty($session)) {
             throw new UnauthorizedHttpException();
@@ -121,24 +120,22 @@ class MainController extends Controller
     }
 
     /**
-     * @return array
+     * @return array | bool
      */
     public function actionInit()
     {
         $mainService = $this->mainService;
         $getRequest = \Yii::$app->request->get();
 
-        if (empty($getRequest)) {
-            throw new UnauthorizedHttpException();
+        if (isset($getRequest['mid'])) {
+            $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
+
+            if (isset($auth->user)) {
+                return $mainService->receiveCurrentUser($auth->user);
+            }
         }
 
-        $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
-
-        if ($auth) {
-            return $mainService->receiveCurrentUser($auth->user);
-        }
-
-        throw new UnauthorizedHttpException();
+        return false;
     }
 
     /**
