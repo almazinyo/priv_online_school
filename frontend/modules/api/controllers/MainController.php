@@ -134,9 +134,7 @@ class MainController extends Controller
             return [$mainService->receiveCurrentUser($auth->user)];
         }
 
-        $user = $mainService->createAccount($getRequest['mid']);
-
-        return $mainService->receiveCurrentUser($user);
+        return [];
     }
 
     /**
