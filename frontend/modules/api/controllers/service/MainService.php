@@ -13,16 +13,14 @@ class MainService extends Component
 {
     public function receiveCurrentUser(User $user)
     {
-        $session = Session::findOne(['user_id'=>$user->id]);
+        $session = Session::findOne(['user_id' => $user->id]);
 
         return
             [
-                'username' => $user->username,
-                'email' => $user->email,
-                'session' => [
+                'status' => 200,
+                'data' => [
+                    'username' => $user->username,
                     'token' => $session->token,
-                    'expire' => $session->expire,
-                    'status' => $session->status,
                 ],
             ];
     }
