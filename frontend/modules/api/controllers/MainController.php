@@ -128,13 +128,17 @@ class MainController extends Controller
         $mainService = $this->mainService;
         $getRequest = \Yii::$app->request->get();
 
+        if (empty($getRequest)) {
+            throw new UnauthorizedHttpException();
+        }
+
         $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
 
         if ($auth) {
             return [$mainService->receiveCurrentUser($auth->user)];
         }
 
-        return [];
+        throw new UnauthorizedHttpException();
     }
 
     /**
