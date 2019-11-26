@@ -135,7 +135,7 @@ class MainController extends Controller
         $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
 
         if ($auth) {
-            return [$mainService->receiveCurrentUser($auth->user)];
+            return $mainService->receiveCurrentUser($auth->user);
         }
 
         throw new UnauthorizedHttpException();
