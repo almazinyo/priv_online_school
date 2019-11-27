@@ -146,6 +146,11 @@ class SubjectsController extends Controller
         ];
     }
 
+    public function actionCheckTest()
+    {
+        return \Yii::$app->request->post();
+    }
+
     /**
      * @return mixed[]
      * @throws NotFoundHttpException
