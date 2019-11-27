@@ -124,6 +124,12 @@ class MainController extends Controller
      */
     public function actionInit()
     {
+        $result =
+            [
+                'status' => 200,
+                'data' => [],
+            ];
+
         $mainService = $this->mainService;
         $getRequest = \Yii::$app->request->get();
 
@@ -131,11 +137,11 @@ class MainController extends Controller
             $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
 
             if (isset($auth->user)) {
-                return $mainService->receiveCurrentUser($auth->user);
+                $result = $mainService->receiveCurrentUser($auth->user);
             }
         }
 
-        return false;
+        return $result;
     }
 
     /**
