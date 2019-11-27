@@ -8,7 +8,6 @@ class m130524_201442_init extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
@@ -36,53 +35,10 @@ class m130524_201442_init extends Migration
         $user->generateAuthKey();
         $user->setPassword('admin1234');
         $user->save(false);
-
-        $this->createTable(
-            'session',
-            [
-                'id' => $this->char(40)->notNull(),
-                'expire' => $this->integer(),
-                'data' => $this->binary(),
-                'token'=>$this->string('500'),
-                'user_id' => $this->integer(),
-                'status'=>$this->smallInteger(1)->defaultValue(0),
-            ]
-        );
-
-        $this->addForeignKey(
-            'fk-session-user_id-user-id',
-            'session',
-            'user_id',
-            'user',
-            'id',
-            'CASCADE',
-            'CASCADE'
-        );
-
-        $this->createTable(
-            'auth',
-            [
-                'id' => $this->primaryKey(),
-                'user_id' => $this->integer()->notNull(),
-                'source' => $this->string()->notNull(),
-                'source_id' => $this->string()->notNull(),
-            ]);
-
-        $this->addForeignKey(
-            'fk-auth-user_id-user-id',
-            'auth',
-            'user_id',
-            'user',
-            'id',
-            'CASCADE',
-            'CASCADE'
-        );
     }
 
     public function down()
     {
-        $this->dropTable('session');
-        $this->dropTable('auth');
         $this->dropTable('{{%user}}');
     }
 }
