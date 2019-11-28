@@ -8,6 +8,8 @@ use common\models\StorageLessons;
 use common\models\Subjects;
 use common\models\Teachers;
 use frontend\modules\api\components\Select;
+use frontend\modules\api\controllers\service\SubjectsService;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,6 +17,11 @@ use yii\web\Response;
 
 class SubjectsController extends Controller
 {
+    /**
+     * @var SubjectsService
+     */
+    private $subjectsService;
+
     /**
      * {@inheritDoc}
      */
@@ -64,6 +71,8 @@ class SubjectsController extends Controller
     public function init()
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
+        $this->subjectsService = new SubjectsService();
+
         parent::init();
     }
 
@@ -148,7 +157,10 @@ class SubjectsController extends Controller
 
     public function actionCheckTest()
     {
-        return \Yii::$app->request->post();
+
+        $answers = [['id' => 1, 'answer' => 3], ['id' => 2, 'answer' => 3], ['id' => 3, 'answer' => 3],];
+
+        return $this->subjectsService->checkTest($answers);
     }
 
     /**
