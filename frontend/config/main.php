@@ -50,6 +50,9 @@ return [
             'csrfParam' => '_csrf-frontend',
 //            'enableCookieValidation' => false,
             'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
 //        'response' => [
 //            'format' => yii\web\Response::FORMAT_JSON,
@@ -83,7 +86,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning', 'info'],
                 ],
             ],
         ],
