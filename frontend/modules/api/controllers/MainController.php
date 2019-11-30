@@ -30,11 +30,32 @@ class MainController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'PrBlockFilter' => [
-                'class' => 'app\components\filters\PrBlockFilter',
-            ]
-        ];
+        return \yii\helpers\ArrayHelper::merge([
+            [
+                'class' => \yii\filters\Cors::className(),
+                'cors' =>
+                    [
+                        'Origin' => ['*'],
+                        'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                        'Access-Control-Request-Headers' => [
+                            'Origin',
+                            'X-Requested-With',
+                            'Content-Type',
+                            'accept',
+                            /*'Authorization'*/
+                        ],
+                        'Access-Control-Expose-Headers' =>
+                            [
+                                'X-Pagination-Per-Page',
+                                'X-Pagination-Total-Count',
+                                'X-Pagination-Current-Page',
+                                'X-Pagination-Page-Count',
+                            ],
+                    ],
+            ],
+        ],
+            parent::behaviors()
+        );
     }
 
     /**
@@ -68,7 +89,8 @@ class MainController extends Controller
             Session::find()
                 ->where(['user_id' => \Yii::$app->user->id])
                 ->andWhere(['!=', 'user_id', ''])
-                ->orderBy(['expire' => SORT_DESC])->asArray()->one();
+                ->orderBy(['expire' => SORT_DESC])->asArray()->one()
+        ;
 
         if (empty($session)) {
             throw new UnauthorizedHttpException();
@@ -110,15 +132,16 @@ class MainController extends Controller
             ];
 
         $request = Yii::$app->request;
-        $data = $request->getBodyParam('data');
-
-        Yii::info('ololo: '.serialize($data), __METHOD__);
-
         $mainService = $this->mainService;
-        $getRequest = \Yii::$app->request->get();
+        $mid =
+            preg_replace(
+                '~.*mid\=|\&.*~sui',
+                '',
+                base64_decode($request->post('prBlock'))
+            );
 
-        if (isset($getRequest['mid'])) {
-            $auth = $mainService->findAuth(Html::encode($getRequest['mid']));
+        if (isset($mid)) {
+            $auth = $mainService->findAuth(Html::encode($mid));
 
             if (isset($auth->user)) {
                 $result = $mainService->receiveCurrentUser($auth->user);
@@ -129,7 +152,7 @@ class MainController extends Controller
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function actionOptions()
     {
