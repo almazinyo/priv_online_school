@@ -17,6 +17,9 @@ use yii\web\UploadedFile;
  */
 class BlogController extends Controller
 {
+
+    public $enableCsrfValidation = false;
+
     /**
      * {@inheritdoc}
      */

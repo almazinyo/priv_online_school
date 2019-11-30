@@ -109,6 +109,11 @@ class MainController extends Controller
                 'data' => [],
             ];
 
+        $request = Yii::$app->request;
+        $data = $request->getBodyParam('data');
+
+        Yii::info('ololo: '.serialize($data), __METHOD__);
+
         $mainService = $this->mainService;
         $getRequest = \Yii::$app->request->get();
 
