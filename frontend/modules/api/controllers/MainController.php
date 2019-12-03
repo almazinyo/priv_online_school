@@ -121,15 +121,10 @@ class MainController extends Controller
     }
 
     /**
-     * @return array | bool
+     * @return array
      */
     public function actionInit()
     {
-        $result =
-            [
-                'status' => 200,
-                'data' => [],
-            ];
 
         $request = Yii::$app->request;
         $mainService = $this->mainService;
@@ -140,15 +135,22 @@ class MainController extends Controller
                 base64_decode($request->post('prBlock'))
             );
 
-        if (isset($mid)) {
-            $auth = $mainService->findAuth(Html::encode($mid));
-
-            if (isset($auth->user)) {
-                $result = $mainService->receiveCurrentUser($auth->user);
-            }
+        if (empty($mid)) {
+            return [
+                'status' => 404,
+                'data' => [],
+            ];
         }
 
-        return $result;
+        $auth = $mainService->findAuth(Html::encode($mid));
+
+        if (isset($auth->user)) {
+            return $mainService->receiveCurrentUser($auth->user);
+        }
+
+        $user = $mainService->createAccount($mid);
+
+        return $mainService->receiveCurrentUser($user);
     }
 
     /**
