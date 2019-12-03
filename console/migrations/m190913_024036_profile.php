@@ -35,6 +35,7 @@ class m190913_024036_profile extends Migration
                 'bonus_points' => $this->integer(11),
                 'first_name' => $this->string(300),
                 'last_name' => $this->string(300),
+                'date_of_birth' => $this->string(300),
                 'phone' => $this->string(300),
                 'city' => $this->string(300),
                 'created_at' => $this->string(300),

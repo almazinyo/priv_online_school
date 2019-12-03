@@ -5,7 +5,7 @@ namespace frontend\modules\api\controllers;
 use common\models\User;
 use frontend\modules\api\controllers\service\UsersService;
 use yii\helpers\Html;
-use yii\web\Controller;
+use yii\base\Controller;
 use yii\web\Response;
 use yii\web\Session;
 use yii;
@@ -58,8 +58,10 @@ class UsersController extends Controller
         parent::init();
     }
 
-    public function actionCurrentUser($token)
+    public function actionCurrentUser()
     {
+        $token = Yii::$app->request->post('token');
+
         $service = $this->userService;
 
         $user = $service->receiveUser($token);
@@ -72,6 +74,7 @@ class UsersController extends Controller
                     'email' => $user->email,
                     'first_name' => $user->profiles->last_name,
                     'phone' => $user->profiles->phone,
+                    'date_of_birth' => $user->profiles->date_of_birth,
                     'city' => $user->profiles->city,
                 ],
 
