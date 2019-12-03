@@ -72,9 +72,10 @@ class UsersController extends Controller
                 'data' => [
                     'username' => $user->username,
                     'email' => $user->email,
-                    'first_name' => $user->profiles->last_name,
+                    'first_name' => $user->profiles->first_name,
+                    'last_name' => $user->profiles->last_name,
                     'phone' => $user->profiles->phone,
-                    'date_of_birth' => $user->profiles->date_of_birth,
+                    'date_birth' => $user->profiles->date_of_birth,
                     'city' => $user->profiles->city,
                 ],
 
