@@ -61,7 +61,7 @@ class UsersController extends Controller
 
     public function actionCurrentUser()
     {
-        $helpers =  new Helpers();
+        $helpers = new Helpers();
         $postRequest = Yii::$app->request->post();
 
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
@@ -83,5 +83,16 @@ class UsersController extends Controller
                 ],
 
             ];
+    }
+
+    public function actionUpdateData()
+    {
+        $helpers = new Helpers();
+        $postRequest = Yii::$app->request->post();
+
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $service = $this->userService;
+
+        return $service->updateUserInfo($data);
     }
 }
