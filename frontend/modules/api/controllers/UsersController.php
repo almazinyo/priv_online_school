@@ -95,4 +95,15 @@ class UsersController extends Controller
 
         return $service->updateUserInfo($data);
     }
+
+    public function actionContact()
+    {
+        $helpers = new Helpers();
+        $postRequest = Yii::$app->request->post();
+
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $service = $this->userService;
+
+        return $service->sendEmail($data);
+    }
 }

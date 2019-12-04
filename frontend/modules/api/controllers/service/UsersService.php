@@ -7,6 +7,7 @@ use common\models\User;
 use yii\base\Component;
 use yii\helpers\Html;
 use \common\models\Session;
+use yii;
 
 class UsersService extends Component
 {
@@ -40,5 +41,23 @@ class UsersService extends Component
         $user->profiles->city = $data['city'];
 
         return $user->save(false);
+    }
+
+    public function sendEmail($data)
+    {
+        $content =
+            sprintf(
+                'ЭЛЕКТРОННАЯ ПОЧТА: %s <br /> НОМЕР ТЕЛЕФОНА: %s <br />ВОПРОС: %s <br />',
+                $data['email'],
+                $data['phone'],
+                $data['content']
+            );
+        return Yii::$app->mailer->compose(['text' => 'contact', 'html' => 'contact'], ['content' => $content])
+            ->setTo($data['email'])
+//            ->setFrom([$this->email => $this->name])
+//            ->setSubject('')
+//            ->setTextBody( sprintf(' email:%s \n %s ',$this->email,$this->body))
+            ->send()
+            ;
     }
 }
