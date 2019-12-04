@@ -3,6 +3,7 @@
 namespace frontend\modules\api\controllers;
 
 use common\models\User;
+use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\UsersService;
 use yii\helpers\Html;
 use yii\base\Controller;
@@ -60,11 +61,13 @@ class UsersController extends Controller
 
     public function actionCurrentUser()
     {
-        $token = Yii::$app->request->post('token');
+        $helpers =  new Helpers();
+        $postRequest = Yii::$app->request->post();
 
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
         $service = $this->userService;
 
-        $user = $service->receiveUser($token);
+        $user = $service->receiveUser($data['token']);
 
         return
             [
