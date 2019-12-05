@@ -1,0 +1,10 @@
+POST http://api.examator.ru/api/users/current-user
+Content-Type: application/json
+
+{   "prBlock": "eyJ0b2tlbiI6ImtoRFNDX3ZFRUluT2FQazBUQXk0aU1sWUdfWTgtRV81In0=" }
+
+
+<> 2019-12-04T120501.500.json
+
+###
+

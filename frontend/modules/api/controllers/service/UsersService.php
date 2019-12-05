@@ -33,14 +33,15 @@ class UsersService extends Component
         $userId = $this->receiveUserId($data['token']);
         $user = User::findOne(['id' => $userId]);
         $profile = Profile::findOne(['user_id' => $userId]);
-        $user->email = $data['email'];
-        $user->profiles->first_name = $data['first_name'];
-        $user->profiles->last_name = $data['last_name'];
-        $user->profiles->date_of_birth = $data['date_birth'];
-        $user->profiles->phone = $data['phone'];
-        $user->profiles->city = $data['city'];
 
-        return $user->save(false);
+        $user->email = $data['data']['email'];
+        $profile->first_name = $data['data']['first_name'];
+        $profile->last_name = $data['data']['last_name'];
+        $profile->date_of_birth = $data['data']['date_birth'];
+        $profile->phone = $data['data']['phone'];
+        $profile->city = $data['data']['city'];
+
+        return $user->save(false) && $profile->save(false);
     }
 
     public function sendEmail($data)

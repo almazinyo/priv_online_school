@@ -85,12 +85,20 @@ class UsersController extends Controller
             ];
     }
 
-    public function actionUpdateData()
+    /**
+     * @return bool
+     */
+    public function actionSaveProfileDetails()
     {
         $helpers = new Helpers();
         $postRequest = Yii::$app->request->post();
 
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+
+        if (empty($data)) {
+            return false;
+        }
+
         $service = $this->userService;
 
         return $service->updateUserInfo($data);
