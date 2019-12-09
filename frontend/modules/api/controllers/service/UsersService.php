@@ -34,6 +34,11 @@ class UsersService extends Component
         $user = User::findOne(['id' => $userId]);
         $profile = Profile::findOne(['user_id' => $userId]);
 
+        if (empty($profile)) {
+            $profile = new Profile();
+            $profile->user_id = $user->id;
+        }
+
         $user->email = $data['data']['email'];
         $profile->first_name = $data['data']['first_name'];
         $profile->last_name = $data['data']['last_name'];

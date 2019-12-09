@@ -8,12 +8,15 @@ use common\models\Menu;
 use common\models\Options;
 use common\models\Session;
 use frontend\models\User;
+use frontend\modules\api\components\Helpers;
 use frontend\modules\api\components\Select;
 use frontend\modules\api\controllers\service\MainService;
 use yii\base\Controller;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotAcceptableHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
 use  Yii;
@@ -128,11 +131,17 @@ class MainController extends Controller
 
         $request = Yii::$app->request;
         $mainService = $this->mainService;
+
+        if (!$request->post('prBlock')) {
+            throw new NotFoundHttpException();
+        }
+
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $mid =
             preg_replace(
                 '~.*mid\=|\&.*~sui',
                 '',
-                base64_decode($request->post('prBlock'))
+                $data['data']
             );
 
         if (empty($mid)) {
