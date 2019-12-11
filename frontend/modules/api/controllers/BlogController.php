@@ -54,7 +54,31 @@ class BlogController extends Controller
     }
 
     /**
-     * @return mixed[]
+     * @SWG\Get(path="/api/blog",
+     *     tags={"blog"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *       @SWG\Parameter(
+     *        in = "formData",
+     *        name = "test",
+     *        description = "",
+     *        required = false,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     *     @SWG\Response(
+     *         response = 401,
+     *         description = "需要重新登陆",
+     *         @SWG\Schema(ref="#/definitions/Error")
+     *     )
+     * )
+     *
      */
     public function actionIndex()
     {

@@ -85,6 +85,22 @@ class SiteController extends Controller
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
             ],
+            'doc' => [
+                'class' => 'light\swagger\SwaggerAction',
+                'restUrl' => \yii\helpers\Url::to(['site/api'], true),
+            ],
+            //The resultUrl action.
+            'api' => [
+                'class' => 'light\swagger\SwaggerApiAction',
+                //The scan directories, you should use real path there.
+                'scanDir' => [
+                    Yii::getAlias('@frontend/modules/api/swagger'),
+                    Yii::getAlias('@frontend/modules/api/controllers'),
+                    Yii::getAlias('@frontend/modules/api/models'),
+                ],
+                //The security key
+//                'api_key' => 'test',
+            ],
         ];
     }
 

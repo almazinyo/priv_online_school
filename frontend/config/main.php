@@ -96,8 +96,10 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
+//            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+
                 '' => 'site/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
@@ -105,6 +107,7 @@ return [
                 'api/blog/details/<slug>' => 'api/blog/details/',
                 'api/sections/details/<slugSection>/<slugLesson>' => 'api/sections/details/',
                 'api/sections/details/<slugSection>' => 'api/sections/details/',
+                'api/subjects/teachers' => 'api/subjects/teachers/',
                 'api/subjects/teacher/<slug>' => 'api/subjects/teacher/',
             ],
         ],
