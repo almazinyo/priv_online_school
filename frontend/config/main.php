@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru',
-    'defaultRoute' => 'site/index',
+    'defaultRoute' => 'site/doc',
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'api' => [
@@ -100,7 +100,7 @@ return [
             'showScriptName' => false,
             'rules' => [
 
-                '' => 'site/index',
+                '' => 'site/doc',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/lessons/details/<slug>' => 'api/lessons/details/',
