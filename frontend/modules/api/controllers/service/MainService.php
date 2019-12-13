@@ -13,7 +13,16 @@ class MainService extends Component
 {
     public function receiveCurrentUser(User $user)
     {
-        $session = Session::findOne(['user_id' => $user->id]);
+        $session =
+            Session::find()
+                ->where(['user_id' => $user->id])
+                ->andWhere(['>', 'expire', time()])
+                ->one()
+        ;
+
+        if (empty($session)) {
+            $session = $this->createSession($user->id);
+        }
 
         return
             [
@@ -65,19 +74,30 @@ class MainService extends Component
         }
 
         if ($auth->save(false)) {
-            $session =
-                new Session(
-                    [
-                        'id' => Yii::$app->security->generateRandomString(40),
-                        'expire' => time(),
-                        'user_id' => $user->id,
-                        'status' => 1,
-                        'token' => Yii::$app->security->generateRandomString(),
-                    ]
-                );
-            $session->save(false);
+            $this->createSession($user->id);
         }
 
         return $user;
+    }
+
+    /**
+     * @param $userId
+     * @return bool
+     * @throws yii\base\Exception
+     */
+    private function createSession($userId)
+    {
+        $session =
+            new Session(
+                [
+                    'id' => Yii::$app->security->generateRandomString(40),
+                    'expire' => strtotime('+90 days'),
+                    'date' => time(),
+                    'user_id' => $userId,
+                    'status' => 1,
+                    'token' => Yii::$app->security->generateRandomString(),
+                ]
+            );
+        return $session->save(false);
     }
 }

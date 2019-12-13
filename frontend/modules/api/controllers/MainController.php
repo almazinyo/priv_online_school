@@ -145,10 +145,7 @@ class MainController extends Controller
             );
 
         if (empty($mid)) {
-            return [
-                'status' => 404,
-                'data' => [],
-            ];
+            return [];
         }
 
         $auth = $mainService->findAuth(Html::encode($mid));
