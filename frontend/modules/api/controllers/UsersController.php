@@ -67,6 +67,22 @@ class UsersController extends Controller
         parent::init();
     }
 
+
+    /**
+     * @SWG\Post(path="api/users/current-user",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
     public function actionCurrentUser()
     {
         $helpers = $this->helpers;
@@ -94,7 +110,19 @@ class UsersController extends Controller
     }
 
     /**
-     * @return bool
+     * @SWG\Post(path="api/users/save-prof-details",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
      */
     public function actionSaveProfileDetails()
     {
@@ -112,6 +140,21 @@ class UsersController extends Controller
         return $service->updateUserInfo($data);
     }
 
+    /**
+     * @SWG\Post(path="api/users/contact",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
     public function actionContact()
     {
         $helpers = $this->helpers;
