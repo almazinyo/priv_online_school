@@ -56,7 +56,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return mixed[]
+     * @SWG\Get(path="/api/subjects",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionIndex()
     {
@@ -77,7 +87,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return mixed[]
+     * @SWG\Get(path="/api/subjects/menu",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionMenu()
     {
@@ -91,9 +111,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @param $slug
-     * @return array
-     * @throws NotFoundHttpException
+     * @SWG\Get(path="/api/subjects/details{slug}",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionDetails($slug)
     {
@@ -110,7 +138,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return array
+     * @SWG\Get(path="/api/subjects/sections",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionSections()
     {
@@ -121,7 +159,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return array
+     * @SWG\Get(path="/api/subjects/lessons",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionLessons()
     {
@@ -132,7 +180,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return array
+     * @SWG\Get(path="/api/subjects/storages",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionStorage()
     {
@@ -143,7 +201,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return mixed[]
+     * @SWG\Get(path="/api/subjects/teachers",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionTeachers()
     {
@@ -164,8 +232,17 @@ class SubjectsController extends Controller
     }
 
     /**
-     * @return mixed[]
-     * @throws NotFoundHttpException
+     * @SWG\Get(path="/api/subjects/teacher/{slug}",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
      */
     public function actionTeacher($slug)
     {

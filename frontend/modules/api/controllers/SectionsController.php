@@ -49,7 +49,19 @@ class SectionsController extends Controller
         parent::init();
     }
 
-
+    /**
+     * @SWG\Get(path="/api/sections/{slugSection}{slugLesson}",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     */
     public function actionDetails($slugSection, $slugLesson = '')
     {
 
