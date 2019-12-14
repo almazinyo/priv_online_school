@@ -16,6 +16,11 @@ class UsersService extends Component
         return Session::findOne(['token' => Html::encode($token)])->user_id;
     }
 
+    public function receiveSessionCurrentUser(string $token): Session
+    {
+        return Session::findOne(['token' => Html::encode($token)]);
+    }
+
     public function receiveUser(string $token): User
     {
         $userId = $this->receiveUserId($token);

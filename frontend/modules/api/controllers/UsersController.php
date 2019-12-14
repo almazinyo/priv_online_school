@@ -5,6 +5,7 @@ namespace frontend\modules\api\controllers;
 use common\models\User;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\UsersService;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\base\Controller;
 use yii\web\Response;
@@ -51,9 +52,16 @@ class UsersController extends Controller
      */
     private $userService;
 
+    /**
+     * @var Helpers
+     */
+    private $helpers;
+
     public function init()
     {
         $this->userService = new UsersService();
+        $this->helpers = new Helpers();
+
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         parent::init();
@@ -61,7 +69,7 @@ class UsersController extends Controller
 
     public function actionCurrentUser()
     {
-        $helpers = new Helpers();
+        $helpers = $this->helpers;
         $postRequest = Yii::$app->request->post();
 
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
@@ -106,12 +114,50 @@ class UsersController extends Controller
 
     public function actionContact()
     {
-        $helpers = new Helpers();
+        $helpers = $this->helpers;
         $postRequest = Yii::$app->request->post();
 
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
         $service = $this->userService;
 
         return $service->sendEmail($data);
+    }
+
+
+    /**
+     * @SWG\Post(path="api/users/logout",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *       @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = "",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
+    public function actionLogout()
+    {
+        $helpers = $this->helpers;
+        $postRequest = Yii::$app->request->post();
+
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $service = $this->userService;
+
+        $session = $service->receiveSessionCurrentUser($data['token']);
+        Yii::$app->getSession()->destroy();
+        $session->expire = time();
+
+        return $session->save(false);
     }
 }

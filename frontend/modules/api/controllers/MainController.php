@@ -133,7 +133,7 @@ class MainController extends Controller
         $mainService = $this->mainService;
 
         if (!$request->post('prBlock')) {
-            throw new NotFoundHttpException();
+            return [];
         }
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));

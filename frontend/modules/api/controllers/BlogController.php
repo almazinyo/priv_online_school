@@ -74,7 +74,7 @@ class BlogController extends Controller
      *     ),
      *     @SWG\Response(
      *         response = 401,
-     *         description = "需要重新登陆",
+     *         description = "",
      *         @SWG\Schema(ref="#/definitions/Error")
      *     )
      * )
@@ -109,11 +109,6 @@ class BlogController extends Controller
      *         response = 200,
      *         description = " success"
      *     ),
-     *     @SWG\Response(
-     *         response = 401,
-     *         description = "需要重新登陆",
-     *         @SWG\Schema(ref="#/definitions/Error")
-     *     )
      * )
      *
      */
