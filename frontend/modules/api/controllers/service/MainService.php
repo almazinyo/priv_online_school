@@ -92,7 +92,7 @@ class MainService extends Component
                 [
                     'id' => Yii::$app->security->generateRandomString(40),
                     'expire' => strtotime('+90 days'),
-                    'date' => time(),
+                    'data' => time(),
                     'user_id' => $userId,
                     'status' => 1,
                     'token' => Yii::$app->security->generateRandomString(),
