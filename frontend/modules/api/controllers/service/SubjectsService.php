@@ -39,7 +39,7 @@ class SubjectsService extends Component
         return
             [
                 'correct_answers' => $correctly,
-                'wrong_answers' => $correctly,
+                'wrong_answers' => $wrong,
             ];
     }
 }

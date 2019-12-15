@@ -241,15 +241,15 @@ class SubjectsController extends Controller
     {
 
         $helpers = new Helpers();
-        $postRequest = Yii::$app->request->post();
+        $postRequest = \Yii::$app->request->post();
 
         $answers = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
 
-        if (empty($answers)) {
+        if (empty($answers['data'])) {
             return false;
         }
 
-        return $this->subjectsService->checkTest($answers);
+        return $this->subjectsService->checkTest($answers['data']);
     }
 
     /**
