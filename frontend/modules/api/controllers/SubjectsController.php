@@ -7,11 +7,12 @@ use common\models\SectionSubjects;
 use common\models\StorageLessons;
 use common\models\Subjects;
 use common\models\Teachers;
+use frontend\modules\api\components\Helpers;
 use frontend\modules\api\components\Select;
 use frontend\modules\api\controllers\service\SubjectsService;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\web\Controller;
+use yii\base\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -239,7 +240,14 @@ class SubjectsController extends Controller
     public function actionCheckTest()
     {
 
-        $answers = [['id' => 1, 'answer' => 3], ['id' => 2, 'answer' => 3], ['id' => 3, 'answer' => 3],];
+        $helpers = new Helpers();
+        $postRequest = Yii::$app->request->post();
+
+        $answers = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+
+        if (empty($answers)) {
+            return false;
+        }
 
         return $this->subjectsService->checkTest($answers);
     }
