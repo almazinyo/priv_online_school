@@ -15,6 +15,7 @@ use yii\helpers\Html;
 use yii\base\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use  yii;
 
 class SubjectsController extends Controller
 {
@@ -124,9 +125,11 @@ class SubjectsController extends Controller
      *     ),
      * )
      */
-    public function actionDetails($slug)
+    public function actionDetails()
     {
-        $model = Subjects::receiveSpecificData(Html::encode($slug));
+        $getRequest = \Yii::$app->request->get();
+
+        $model = Subjects::receiveSpecificData(Html::encode($getRequest['slug']));
 
         if (empty($model)) {
             throw new NotFoundHttpException();
@@ -265,9 +268,11 @@ class SubjectsController extends Controller
      *     ),
      * )
      */
-    public function actionTeacher($slug)
+    public function actionTeacher()
     {
-        $model = Teachers::receiveSpecificData($slug);
+        $getRequest = \Yii::$app->request->get();
+
+        $model = Teachers::receiveSpecificData($getRequest['slug']);
 
         if (empty($model)) {
             throw new NotFoundHttpException();
