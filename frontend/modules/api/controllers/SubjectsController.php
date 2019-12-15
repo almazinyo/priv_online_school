@@ -223,6 +223,19 @@ class SubjectsController extends Controller
         ];
     }
 
+    /**
+     * @SWG\Post(path="/api/subjects/check-test",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     */
     public function actionCheckTest()
     {
 
