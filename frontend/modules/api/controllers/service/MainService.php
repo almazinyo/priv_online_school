@@ -3,6 +3,7 @@
 namespace frontend\modules\api\controllers\service;
 
 use common\models\Auth;
+use common\models\Profile;
 use common\models\Session;
 use common\models\User;
 use phpDocumentor\Reflection\Types\String_;
@@ -11,6 +12,9 @@ use  yii;
 
 class MainService extends Component
 {
+    const  ACCESS_TOKEN_VK = '9717d5729717d5729717d572e8977a0a15997179717d572cad34a6c0ee980b0d742e42c';
+    const  FIELDS_VK = 'photo_max,bdate,city,country,education,contacts,universities';
+
     public function receiveCurrentUser(User $user)
     {
         $session =
@@ -49,6 +53,15 @@ class MainService extends Component
 
     public function createAccount(string $mid)
     {
+        $urlApiVk =
+            sprintf(
+                'https://api.vk.com/method/users.get?user_id=%s&fields=%s&access_token=%s&v=5.103',
+                $mid,
+                self::FIELDS_VK,
+                self::ACCESS_TOKEN_VK
+            );
+        $informationUser = json_decode(file_get_contents($urlApiVk), true);
+
         $user =
             new User(
                 [
@@ -75,6 +88,23 @@ class MainService extends Component
 
         if ($auth->save(false)) {
             $this->createSession($user->id);
+        }
+
+        if (!empty($informationUser['response'])) {
+            $profile =
+                new Profile(
+                    [
+                        'user_id' => $user->id,
+                        'first_name' => $informationUser['response']['first_name'],
+                        'last_name' => $informationUser['response']['last_name'],
+                        'city' => $informationUser['response']['city']['title'],
+                        'date_of_birth' => str_replace('.', '-', $informationUser['response']['last_name']),
+                        'created_at' => time(),
+                        'is_status' => true,
+                        'bonus_points' => 0,
+                    ]
+                );
+            $profile->save(false);
         }
 
         return $user;

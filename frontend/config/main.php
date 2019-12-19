@@ -17,6 +17,8 @@ return [
     'modules' => [
         'api' => [
             'class' => 'frontend\modules\api\Module',
+            'cache' => 'cache',
+            'cacheKey' => 'api-swagger-cache', // default is 'api-swagger-cache'
         ],
     ],
     'components' => [
