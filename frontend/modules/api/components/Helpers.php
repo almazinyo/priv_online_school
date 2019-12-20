@@ -26,15 +26,16 @@ class Helpers extends Component
      */
     public function downloadImage(string $imgUrl): string
     {
-        if (empty($imgUrl)){
+        if (empty($imgUrl)) {
             return '';
         }
 
-        $imgName = preg_replace('~.*\/|\?.*~sui','', $imgUrl);
-        $imgPath = '/var/www/html/priv_online_school/frontend/web/images/users/' . $imgName;
+        $imgName = preg_replace('~.*\/|\?.*~sui', '', $imgUrl);
+        $imgPath = \yii\helpers\Url::base('') . '/images/users/' . $imgName;
+        $downloadPath = \Yii::getAlias('@webRoot') . '/images/users/' . $imgName;
 
         $ch = curl_init($imgUrl);
-        $fp = fopen($imgPath, 'wb');
+        $fp = fopen($downloadPath, 'wb');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);
