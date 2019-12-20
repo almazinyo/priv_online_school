@@ -95,10 +95,10 @@ class MainService extends Component
                 new Profile(
                     [
                         'user_id' => $user->id,
-                        'first_name' => $informationUser['response']['first_name'],
-                        'last_name' => $informationUser['response']['last_name'],
-                        'city' => $informationUser['response']['city']['title'],
-                        'date_of_birth' => str_replace('.', '-', $informationUser['response']['last_name']),
+                        'first_name' => $informationUser['response'][0]['first_name'] ?? '',
+                        'last_name' => $informationUser['response'][0]['last_name'] ?? '',
+                        'city' => $informationUser['response'][0]['city']['title'],
+                        'date_of_birth' => str_replace('.', '-', $informationUser['response'][0]['bdate'] ?? ''),
                         'created_at' => time(),
                         'is_status' => true,
                         'bonus_points' => 0,
