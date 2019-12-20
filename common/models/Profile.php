@@ -12,6 +12,7 @@ use Yii;
  * @property int $bonus_points
  * @property string $first_name
  * @property string $last_name
+ * @property string $image
  * @property string $date_of_birth
  * @property string $phone
  * @property string $city
@@ -39,7 +40,7 @@ class Profile extends \yii\db\ActiveRecord
         return [
             [['user_id', 'bonus_points', 'is_status'], 'integer'],
             [
-                ['first_name', 'last_name', 'phone', 'city', 'date_of_birth', 'created_at', 'updated_at'],
+                ['first_name', 'last_name','image', 'phone', 'city', 'date_of_birth', 'created_at', 'updated_at'],
                 'string',
                 'max' => 300,
             ],
