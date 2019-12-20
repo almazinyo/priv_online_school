@@ -30,7 +30,7 @@ class Helpers extends Component
             return '';
         }
 
-        $imgName = preg_replace('~.*\/|\?.*~sui', $imgUrl);
+        $imgName = preg_replace('~.*\/|\?.*~sui','', $imgUrl);
         $imgPath = '/var/www/html/priv_online_school/frontend/web/images/users/' . $imgName;
 
         $ch = curl_init($imgUrl);
