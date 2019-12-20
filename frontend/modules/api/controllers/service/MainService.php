@@ -6,6 +6,7 @@ use common\models\Auth;
 use common\models\Profile;
 use common\models\Session;
 use common\models\User;
+use frontend\modules\api\components\Helpers;
 use phpDocumentor\Reflection\Types\String_;
 use yii\base\Component;
 use  yii;
@@ -99,6 +100,7 @@ class MainService extends Component
                         'last_name' => $informationUser['response'][0]['last_name'] ?? '',
                         'city' => $informationUser['response'][0]['city']['title'],
                         'date_of_birth' => str_replace('.', '-', $informationUser['response'][0]['bdate'] ?? ''),
+                        'image' => (new Helpers())->downloadImage($informationUser['response'][0]['photo_max']),
                         'created_at' => time(),
                         'is_status' => true,
                         'bonus_points' => 0,
@@ -130,4 +132,5 @@ class MainService extends Component
             );
         return $session->save(false);
     }
+
 }
