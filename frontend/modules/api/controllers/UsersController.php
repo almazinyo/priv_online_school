@@ -102,6 +102,7 @@ class UsersController extends Controller
                     'first_name' => $user->profiles->first_name,
                     'last_name' => $user->profiles->last_name,
                     'phone' => $user->profiles->phone,
+                    'image' => $user->profiles->image,
                     'date_birth' => $user->profiles->date_of_birth,
                     'city' => $user->profiles->city,
                 ],

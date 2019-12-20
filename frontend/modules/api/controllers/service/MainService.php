@@ -70,6 +70,7 @@ class MainService extends Component
                     'email' => ' ',
                     'status' => 10,
                     'auth_key' => Yii::$app->security->generateRandomString(),
+                    'password_reset_token' => Yii::$app->security->generateRandomString(),
                     'password_hash' => Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString()),
                     'created_at' => $time = time(),
                     'updated_at' => $time,
