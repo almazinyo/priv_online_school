@@ -26,6 +26,10 @@ class Helpers extends Component
      */
     public function downloadImage(string $imgUrl): string
     {
+        if (empty($imgUrl)){
+            return '';
+        }
+
         $imgName = preg_replace('~.*\/|\?.*~sui', $imgUrl);
         $imgPath = '/var/www/html/priv_online_school/frontend/web/images/users/' . $imgName;
 
