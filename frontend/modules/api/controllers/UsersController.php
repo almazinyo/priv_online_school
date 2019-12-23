@@ -96,7 +96,7 @@ class UsersController extends Controller
             [
                 'status' => 200,
                 'data' => [
-                    'username' => $user->username,
+                    'vk_id' => $user->username,
                     'email' => $user->email,
                     'first_name' => $user->profiles->first_name,
                     'last_name' => $user->profiles->last_name,
