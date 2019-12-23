@@ -31,7 +31,6 @@ class Helpers extends Component
         }
 
         $imgName = preg_replace('~.*\/|\?.*~sui', '', $imgUrl);
-        $imgPath = \yii\helpers\Url::base('') . '/images/users/' . $imgName;
         $downloadPath = \Yii::getAlias('@webRoot') . '/images/users/' . $imgName;
 
         $ch = curl_init($imgUrl);
@@ -42,6 +41,6 @@ class Helpers extends Component
         curl_close($ch);
         fclose($fp);
 
-        return $imgPath;
+        return $imgName;
     }
 }

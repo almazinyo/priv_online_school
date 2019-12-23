@@ -67,7 +67,6 @@ class UsersController extends Controller
         parent::init();
     }
 
-
     /**
      * @SWG\Post(path="api/users/current-user",
      *     tags={"user"},
@@ -102,7 +101,7 @@ class UsersController extends Controller
                     'first_name' => $user->profiles->first_name,
                     'last_name' => $user->profiles->last_name,
                     'phone' => $user->profiles->phone,
-                    'image' => $user->profiles->image,
+                    'image' => preg_replace('~.*\/~sui', '', $user->profiles->image),
                     'date_birth' => $user->profiles->date_of_birth,
                     'city' => $user->profiles->city,
                 ],
@@ -166,7 +165,6 @@ class UsersController extends Controller
 
         return $service->sendEmail($data);
     }
-
 
     /**
      * @SWG\Post(path="api/users/logout",
