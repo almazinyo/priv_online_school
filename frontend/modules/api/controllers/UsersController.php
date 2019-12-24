@@ -25,7 +25,7 @@ class UsersController extends Controller
                 'cors' =>
                     [
                         'Origin' => ['*'],
-                        'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                        'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD',],
                         'Access-Control-Request-Headers' => [
                             'Origin',
                             'X-Requested-With',
@@ -87,7 +87,8 @@ class UsersController extends Controller
         $helpers = $this->helpers;
         $postRequest = Yii::$app->request->post();
 
-        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $data = $helpers->decodePostRequest($postRequest['prBlock']);
+
         $service = $this->userService;
 
         $user = $service->receiveUser($data['token']);
@@ -193,11 +194,7 @@ class UsersController extends Controller
         $helpers = $this->helpers;
         $postRequest = Yii::$app->request->post();
 
-        if (empty($postRequest['prBlock'])){
-            return false;
-        }
-
-        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $data = $helpers->decodePostRequest($postRequest['prBlock']);
         $service = $this->userService;
 
         $session = $service->receiveSessionCurrentUser($data['token']);

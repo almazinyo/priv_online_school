@@ -51,7 +51,11 @@ class UsersService extends Component
         $profile->phone = $data['data']['phone'];
         $profile->city = $data['data']['city'];
 
-        return $user->save(false) && $profile->save(false);
+        if ($user->save(false) && $profile->save(false)) {
+            return ['status' => 200];
+        }
+
+        return false;
     }
 
     public function sendEmail($data)

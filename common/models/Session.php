@@ -32,10 +32,8 @@ class Session extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
             [['expire', 'user_id', 'status'], 'integer'],
             [['data'], 'string'],
-            [['id'], 'string', 'max' => 40],
             [['token'], 'string', 'max' => 500],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
