@@ -36,7 +36,7 @@ class m191127_100204_session extends Migration
         $this->createTable(
             'session',
             [
-                'id' => $this->char(40)->notNull(),
+                'id' => $this->primaryKey(),
                 'expire' => $this->integer(),
                 'data' => $this->binary(),
                 'token' => $this->string('500'),

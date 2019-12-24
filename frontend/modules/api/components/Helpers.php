@@ -4,6 +4,7 @@ namespace frontend\modules\api\components;
 
 use phpDocumentor\Reflection\Types\String_;
 use yii\base\Component;
+use yii\helpers\Html;
 
 class Helpers extends Component
 {
@@ -15,7 +16,7 @@ class Helpers extends Component
     {
         return
             json_decode(
-                base64_decode($param),
+                base64_decode(Html::encode($param)),
                 true
             );
     }

@@ -194,7 +194,7 @@ class UsersController extends Controller
         $postRequest = Yii::$app->request->post();
 
         if (empty($postRequest['prBlock'])){
-            return false
+            return false;
         }
 
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
