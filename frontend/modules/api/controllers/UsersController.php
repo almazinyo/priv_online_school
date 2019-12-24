@@ -193,6 +193,10 @@ class UsersController extends Controller
         $helpers = $this->helpers;
         $postRequest = Yii::$app->request->post();
 
+        if (empty($postRequest['prBlock'])){
+            return false
+        }
+
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
         $service = $this->userService;
 
