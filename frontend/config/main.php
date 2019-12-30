@@ -20,6 +20,13 @@ return [
         ],
     ],
     'components' => [
+        'ym' => [
+            'class' => 'betsuno\yii2yandexMoney\YMComponent',
+            'client_id' => '3D5B0CC4FEE00E201B331D31F8406F8AF42F7EA7DFC2294F9D074AC7249BA304',
+            'code' => '......',
+            'redirect_uri' => 'http://examator.ru',
+            'client_secret' => 'C1D13A47613CC5E0DF9B961C0DBE84DE73A10B1B627AA6897ECF0A0FB54E07200654359D751C1A1DF6376B3D0CF5B9EF6FD957F4292AB84EEE9BBF683DFB467E'
+        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
