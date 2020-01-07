@@ -6,11 +6,10 @@ use common\models\OrderList;
 use yii\base\Controller;
 use yii\web\BadRequestHttpException;
 
-class Payment extends Controller
+class PaymentController extends Controller
 {
     public function actionCheckYandexPayment()
     {
-
         $postRequest = \Yii::$app->request->post();
 
         if (empty($postRequest)) {
