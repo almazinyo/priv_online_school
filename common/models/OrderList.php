@@ -41,8 +41,8 @@ class OrderList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'subjects_id', 'section_id', 'price', 'sender', 'operation_label', 'operation_id', 'is_status'], 'integer'],
-            [['name', 'email', 'datetime', 'notification_type'], 'string', 'max' => 300],
+            [['user_id', 'subjects_id', 'section_id',    'is_status'], 'integer'],
+            [['name', 'email', 'datetime', 'notification_type','price','sender','operation_label', 'operation_id',], 'string', 'max' => 300],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
             [['subjects_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subjects_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
