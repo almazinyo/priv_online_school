@@ -98,3 +98,42 @@ var_dump($_GET);
     <input type="hidden" name="paymentType" value="payment-shop">
     <input type="submit" value="Перевести">
 </form>
+
+<?php
+
+$account = '410013781874599';
+$targets = 'Examator';
+$successURL = 'http://dev.examator.ru';
+$price = 2;
+$comment = 'Платеж  за  урока';
+$message = 'Платеж  за  урока';
+$shortDest = 'Платеж  за  урока';
+
+$config =
+    sprintf(
+        'https://money.yandex.ru/quickpay/shop-widget?targets=%s&%s&%s&default-sum=%s&successURL=%s&account=%s&comment=%s&quickpayData=%s&short-dest=%s&%s&',
+
+        $targets,
+        'any-card-payment-type=on',
+        'payment-type-choice=on&mobile-payment-type-choice=on',
+        $price,
+        $successURL,
+        $account,
+        $comment,
+        $message,
+        $shortDest,
+        'button-text=20&codepro=true&quickpay-form=shop&operation-details=true&display=popup'
+    )
+?>
+<iframe src="<?= $config ?>"
+        width="184"
+        height="36"
+        frameborder="0"
+        allowtransparency="true"
+        scrolling="no">
+
+</iframe>
+
+
+<iframe src="https://money.yandex.ru/quickpay/shop-widget?targets=examptro&targets-hint=&default-sum=2&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&comment=on&hint=&successURL=&quickpay=shop&account=410013781874599" width="100%" height="301" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+<iframe src="https://money.yandex.ru/quickpay/button-widget?targets=examptro&default-sum=2&button-text=11&yamoney-payment-type=on&button-size=m&button-color=orange&successURL=&quickpay=small&account=410013781874599&" width="184" height="36" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
