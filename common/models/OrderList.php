@@ -8,13 +8,18 @@ use Yii;
  * This is the model class for table "order_list".
  *
  * @property int $id
- * @property int $user_id
- * @property int $subjects_id
- * @property int $section_id
- * @property int $price
- * @property string $created_at
- * @property string $updated_at
- * @property int $is_status
+ * @property int|null $user_id
+ * @property int|null $subjects_id
+ * @property int|null $section_id
+ * @property string|null $name
+ * @property string|null $email
+ * @property int|null $price
+ * @property int|null $sender
+ * @property int|null $operation_label
+ * @property int|null $operation_id
+ * @property string|null $datetime
+ * @property string|null $notification_type
+ * @property int|null $is_status
  *
  * @property SectionSubjects $section
  * @property Subjects $subjects
@@ -36,8 +41,8 @@ class OrderList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'subjects_id', 'section_id', 'price', 'is_status'], 'integer'],
-            [['created_at', 'updated_at'], 'string', 'max' => 300],
+            [['user_id', 'subjects_id', 'section_id', 'price', 'sender', 'operation_label', 'operation_id', 'is_status'], 'integer'],
+            [['name', 'email', 'datetime', 'notification_type'], 'string', 'max' => 300],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
             [['subjects_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subjects_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -54,9 +59,14 @@ class OrderList extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'subjects_id' => Yii::t('app', 'Subjects ID'),
             'section_id' => Yii::t('app', 'Section ID'),
+            'name' => Yii::t('app', 'Name'),
+            'email' => Yii::t('app', 'Email'),
             'price' => Yii::t('app', 'Price'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'sender' => Yii::t('app', 'Sender'),
+            'operation_label' => Yii::t('app', 'Operation Label'),
+            'operation_id' => Yii::t('app', 'Operation ID'),
+            'datetime' => Yii::t('app', 'Datetime'),
+            'notification_type' => Yii::t('app', 'Notification Type'),
             'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
