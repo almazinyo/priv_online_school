@@ -3,6 +3,8 @@
 namespace frontend\modules\api\controllers;
 
 use common\models\OrderList;
+use common\models\SectionSubjects;
+use frontend\models\Auth;
 use yii\base\Controller;
 use yii\web\BadRequestHttpException;
 
@@ -15,6 +17,9 @@ class PaymentController extends Controller
         if (empty($postRequest)) {
             throw new  BadRequestHttpException();
         }
+        $label = $postRequest['label'];
+        $userId = Auth::findOne(['source_id' => preg_replace('~\&.*~sui', '', $label)])->user_id;
+        $sectionId = SectionSubjects::findOne(['slug' => preg_replace('~.*\&~sui', '', $label)])->id;
 
         $hash =
             sha1(
@@ -28,11 +33,13 @@ class PaymentController extends Controller
                     $postRequest['sender'],
                     $postRequest['codepro'],
                     'Du9j+ADcTDWjPbB24I4Mm3BP',
-                    $postRequest['label']
+                    $label
                 )
             );
 
         $model = new OrderList();
+        $model->user_id = $userId;
+        $model->section_id = $sectionId;
         $model->price = $postRequest['amount'];
         $model->sender = $postRequest['sender'];
         $model->datetime = $postRequest['datetime'];
