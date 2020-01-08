@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
 //            'subjects_id',
-//            'section_id',
+            'section_id',
             'name',
             //'email:email',
             'price',

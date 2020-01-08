@@ -19,8 +19,8 @@ class PaymentController extends Controller
             throw new  BadRequestHttpException();
         }
         $label = $postRequest['label'];
-        $userId = Auth::findOne(['source_id' => preg_replace('~\&.*~sui', '', $label)])->user_id;
-        $sectionId = SectionSubjects::findOne(['slug' => preg_replace('~.*\&~sui', '', $label)])->id;
+        $userId = Auth::findOne(['source_id' => preg_replace('~\-.*~sui', '', $label)])->user_id;
+        $sectionId = SectionSubjects::findOne(['slug' => preg_replace('~.*\-~sui', '', $label)])->id;
         $profile = Profile::findOne(['user_id' => $userId]);
         $fulName = sprintf('%s %s', $profile->first_name, $profile->last_name);
 
