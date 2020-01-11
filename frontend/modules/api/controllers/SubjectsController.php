@@ -252,7 +252,11 @@ class SubjectsController extends Controller
             return false;
         }
 
-        return $this->subjectsService->checkTest($answers['data']);
+        return
+            [
+                'status' => 200,
+                'data' => $this->subjectsService->checkTest($answers['data']),
+            ];
     }
 
     /**
