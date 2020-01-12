@@ -37,21 +37,15 @@ class UsersService extends Component
     public function receiveOrderList(string $token)
     {
         $userId = $this->receiveUserId($token);
-        $orderList =
+
+        return
             OrderList::find()
                 ->where(['order_list.user_id' => $userId])
+                ->select('order_list.*, section_subjects.id, section_subjects.name as section_name')
                 ->joinWith('section')
                 ->asArray()
                 ->all()
-        ;
-
-        return
-            [
-                'id' => $orderList['id'],
-                'price' => $orderList['price'],
-                'datetime' => $orderList['datetime'],
-                'section_name' => $orderList['section']['name'],
-            ];
+            ;
     }
 
     public function updateUserInfo(array $data)
