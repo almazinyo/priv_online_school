@@ -41,7 +41,7 @@ class UsersService extends Component
         return
             OrderList::find()
                 ->where(['order_list.user_id' => $userId])
-                ->select('order_list.*, section_subjects.id, section_subjects.name as section_name')
+                ->select('order_list.*, section_subjects.name as section_name')
                 ->joinWith('section')
                 ->asArray()
                 ->all()
