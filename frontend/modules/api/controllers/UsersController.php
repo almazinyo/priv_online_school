@@ -110,6 +110,21 @@ class UsersController extends Controller
             ];
     }
 
+    public function actionProfileBuy()
+    {
+        $helpers = $this->helpers;
+        $postRequest = Yii::$app->request->post();
+        $service = $this->userService;
+
+        $data = $helpers->decodePostRequest($postRequest['prBlock']);
+
+        return
+            [
+                'status' => 200,
+                'data' => $service->receiveOrderList($data['token']),
+            ];
+    }
+
     /**
      * @SWG\Post(path="api/users/save-prof-details",
      *     tags={"user"},

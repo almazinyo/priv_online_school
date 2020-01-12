@@ -5,6 +5,7 @@ namespace frontend\modules\api\components;
 use phpDocumentor\Reflection\Types\String_;
 use yii\base\Component;
 use yii\helpers\Html;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
 class Helpers extends Component
@@ -16,7 +17,7 @@ class Helpers extends Component
     public function decodePostRequest(string $param): array
     {
         if (empty($param)){
-            throw new NotFoundHttpException();
+            throw new BadRequestHttpException();
         }
 
         return

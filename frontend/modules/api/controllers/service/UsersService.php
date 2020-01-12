@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers\service;
 
+use common\models\OrderList;
 use common\models\Profile;
 use common\models\User;
 use yii\base\Component;
@@ -30,6 +31,19 @@ class UsersService extends Component
                 ->where(['user.id' => $userId])
                 ->joinWith('profiles')
                 ->one()
+            ;
+    }
+
+    public function receiveOrderList(string $token): User
+    {
+        $userId = $this->receiveUserId($token);
+
+        return
+            OrderList::find()
+                ->where(['order_list.user_id' => $userId])
+                ->joinWith('section')
+                ->asArray()
+                ->all()
             ;
     }
 
