@@ -47,10 +47,10 @@ class UsersService extends Component
 
         return
             [
-                $orderList['id'],
-                $orderList['price'],
-                $orderList['datetime'],
-                $orderList['section']['name'],
+                'id' => $orderList['id'],
+                'price' => $orderList['price'],
+                'datetime' => $orderList['datetime'],
+                'section_name' => $orderList['section']['name'],
             ];
     }
 
