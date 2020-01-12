@@ -110,6 +110,22 @@ class UsersController extends Controller
             ];
     }
 
+
+    /**
+     * @SWG\Post(path="api/users/profile-buy",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
     public function actionProfileBuy()
     {
         $helpers = $this->helpers;
