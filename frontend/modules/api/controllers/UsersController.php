@@ -110,7 +110,6 @@ class UsersController extends Controller
             ];
     }
 
-
     /**
      * @SWG\Post(path="api/users/profile-buy",
      *     tags={"user"},

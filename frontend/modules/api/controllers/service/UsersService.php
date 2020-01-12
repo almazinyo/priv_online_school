@@ -34,7 +34,7 @@ class UsersService extends Component
             ;
     }
 
-    public function receiveOrderList(string $token): OrderList
+    public function receiveOrderList(string $token)
     {
         $userId = $this->receiveUserId($token);
 
@@ -42,6 +42,7 @@ class UsersService extends Component
             OrderList::find()
                 ->where(['order_list.user_id' => $userId])
                 ->joinWith('section')
+                ->asArray()
                 ->all()
             ;
     }
