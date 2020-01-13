@@ -29,6 +29,9 @@ use yii\helpers\Html;
  */
 class Lessons extends ActiveRecord
 {
+    const   STATUS_ACTIVE = 1;
+    const   STATUS_FREE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -166,7 +169,7 @@ class Lessons extends ActiveRecord
                 ->where(
                     [
                         'section_id' => Html::encode($sectionId),
-                        'is_status' => true,
+                        'is_status' => self::STATUS_FREE,
                     ])
                 ->asArray()
                 ->all()

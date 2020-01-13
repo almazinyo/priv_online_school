@@ -221,7 +221,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
                                 ->with(
                                     [
                                         'lessons' => function ($query) {
-                                            $query->orderBy(['lessons.sort_lessons' => SORT_ASC])->limit(3);
+                                            $query->orderBy(['lessons.sort_lessons' => SORT_ASC]);
                                         },
                                     ]
                                 )
@@ -231,9 +231,8 @@ class SectionSubjects extends \yii\db\ActiveRecord
                 )->joinWith(
                     [
                         'lessons' => function ($query) {
-
                             $query->onCondition(
-                                ['lessons.is_status' => SectionSubjects::STATUS_ACTIVE]
+                                ['lessons.is_status' => Lessons::STATUS_FREE]
                             )
                                 ->limit(1)
                                 ->joinWith('storageLessons')
