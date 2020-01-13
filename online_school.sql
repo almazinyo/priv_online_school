@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2019 at 01:40 PM
+-- Generation Time: Jan 12, 2020 at 09:41 PM
 -- Server version: 5.6.39-83.1
 -- PHP Version: 5.6.40
 
@@ -29,21 +29,23 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `auth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `source` varchar(255) NOT NULL,
-  `source_id` varchar(255) NOT NULL,
+  `source` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `source_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk-auth-user_id-user-id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `auth`
 --
 
 INSERT INTO `auth` (`id`, `user_id`, `source`, `source_id`) VALUES
-(10, 18, 'vkontakte', '500729970'),
-(30, 133, 'vkontakte', '32300688'),
-(29, 132, 'vkontakte', '1887916'),
-(28, 131, 'vkontakte', '163662408');
+(1, 2, 'vkontakte', '163662408'),
+(2, 3, 'vkontakte', '362315917'),
+(3, 4, 'vkontakte', '196663403'),
+(4, 5, 'vkontakte', '1887916'),
+(5, 6, 'vkontakte', '500729970'),
+(6, 7, 'vkontakte', '226776813');
 
 -- --------------------------------------------------------
 
@@ -152,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `grid_sort` (
   `theme` varchar(300) DEFAULT NULL,
   `label` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `grid_sort`
@@ -161,7 +163,12 @@ CREATE TABLE IF NOT EXISTS `grid_sort` (
 INSERT INTO `grid_sort` (`id`, `user_id`, `visible_columns`, `default_columns`, `page_size`, `class_name`, `theme`, `label`) VALUES
 (1, 3, NULL, NULL, NULL, 'common\\models\\Subjects', NULL, 'Предметы'),
 (2, 3, '[\"id\",\"name\",\"sortable_id\",\"slug\",\"subject_id\",\"short_description\",\"description\",\"seo_keywords\",\"seo_description\",\"created_at\",\"updated_at\",\"is_status\"]', NULL, '', 'common\\models\\SectionSubjects', '', 'Разделы'),
-(3, 3, NULL, NULL, NULL, 'common\\models\\Lessons', NULL, 'Уроки');
+(3, 3, NULL, NULL, NULL, 'common\\models\\Lessons', NULL, 'Уроки'),
+(4, 1, NULL, NULL, NULL, 'common\\models\\SectionSubjects', NULL, 'Разделы'),
+(5, 1, NULL, NULL, NULL, 'common\\models\\Subjects', NULL, 'Предметы'),
+(6, 1, NULL, NULL, NULL, 'common\\models\\Lessons', NULL, 'Уроки'),
+(7, 1, NULL, NULL, NULL, 'common\\models\\OrderList', NULL, 'Order Lists'),
+(8, NULL, NULL, NULL, NULL, 'common\\models\\OrderList', NULL, 'Order Lists');
 
 -- --------------------------------------------------------
 
@@ -193,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `lessons` (
 --
 
 INSERT INTO `lessons` (`id`, `sort_lessons`, `name`, `section_id`, `background`, `logo`, `slug`, `short_description`, `description`, `seo_keywords`, `seo_description`, `created_at`, `updated_at`, `is_status`) VALUES
-(1, 0, 'Закон сохранения импульса', 2, 'Фон', ' Логотип', 'zakon-sokhraneniya-impul-sa', 'Краткое описание', '<p>Описание</p>', 'Уроки', 'Уроки', '1573018613', '1573940145', 1),
+(1, 0, 'Уравнение движения', 2, 'Фон', ' Логотип', 'uravneniye-dvizheniya', 'Урок 1', '<p>Урок 1. Уравнения движения и основные понятия.</p>', 'Уроки', 'Уроки', '1573018613', '1578353369', 1),
 (2, 0, 'Пространство и время в теории относительности', 2, 'Фон', ' Логотип', 'prostranstvo-i-vremya-v-teorii-otnositel-nosti', 'Пространство и время в теории относительности\r\n', '<ul><li>Пространство и время в теории относительности</li></ul><ul class=\"redactor-toolbar\" id=\"redactor-toolbar-0\"><span></span><li></li></ul>', 'Пространство и время в теории относительности', 'Пространство и время в теории относительности\r\n', '1573018715', '1573942686', 1),
 (3, 0, 'Пространство и время в теории относительности', 2, 'Фон', 'Фон', 'prostranstvo-i-vremya-v-teorii-otnositel-nosti-2', 'Урок 3', '<p>Описание </p>', 'Пространство и время в теории относительности', 'Краткое описание', '1573018796', '1573967921', 1),
 (4, 0, 'Закон сохранения импульса', 8, 'Фон', ' Логотип', 'zakon-sokhraneniya-impul-sa-2', 'Краткое описание', '<p>Описание</p>', 'Уроки', 'Уроки', '1573967948', '1573968007', 1),
@@ -241,9 +248,8 @@ CREATE TABLE IF NOT EXISTS `migration` (
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1572817133),
-('m130524_201442_init', 1572817137),
-('m190124_110200_add_verification_token_column_to_user_table', 1572817137),
+('m130524_201442_init', 1577225361),
+('m190124_110200_add_verification_token_column_to_user_table', 1577194836),
 ('m190813_092119_subjects', 1572817137),
 ('m190823_012957_blog', 1572817137),
 ('m190823_020442_section_subjects', 1572817137),
@@ -252,8 +258,8 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m190903_104002_menu', 1572817137),
 ('m190903_110452_storage_lessons', 1572817137),
 ('m190910_070454_teachers', 1573333357),
-('m190913_024036_profile', 1575385105),
-('m190913_031513_order_list', 1572817137),
+('m190913_024036_profile', 1577225361),
+('m190913_031513_order_list', 1578430866),
 ('m190913_083839_promotional_code', 1572817137),
 ('m190929_110438_quiz', 1572817137),
 ('m190929_110848_quizzes_users', 1572817137),
@@ -261,7 +267,9 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m191018_140218_grid_sort', 1572817137),
 ('m140506_102106_rbac_init', 1572818062),
 ('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1572818062),
-('m180523_151638_rbac_updates_indexes_without_prefix', 1572818062);
+('m180523_151638_rbac_updates_indexes_without_prefix', 1572818062),
+('m191127_100141_auth', 1577225361),
+('m191127_100204_session', 1577225362);
 
 -- --------------------------------------------------------
 
@@ -274,7 +282,16 @@ CREATE TABLE IF NOT EXISTS `options` (
   `key` varchar(500) NOT NULL,
   `value` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `options`
+--
+
+INSERT INTO `options` (`id`, `key`, `value`) VALUES
+(1, 'mainSection', 'a:3:{s:8:\"img_name\";s:37:\"sGOpcXJp25elPnH-fjA7HbSApnk4ZO95.jpeg\";s:4:\"name\";s:60:\"Более 1000 заданий из реальных ЕГЭ!\";s:11:\"description\";s:611:\"После каждого видеоурока необходимо правильно решить контрольные задания по пройденной теме, чтобы получить доступ к следующему занятию. В любой момент, для повторения раздела, можно вернуться к пройденному уроку и решать дополнительные задания. Если не получается решить с первого раза - можно всегда посмотреть подробное решение.\";}'),
+(2, 'mainSection', 'a:3:{s:8:\"img_name\";s:37:\"rgWEu7ETukvz6Fl516OZQsw2AoJexZ0N.jpeg\";s:4:\"name\";s:67:\"Видеоуроки на 80% состоят из практики!\";s:11:\"description\";s:476:\"Формат видеоуроков нацелен исключительно на результат. Уже после прохождения первого урока вы сразу начнете решать реальные задачи из ЕГЭ. Уровень сложности будет постепенно расти с каждым уроком- так что вы легко научитесь выполнять даже задания “части С”.\";}'),
+(3, 'mainSection', 'a:3:{s:8:\"img_name\";s:37:\"ulEAcZarB0Vp1NjPbbQrDLFF9YY2xMNf.jpeg\";s:4:\"name\";s:55:\"Остались вопросы - запишись на\";s:11:\"description\";s:410:\"бесплатное онлайн занятие!\r\nВ любой момент можно записаться на бесплатное онлайн занятие с опытными преподавателями - экспертами ЕГЭ. Актуальное расписание занятий по каждому предмету можно узнать в нашей группе Вконтакте.\";}');
 
 -- --------------------------------------------------------
 
@@ -287,15 +304,29 @@ CREATE TABLE IF NOT EXISTS `order_list` (
   `user_id` int(11) DEFAULT NULL,
   `subjects_id` int(11) DEFAULT NULL,
   `section_id` int(11) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `created_at` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `updated_at` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sender` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `operation_label` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `operation_id` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `datetime` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `notification_type` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_status` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_order_user` (`user_id`),
   KEY `FK_order_subject` (`subjects_id`),
   KEY `FK_order_section` (`section_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `order_list`
+--
+
+INSERT INTO `order_list` (`id`, `user_id`, `subjects_id`, `section_id`, `name`, `email`, `price`, `sender`, `operation_label`, `operation_id`, `datetime`, `notification_type`, `is_status`) VALUES
+(7, 2, NULL, 14, 'Arsen Papikyan', NULL, '1.99', '410019506852585', '25a85e2a-0011-5000-a000-1d6039e29d09', '631834351967017004', '2020-01-08T21:32:31Z', 'p2p-incoming', 1),
+(9, 2, NULL, 14, 'Arsen Papikyan', NULL, '1.99', '410019506852585', '25a85e2a-0011-5000-a000-1d6039e29d09', '631834351967017004', '2020-01-08T21:32:31Z', 'p2p-incoming', 1),
+(12, 2, NULL, 14, 'Arsen Papikyan', NULL, '1.99', '410019506852585', '25a85e2a-0011-5000-a000-1d6039e29d09', '631834351967017004', '2020-01-08T21:32:31Z', 'p2p-incoming', 1);
 
 -- --------------------------------------------------------
 
@@ -311,21 +342,25 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `last_name` varchar(300) DEFAULT NULL,
   `date_of_birth` varchar(300) DEFAULT NULL,
   `phone` varchar(300) DEFAULT NULL,
+  `image` varchar(500) DEFAULT NULL,
   `city` varchar(300) DEFAULT NULL,
   `created_at` varchar(300) DEFAULT NULL,
   `updated_at` varchar(300) DEFAULT NULL,
   `is_status` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_profile_user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`id`, `user_id`, `bonus_points`, `first_name`, `last_name`, `date_of_birth`, `phone`, `city`, `created_at`, `updated_at`, `is_status`) VALUES
-(1, 18, 20, 'test', 'test', '1995-10-01', '70000000000', 'Москва', '', '', 1),
-(3, 131, NULL, 'test', 'ew', NULL, '00000000000', 'xdas', NULL, NULL, NULL);
+INSERT INTO `profile` (`id`, `user_id`, `bonus_points`, `first_name`, `last_name`, `date_of_birth`, `phone`, `image`, `city`, `created_at`, `updated_at`, `is_status`) VALUES
+(1, 2, 0, 'Arsen', 'Papikyan', '', '00000000000', '6GjHSpUxud4.jpg', 'Gyumri', '1577225399', NULL, 1),
+(2, 3, 0, 'Linaz', 'Rizvanov', '', '79173936213', 'ILhzNUOc4Nk.jpg', 'Almetyevsk', '1577248345', NULL, 1),
+(3, 4, 0, 'Timur', 'Zakirov', '1-12', NULL, 'PamqThg6Ndo.jpg', 'Kazan', '1577251389', NULL, 1),
+(4, 5, 0, 'Rishat', 'Dunaev', '11-1-1990', NULL, 'JTtcMjpto4M.jpg', 'Kazan', '1578327437', NULL, 1),
+(5, 6, 0, 'Anna', 'Tiraturyan', '', NULL, 'cDvRhFPQkWE.jpg', 'Moscow', '1578509506', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -447,20 +482,28 @@ CREATE TABLE IF NOT EXISTS `section_subjects` (
   `stock` varchar(300) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_subjects` (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `section_subjects`
 --
 
 INSERT INTO `section_subjects` (`id`, `subject_id`, `parent_id`, `name`, `slug`, `sortable_id`, `price`, `background`, `icon`, `short_description`, `description`, `seo_keywords`, `seo_description`, `created_at`, `updated_at`, `is_status`, `img_path`, `stock`) VALUES
-(1, 1, 0, 'Механика', 'mekhanika', 0, '1450', '#F18764', 'physics', 'Фи́зика — область естествознания: наука о законах природы.', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. Так, исследования в области электромагнетизма привели к появлению телефонов и позже мобильных телефонов, открытия в термодинамике позволили создать автомобиль, развитие электроники привело к появлению компьютеров. Развитие фотоники способно дать возможность создать принципиально новые — фотонные — компьютеры и другую фотонную технику, которые сменят существующую электронную технику. Развитие газодинамики привело к появлению самолётов и вертолётов.</p>', 'Механика ', 'Механика', '1573017396', '1573935741', 1, 'http://api.examator.ru/images/sections/2dChT1VcvxfV1USccyVCIlmmKr1vN-5_.svg', ''),
+(1, 1, 0, 'Механика', 'mekhanika', 0, '1450', '#F18764', 'physics', 'Механика', '<p>Механика включает в себя 5 подразделов - Кинематика, Динамика, Статика, Законы сохранения, Колебания и Волны</p>', 'Механика ', 'Механика', '1573017396', '1578350944', 1, 'http://api.examator.ru/images/sections/2dChT1VcvxfV1USccyVCIlmmKr1vN-5_.svg', ''),
 (2, 1, 1, 'Кинематика', 'kinematika', 1, '1450', '#ed5a7a', 'course', 'Характеристики движения тела', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий.<span class=\"redactor-invisible-space\"></span></p>', 'Кинематика', 'Кинематика', '1573017485', '1576135325', 1, 'http://api.examator.ru/images/sections/XNVDOzzYPwZLFCaRJ_ShZoVjOZC92b0K.svg', ''),
-(3, 1, 0, 'Термодинамика', 'termodinamika', 2, '4500', '#3FB7F6', '', 'Фи́зика (от др.-греч. φύσις — природа) ', '<p>Фи́зика (от др.-греч. φύσις — природа) — область естествознания: наука о простейших и вместе с тем наиболее общих законах природы, о материи, её структуре и движении. Фи́зика (от др.-греч. φύσις — природа) — область естествознания: наука о простейших и вместе с тем наиболее общих законах природы, о материи, её структуре и движении.<span class=\"redactor-invisible-space\"> Фи́зика (от др.-греч. φύσις — природа) — область естествознания: наука о простейших и вместе с тем наиболее общих законах природы, о материи, её структуре и движении.<span class=\"redactor-invisible-space\"> </span></span></p>', '', '', '1573911681', '1576135371', 1, 'http://api.examator.ru/images/sections/VptqQwB-Z737fpuDh_0cEVOGDvGH1YpD.svg', ''),
+(3, 1, 0, 'Термодинамика', 'termodinamika', 2, '4500', '#3FB7F6', '', 'МКТ и Термодинамика', '<p>МКТ и Термодинамика</p>', '', '', '1573911681', '1578350875', 1, 'http://api.examator.ru/images/sections/VptqQwB-Z737fpuDh_0cEVOGDvGH1YpD.svg', ''),
 (6, 1, NULL, 'Уравнения', 'uravneniya-2', NULL, '400', '#3c78d8', 'physics', 'Математика — область естествознания: наука о законах природы.', '<p>Математика — область естествознания: наука о законах природы. Математика — область естествознания: наука о законах природы.<span class=\"redactor-invisible-space\"> Математика — область естествознания: наука о законах природы.<span class=\"redactor-invisible-space\"></span></span></p>', '', '', '1573913672', '1573913705', 1, '', ''),
 (8, 1, 1, 'Динамика', 'dinamika', 1, '1250', '#ed5a7a', 'physics', 'Силы в природе, законы Ньютона', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий.<span class=\"redactor-invisible-space\"></span></p>', 'Динамика', 'Динамика', '1573967365', '1576135255', 1, 'http://api.examator.ru/images/sections/XNVDOzzYPwZLFCaRJ_ShZoVjOZC92b0K.svg', ''),
 (9, 1, 1, 'Законы сохранения', 'zakony-sokhraneniya', 3, '800', '#3fb7f6', 'russian', 'Законы сохранения импульса и энергии', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий.<span class=\"redactor-invisible-space\"></span></p>', 'Неинерциальные системы отсчета', 'Законы сохранения импульса и энергии', '1573967641', '1576135156', 1, 'http://api.examator.ru/images/sections/XNVDOzzYPwZLFCaRJ_ShZoVjOZC92b0K.svg', ''),
-(10, 1, 1, 'Статика', 'statika', 4, '500', '#9e9e9e', 'social', 'Равновесие тел', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий.<span class=\"redactor-invisible-space\"></span></p>', 'Статика', 'Статика', '1573967644', '1576135068', 1, 'http://api.examator.ru/images/sections/XNVDOzzYPwZLFCaRJ_ShZoVjOZC92b0K.svg', '');
+(10, 1, 1, 'Статика', 'statika', 4, '500', '#9e9e9e', 'social', 'Равновесие тел', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий.<span class=\"redactor-invisible-space\"></span></p>', 'Статика', 'Статика', '1573967644', '1576135068', 1, 'http://api.examator.ru/images/sections/XNVDOzzYPwZLFCaRJ_ShZoVjOZC92b0K.svg', ''),
+(11, 1, 0, 'Электричество', 'elektrichestvo', NULL, '500', '#f6b26b', '', 'Электричество и Магнетизм', '<p>Электричество и Магнетизм состоит из 4 подразделов: </p><p>- Электростатика</p><p>- Постоянный ток</p><p>- Магнитное поле</p><p>- Электромагнитные колебания</p>', '', 'Физика ЕГЭ электростатика постоянный ток магнитное поле', '1578351325', '1578351325', 1, '', ''),
+(12, 1, 0, 'Оптика и Атомная физика', 'optika-i-atomnaya-fizika', NULL, '500', '#e69138', '', 'Оптика и атомная физика', '<p>Геометрическая и волновая оптика</p><p>Атомная и Ядерная физика</p>', '', '', '1578351670', '1578351709', 1, '', ''),
+(13, 1, 0, 'Квантовая физика', 'kvantovaya-fizika', NULL, '500', '#cc0000', '', 'Кванты и фотоэффект', '<p>Квантовая физика</p><p>Фотоэффект</p>', '', '', '1578351896', '1578351942', 1, '', ''),
+(14, 1, 1, 'Колебания', 'kolebaniya', NULL, '2', '#980000', '', 'Колебания и волны', '<p>Механические колебания и волны</p>', '', '', '1578352077', '1578518029', 1, '', ''),
+(15, 1, 3, 'МКТ', 'mkt', NULL, '500', '#1c4587', '', '', '', '', '', '1578352162', '1578352415', 1, '', ''),
+(18, 1, 3, 'Термодинамика', 'termodinamika-3', NULL, '500', '#a61c00', '', '', '', '', '', '1578352485', '1578352485', 1, '', ''),
+(19, 1, 11, 'Электростатика', 'elektrostatika', NULL, '500', '#cc4125', '', 'Электростатика', '', '', '', '1578352578', '1578352578', 1, '', ''),
+(20, 1, 11, 'Постоянный ток', 'postoyannyy-tok', NULL, '500', '#cc4125', '', 'постоянный ток', '', '', '', '1578352639', '1578352639', 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -469,44 +512,32 @@ INSERT INTO `section_subjects` (`id`, `subject_id`, `parent_id`, `name`, `slug`,
 --
 
 CREATE TABLE IF NOT EXISTS `session` (
-  `id` char(40) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `expire` int(11) DEFAULT NULL,
   `data` blob,
-  `token` varchar(500) DEFAULT NULL,
+  `token` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `status` smallint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `fk-session-user_id-user-id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `session`
 --
 
 INSERT INTO `session` (`id`, `expire`, `data`, `token`, `user_id`, `status`) VALUES
-('HiJJXcAnPaRzFfUaCtcoMVdTcNd2M1HUaUM7Xuiu', 1574753775, NULL, 'QaCDwaWTgLpNCI1lR5PfaAsEaoX2DL_8', 17, 1),
-('LIbjS-qlaH37CtSA48vyJBTMaCr-Y76hZWlB9PXr', 1575121232, NULL, 'khDSC_vEEInOaPk0TAy4iMlYG_Y8-E_5', 18, 1),
-('3D8PkY4qhvEXVgLKoqO2uqRAjm-5YE2sZrlFNySK', 1575357109, NULL, 'EmAwrfXGY0aXzeg4N0RPzxKPk0HgOJ46', 20, 1),
-('TrylV0c7-xVoYp50wly38BUCRiXmjMHQJ0VWGfFZ', 1575357154, NULL, 'Tgi832U8rScySEzjIbTEwJpFKPdbwDw9', 22, 1),
-('3IXi91rYUSWnEC4tCx61VMOa7fDTI4fhsRs8wal_', 1575357229, NULL, 'Nokm7jKhW8RetEk9YaaeLUgVGDj4gITa', 18, 1),
-('h-fdtdArgMyrpUMvch5aN7w2TBbF_AZKDKJlr9lw', 1575446988, NULL, 'r5UuUsujgq-qSnp9Imna6eSP5AcdF_fW', 40, 1),
-('zCgycNqJu-Nnx4-8KGPpLveQkeu8TeSrDFQTZ-ty', 1575463217, NULL, '8fE-L0dUnxpiHU12zu1HQd1ylIi5cxU8', 67, 1),
-('S4d_IQjHiTw6CeqyNvpWAajswciIC_rkldt3MuOn', 1575463319, NULL, 'NambWVhaXJkI-R-M6M91fOH35St-ABax', 68, 1),
-('aqedVpUwhjq9dshg8-rGLKQ6QzKdkR_tGSfJSFyl', 1575463339, NULL, 'bD1aZGmj6FXWOd7sLLTMuU7dX7knoj_8', 69, 1),
-('xBZxyCNKqqbKze_bqAJqRvvunZv9m-LiVCw2AUCc', 1575522420, NULL, 'THyfZfkvCODM067Fu8yRDvYddmOmOVvh', 71, 1),
-('E8mB8LuNkxjzwSznP2bEHeHF-BN9O4P8TqOrOw1r', 1575522755, NULL, 'ZxilRU6CmFd-Ixkd-WBshtU4fdAu0sTP', 72, 1),
-('qqZCNs4sa3yEk98AsynVQL4xEielOJtpLMXoSOn4', 1575570627, NULL, 'ICTXqqFNy5gmBas_iYgBm82vSfx1sCeK', 77, 1),
-('D_fEa_7d22i0fRD7AWKxp7wwKx99fyyH4y9dcFXh', 1575570654, NULL, 'yUidPsqYHcM46_jI4dty5uoRTA89FZFE', 78, 1),
-('jrtvWzTNosyhorRCTGrR2SwuerHgXKO9uJgZYB0a', 1575608802, NULL, 'kFYkHCw7EwT_7s3FGxBvAHKGF-tMBmRe', 80, 1),
-('aH1U1H8sFIuNymR7KVNGOP7nYdR-CMTIZNaFWCuN', 1575873560, NULL, 'jcc5tJnOtPl4utUAfPVIGNCwEH1X8LhW', 105, 1),
-('n7kDkA7ydj0WCZPyOlpUdu7_koQuhnOqTLAMFNGi', 1575875441, NULL, 'dNKQyJxJTnabuAbJHPyO025Gpfy-DYbW', 119, 1),
-('I39TpKTZ2WUfvF5y5dmWVT53nCmDQ2ULMNd2EgJa', 1575875582, NULL, '2hMeQqIjhohgkUiqKEBkH4E3L0yCFdmC', 122, 1),
-('Wh0c9nJoWdqiuBO23AIrVBOQOkF7SpkMuyTnFIyy', 1575875688, NULL, 'fCGqkg3Dqq3oH8TkQwgSI1kUxuieEqOe', 124, 1),
-('9o95pteaenkc7XfcoPknn2b0WYmIokvFCxdJ08M2', 1575875721, NULL, 'D1n5taGTWbAyMqCRbLUE_4WA_MlKkTAa', 126, 1),
-('We1wg3GQce9IWzlevOYM5_HkAXTYYWeZVH_vBN2c', 1575876624, NULL, 'wyBzAKEwS9_kPeDlWwyUoF9AR-VuRJYD', 127, 1),
-('qTAF8-0qbcHVJYIKVD0MmBRAbt-g0TGq-F0Tbj5R', 1575876881, NULL, 'LT-dHSCGTDR3bJ3CnuWdEGcX31KsqevH', 131, 1),
-('bouQfuDD8DVLkKODX9-Ad0KYarWzAP_ZNRZZvsgn', 1575912748, NULL, 'VRlphXha5yOzZNSSRIiACrYbgfe_PLCr', 18, 1),
-('NKmgzpE6QIXOHCdfASM_6mlSpvBuOZ42m0sr6_yy', 1575959416, NULL, 'w806lAT98-e3WfkCuJvSJFsl_5PW_Eoy', 132, 1),
-('ghvjVq1rsn5QuZ1VciZKZCxUkYEDsAhjTeuRfRPT', 1576107415, NULL, 'Fs1aOUsl6Eyke37QDgaBYfpM0EuebMb4', 133, 1);
+(1, 1577226797, 0x31353737323235333938, 'yIlk8xVx443-NKU8isEXpR1hlhWjJf3H', 2, 1),
+(2, 1577227261, 0x31353737323236393132, 'gL7VFrFm96OJqTfMlQQBkxHpqPpQZ2zV', 2, 1),
+(3, 1577228219, 0x31353737323237373837, 'R0-AVo4w09GaAe6LpZ61tmZA6e_vNuhc', 2, 1),
+(7, 1577248353, 0x31353737323438333435, 'oFz5bkAG9ANru3VAgg9piGKVx8v8TPa7', 3, 1),
+(8, 1585024577, 0x31353737323438353737, 'GjWMIbTezWT7GPss1Uayrk9gXo5TCRbV', 3, 1),
+(62, 1585027388, 0x31353737323531333838, 'Wndz1b9mVMFnih42rPxYiXpwHJMAHk0d', 4, 1),
+(63, 1577258518, 0x31353737323538333733, 'igQgcSwZzDyS4osX7cOueCK3N5h6zxmm', 2, 1),
+(64, 1585034564, 0x31353737323538353634, 'eu3HIgrkPbbXt7s0o6lOfFya-iTaxooo', 2, 1),
+(65, 1586103436, 0x31353738333237343336, 'o-TXleXvg0LaK1B0mFpPk14omdWliiSY', 5, 1),
+(66, 1586285506, 0x31353738353039353036, 'N78h9wmN-cmulC4En1WYpqTEKj1052hZ', 6, 1),
+(67, 1586504556, 0x31353738373238353536, '3kEM4hBtosQlWIAUM5okidm3EY_u1ZhN', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -522,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `storage_lessons` (
   `is_status` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_storage` (`lesson_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `storage_lessons`
@@ -532,9 +563,8 @@ INSERT INTO `storage_lessons` (`id`, `lesson_id`, `name`, `type`, `is_status`) V
 (1, 1, 'rm2gTCpTzTNy2JNiCheBr4eRWU8JQyHD.png', 'image', 1),
 (2, 1, 'ohKgfXq8GmkkAWHWsdMTRnc0np8Xdub2.png', 'image', 1),
 (3, 1, 'wT5ccHK0LVpbo8CQg0daL2fgK30MTKt9.png', 'image', 1),
-(4, 1, 'XWa7xAKeuKjeRK_B0dL0vQQLeEx2dv51.mp4', 'video', 1),
-(5, 1, 'Uo01bTEf6v38SoWmsfUAUMY4Ry9T4KhH.pdf', 'pdf', 1),
-(6, 1, 'jkJS4rAd7CpyytWiQj_9NPNtPLMmJ-3P.mp4', 'video', 1);
+(8, 1, 'gIFJ4nsee0HasPm3lvQNc2XeEsB1Kau4.pdf', 'pdf', 1),
+(9, 1, '6a2kAHo8r5Fcs0FsO_getrUGSEOdX-YC.mp4', 'video', 1);
 
 -- --------------------------------------------------------
 
@@ -564,8 +594,8 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `title`, `slug`, `icon`, `color`, `sortable_id`, `short_description`, `description`, `seo_keywords`, `seo_description`, `created_at`, `updated_at`, `is_status`) VALUES
-(1, 'Физика', 'fizika', 'physics', '#77e624', '2', 'В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. ', '<p>В современном мире значение физики чрезвычайно велико. Всё то, чем отличается современное общество от общества прошлых веков, появилось в результате применения на практике физических открытий. Так, исследования в области электромагнетизма привели к появлению телефонов и позже мобильных телефонов, открытия в термодинамике позволили создать автомобиль, развитие электроники привело к появлению компьютеров. Развитие фотоники способно дать возможность создать принципиально новые — фотонные — компьютеры и другую фотонную технику, которые сменят существующую электронную технику. Развитие газодинамики привело к появлению самолётов и вертолётов.</p><p>Знания физики процессов, происходящих в природе, постоянно расширяются и углубляются. Большинство новых открытий вскоре получают технико-экономическое применение (в частности в промышленности). Однако перед исследователями постоянно встают новые загадки, — обнаруживаются явления, для объяснения и понимания которых требуются новые физические теории. Несмотря на огромный объём накопленных знаний, современная физика ещё очень далека от того, чтобы объяснить все явления природы.</p><p>Общенаучные основы физических методов разрабатываются в теории познания и методологии науки.</p><p>В русский язык слово «физика» было введено М. В. Ломоносовым, издавшим первый в России учебник физики — свой перевод с немецкого языка учебника «Вольфианская экспериментальная физика» Х. Вольфа (1746)[3]. Первым оригинальным учебником физики на русском языке стал курс «Краткое начертание физики» (1810), написанный П. И. Страховым.</p>', 'Физика', 'Физика', '1573016152', '1573933275', 1),
-(2, 'Математика', 'matematika', 'map', '#ed597a', '1', 'Математика', '<p>Математика</p>', 'Математика', 'Математика', '1573163016', '1573933240', 2),
+(1, 'Физика', 'fizika', 'physics', '#77e624', '2', 'ЕГЭ по Физике состоит из 32 заданий. ', '<p>ЕГЭ по Физике состоит из 32 заданий. </p><p>Основные разделы Физики:</p><p>- Механика</p><p>- МКТ и Термодинамика</p><p>- Электричество и магнетизм</p><p>- Атомная и ядерная физика</p><p>- Квантовая физика</p>', 'Физика', 'Физика подготовка к ЕГЭ', '1573016152', '1578350660', 1),
+(2, 'Математика ', 'matematika', 'map', '#ed597a', '1', 'ЕГЭ по Математике состоит из 19 заданий. Первая часть содержит 12 заданий, остальные 7 заданий требуют полного решения.', '<p>ЕГЭ по Математике состоит из 19 заданий. Первая часть содержит 12 заданий, остальные 7 заданий требуют полного решения.</p>', 'Математика', 'Математика', '1573163016', '1578472182', 1),
 (3, 'Русский', 'russkiy', 'russian', '#3fb7f6', '3', 'Русский ', '<p>Русский</p>', 'Русский', 'Русский', '1573723148', '1576223656', 2),
 (4, 'Общество', 'obshchestvo', 'social', '#9e9e9e', '4', 'Общество', '<p>Общество</p>', 'Общество', 'Общество', '1573933584', '1576228209', 2),
 (5, 'История', 'istoriya', 'history', '#50b6ac', '5', 'История', '<p>История</p>', 'История', 'История', '1573933777', '1576228214', 2),
@@ -601,8 +631,8 @@ CREATE TABLE IF NOT EXISTS `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `subject_id`, `social_link`, `work_experience`, `img_name`, `small_img_path`, `large_img_path`, `slug`, `description`, `created_at`, `updated_at`, `is_status`) VALUES
-(1, 'Полина Павлова', 1, 'https://www.instagram.com/teachers/', 4, 'pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'http://api.examator.ru/images/teachers/small/pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'http://api.examator.ru/images/teachers/pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'polina-pavlova', '<p>Привет! Меня зовут Полина Павлова<br><br>Я сдала русский язык на 100 баллов в 2015 году и теперь готова делиться с вами секретами успешной сдачи и ошибками, которые я допускала при подготовке, а также заряжать вас мотивацией и доказывать: сдать русский язык на 90+ баллов реально!<br><br>Я студентка четвертого курса Казанского Медицинского Университета, поэтому я знаю, как сделать обучение максимально эффективным за короткий срок! От тебя требуется терпение, старание и бешеное желание показать, кто здесь босс.</p>', '1573333440', '1573333440', 1),
-(2, 'test', 2, 'https://www.instagram.com/teachers/', 2, '0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'http://api.examator.ru/images/teachers/small/0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'http://api.examator.ru/images/teachers/0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'test', '<p>dd</p>', '1573386479', '1573386479', 1);
+(1, 'Алмаз Хан', 1, 'https://vk.com/aalmaz_khan', 11, 'pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'http://api.examator.ru/images/teachers/small/pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'http://api.examator.ru/images/teachers/pQsSnp2Pzp7Y1JDCm86xs8PYVZGnODCY.png', 'almaz-khan', '<p>Алмаз Хан</p>', '1573333440', '1578353159', 1),
+(2, 'Алмаз Хан', 2, 'https://vk.com/aalmaz_khan', 2, '0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'http://api.examator.ru/images/teachers/small/0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'http://api.examator.ru/images/teachers/0SVejAe18mQhFW0uCy48NUMXD5DaMmB6.png', 'almaz-khan-2', '<p>Математика</p>', '1573386479', '1578353191', 1);
 
 -- --------------------------------------------------------
 
@@ -616,39 +646,37 @@ CREATE TABLE IF NOT EXISTS `user` (
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` smallint(6) NOT NULL DEFAULT '10',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
-  `verification_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(3, 'admin', 'fOeWIEJkrEWvFfsbBBGqfxnzvgvrM1UR', '$2y$13$J/.uk90HtEJQjsotGZwdTuvGGu75rIlJBZgYr3osx0hK.HprlEdPe', 'NULL', 'admin@mail.ru', 10, 1570777744, 1570777744, 'rKDNCehpmFuYeigZh2_MQoApQEc8-XvM_1570777744'),
-(18, '500729970', '81XzYxq1E_fq9IKGxcGbZVjS9nBWQdYE', '$2y$13$xJrX9S/3DD5S2zDiGK5d8.qhztRWenr3YeX4.Mnp2W16lhuxgegx.', NULL, 'test@mail.ru', 10, 1575121232, 1575874493, NULL),
-(131, '163662408', 'eIUZmCJAp6cc1DU1yLXSKHWBaHhvAOcm', '$2y$13$tnwbbLUbAAsgyC8gA/0b/egMdpP9WUE5AwetisWzH8v1.3Mn/cwwy', NULL, 'tdsfs@mail.rux', 10, 1575876881, 1575877670, NULL),
-(132, '1887916', 'QXGI-ZOk09mfYk0tu7IY9x5lSBDU6TJI', '$2y$13$aLzscjlX.fVYo.o/1H4FtegqrjmioCn/pCVnNonNdKPvf6N/WAXca', NULL, ' ', 10, 1575959416, 1575959416, NULL),
-(133, '32300688', 'l5rjJcO2UIuQMBBZ2oQaHoBK7YCMM9oP', '$2y$13$Cc6SKXZnKqsSOtIfwIgBiuhLpVjO/b5NC4tVnoPHhrU9wuB3pjD6W', NULL, ' ', 10, 1576107415, 1576107415, NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user` ADD FULLTEXT KEY `email` (`email`);
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'wNmbaJAt0DJLAFeJDB43mo1KpKfykMtZ', '$2y$13$KqIIHX9RYheiRuLWnA07oOBTJUxhrX1Xi6nichnglxJaosl8AwdIy', NULL, 'admin@example.com', 10, 1577225361, 1577225361),
+(2, '163662408', 'Sr7p3ThOJ2BbbNMneczZp4UmdZJT-krX', '$2y$13$2LCd4XTU0S5RmVBbn6Au0OtjadFQ1iD6x9GKVRauQPaZCkKuzjBc2', 'lH5bww1EpjL3FwOsizqqH_RVa1oq-ALC', 'teste@mail.ru', 10, 1577225398, 1577258752),
+(3, '362315917', 'qwCgHT94uTh_Z4hHbmExk-UaUC78DNom', '$2y$13$UYP6ljbt2tO1rXQ.swx4J.z2Xk4U4sZfb3j6MzV13.WV7131x4/3m', 'wpSNfmgX4AGOTZkZvbU_skDmXNj0Rtxn', 'test@test.ru', 10, 1577248345, 1577248533),
+(4, '196663403', 'GMFzOGPIutylGjktl3-mVqqsJly-6u71', '$2y$13$edTC2WX9xFvyGinh8Hgkt.CN0/48F2sgPyqXR5oKcJZszLhy72i3S', 'Xt-_Cb7pPEO92sRYJhsXj-FKjGIRuipy', ' ', 10, 1577251388, 1577251388),
+(5, '1887916', 'ddgiShvH3H-195CuJoFpT-rCvSQYU3Ku', '$2y$13$pgQ9EpvQsjB6L4rbuxtPLeaEa9ct.NMw1YjXPraviWD6WMU5Jq/g2', 'kpvFoCthPnSrgk-dD2mV2CwhS7ysHRh5', ' ', 10, 1578327436, 1578327436),
+(6, '500729970', 'PLkLEMoX1WUoy1pOQ7oKv_a-9t0eJQKo', '$2y$13$tDFUQ/Bmk1srTqW.wedCFeuG7FghtKYFIgJXbRgG6YL2B4/4QD5ga', 'AcQtwgUU-6ppga9mVR9_JqucEnIHNy4q', ' ', 10, 1578509506, 1578509506),
+(7, '226776813', 'DJ0HaYclFylVMyLY52yM-EoTfR3rm82W', '$2y$13$Oet5wLVZIWcpVY4X50hUAufP9ugcE6LHgDPBRJE9PUG19Nbd05VMG', 'KqK5bSVfw5rt_LKNziqu8kTTju4cUtLY', ' ', 10, 1578728510, 1578728510);
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `auth`
+--
+ALTER TABLE `auth`
+  ADD CONSTRAINT `fk-auth-user_id-user-id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `auth_assignment`
@@ -729,6 +757,12 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `section_subjects`
   ADD CONSTRAINT `FK_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `session`
+--
+ALTER TABLE `session`
+  ADD CONSTRAINT `fk-session-user_id-user-id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `storage_lessons`

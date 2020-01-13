@@ -19,19 +19,27 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+
+
     <div class="col-xs-12">
         <?= $form->field($model, 'is_status')
             ->widget(
                 SwitchInput::classname(),
                 [
                     'value' => true,
+                    'type' => SwitchInput::RADIO,
+                    'items' => [
+                        ['label' => Yii::t('app', 'Paid'), 'value' => 1],
+                        ['label' => Yii::t('app', 'Free'), 'value' => 2],
+                        ['label' => Yii::t('app', 'Disabled'), 'value' => 0],
+                    ],
                     'pluginOptions' =>
                         [
                             'size' => 'large',
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => Yii::t('app','Active'),
-                            'offText' => Yii::t('app','Inactive'),
+                            'onText' => Yii::t('app', 'Active'),
+                            'offText' => Yii::t('app', 'Inactive'),
                         ],
                 ]
             )
