@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers\service;
 
+use common\models\PassingLessons;
 use common\models\Quiz;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -18,12 +19,18 @@ class SubjectsService extends Component
             ;
     }
 
-    public function checkTest(array $answers)
+    public function checkTest(array $source)
     {
+        $userId = (new UsersService())->receiveUserId($source['token']);
+        $section_id = $source['section_id'];
+        $lesson_id = $source['lesson_id'];
+        $passingLessons = new PassingLessons();
+        $percentPassage = 0;
+
         $correctly = 0;
         $wrong = 0;
-        $questions = $this->receiveQuestions($answers);
-        $answers = ArrayHelper::map($answers, 'id', 'answer');
+        $questions = $this->receiveQuestions($source['data']);
+        $answers = ArrayHelper::map($source['data'], 'id', 'answer');
 
         foreach ($questions as $question) {
             $answer = $answers[$question['id']];
@@ -36,10 +43,21 @@ class SubjectsService extends Component
             $wrong++;
         }
 
+        $percentPassage = (100 / count($answers)) * $correctly;
+        $passingLessons->section_id =  $section_id;
+        $passingLessons->lesson_id =  $lesson_id;
+        $passingLessons->user_id =  $userId;
+        $passingLessons->created_at = time();
+
+        if ($percentPassage >= 70) {
+            $passingLessons->is_status = true;
+        }
+
         return
             [
                 'correct_answers' => $correctly,
                 'wrong_answers' => $wrong,
+                'percent_passage' => $percentPassage,
             ];
     }
 }

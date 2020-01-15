@@ -246,16 +246,16 @@ class SubjectsController extends Controller
         $helpers = new Helpers();
         $postRequest = \Yii::$app->request->post();
 
-        $answers = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+        $source = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
 
-        if (empty($answers['data'])) {
+        if (empty($source['data'])) {
             return false;
         }
 
         return
             [
                 'status' => 200,
-                'data' => $this->subjectsService->checkTest($answers['data']),
+                'data' => $this->subjectsService->checkTest($source['data'],$source),
             ];
     }
 
