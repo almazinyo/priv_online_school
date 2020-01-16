@@ -111,7 +111,7 @@
                                 'url' => ['/lessons'],
                             ],
                             [
-                                'label' => Yii::t('app', 'Lessons'),
+                                'label' => Yii::t('app', 'Passing Lessons'),
                                 'icon' => '',
                                 'url' => ['/passing-lessons'],
                             ],
