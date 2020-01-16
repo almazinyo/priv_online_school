@@ -44,14 +44,17 @@ class SubjectsService extends Component
         }
 
         $percentPassage = (100 / count($answers)) * $correctly;
-        $passingLessons->section_id =  $section_id;
-        $passingLessons->lesson_id =  $lesson_id;
-        $passingLessons->user_id =  $userId;
+        $passingLessons->section_id = $section_id;
+        $passingLessons->lesson_id = $lesson_id;
+        $passingLessons->user_id = $userId;
         $passingLessons->created_at = time();
+        $passingLessons->is_status = false;
 
         if ($percentPassage >= 70) {
             $passingLessons->is_status = true;
         }
+
+        $passingLessons->save(false);
 
         return
             [

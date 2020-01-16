@@ -172,6 +172,37 @@ class UsersController extends Controller
     }
 
     /**
+     * @SWG\Post(path="api/users/passing-lessons",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
+    public function actionPassingLessons()
+    {
+        $helpers = new Helpers();
+        $postRequest = Yii::$app->request->post();
+
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+
+        if (empty($data)) {
+            throw new  yii\web\BadRequestHttpException();
+        }
+
+        $service = $this->userService;
+
+        return $service->receivePassingLessons($data['token']);
+    }
+
+    /**
      * @SWG\Post(path="api/users/contact",
      *     tags={"user"},
      *     summary="summary",
@@ -231,6 +262,10 @@ class UsersController extends Controller
         Yii::$app->getSession()->destroy();
         $session->expire = time();
 
-        return $session->save(false);
+        return
+            [
+                'status' => 200,
+                'data' => $session,
+            ];
     }
 }

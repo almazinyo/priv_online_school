@@ -255,7 +255,7 @@ class SubjectsController extends Controller
         return
             [
                 'status' => 200,
-                'data' => $this->subjectsService->checkTest($source['data'],$source),
+                'data' => $this->subjectsService->checkTest($source),
             ];
     }
 

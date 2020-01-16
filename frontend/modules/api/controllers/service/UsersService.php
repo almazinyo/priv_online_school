@@ -3,11 +3,14 @@
 namespace frontend\modules\api\controllers\service;
 
 use common\models\OrderList;
+use common\models\PassingLessons;
 use common\models\Profile;
+use common\models\SectionSubjects;
 use common\models\User;
 use yii\base\Component;
 use yii\helpers\Html;
 use \common\models\Session;
+use yii\helpers\ArrayHelper;
 use yii;
 
 class UsersService extends Component
@@ -43,6 +46,29 @@ class UsersService extends Component
                 ->where(['order_list.user_id' => $userId])
                 ->select('order_list.*, section_subjects.name as section_name')
                 ->joinWith('section')
+                ->asArray()
+                ->all()
+            ;
+    }
+
+    public function receivePassingLessons(string $token)
+    {
+        $userId = $this->receiveUserId($token);
+        $passingLessons =
+            PassingLessons::find()
+                ->where(['user_id' => $userId, 'is-status' => 1])
+                ->asArray()
+                ->all()
+        ;
+
+        $sectionId = ArrayHelper::map($passingLessons, 'section_id', 'section_id');
+        $lessonId = ArrayHelper::map($passingLessons, 'lesson_id', 'lesson_id');
+
+        return
+            SectionSubjects::find()
+                ->joinWith('lessons')
+                ->where(['in', 'section_subjects.id', $sectionId])
+                ->andWhere(['in', 'lessons.id', $lessonId])
                 ->asArray()
                 ->all()
             ;
