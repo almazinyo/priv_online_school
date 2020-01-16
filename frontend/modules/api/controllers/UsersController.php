@@ -199,7 +199,11 @@ class UsersController extends Controller
 
         $service = $this->userService;
 
-        return $service->receivePassingLessons($data['token']);
+        return
+            [
+                'status' => 200,
+                'data' => $service->receivePassingLessons($data['token']),
+            ];
     }
 
     /**
