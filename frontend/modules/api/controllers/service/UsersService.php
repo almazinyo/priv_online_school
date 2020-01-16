@@ -51,12 +51,12 @@ class UsersService extends Component
             ;
     }
 
-    public function receivePassingLessons(string $token)
+    public function receivePassingLessons(string $token): array
     {
         $userId = $this->receiveUserId($token);
         $passingLessons =
             PassingLessons::find()
-                ->where(['user_id' => $userId, 'is-status' => 1])
+                ->where(['user_id' => $userId, 'is_status' => 1])
                 ->asArray()
                 ->all()
         ;
