@@ -15,6 +15,8 @@ use yii;
 
 class UsersService extends Component
 {
+    private $lessonsId = [];
+
     public function receiveUserId(string $token): int
     {
         return Session::findOne(['token' => Html::encode($token)])->user_id;
@@ -62,13 +64,19 @@ class UsersService extends Component
         ;
 
         $sectionId = ArrayHelper::map($passingLessons, 'section_id', 'section_id');
-        $lessonId = ArrayHelper::map($passingLessons, 'lesson_id', 'lesson_id');
+        $this->lessonsId = ArrayHelper::map($passingLessons, 'lesson_id', 'lesson_id');
 
         return
             SectionSubjects::find()
-                ->joinWith('lessons')
-                ->where(['in', 'section_subjects.id', $sectionId])
-                ->andWhere(['in', 'lessons.id', $lessonId])
+                ->joinWith(
+                    [
+                        'lessons' => function ($query) {
+                            $query->andWhere(['lessons.id'=>$this->lessonsId]);
+                        },
+
+                    ]
+                )
+                ->where(['section_subjects.id' => $sectionId])
                 ->asArray()
                 ->all()
             ;
