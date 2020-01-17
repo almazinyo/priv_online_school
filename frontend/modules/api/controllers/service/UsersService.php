@@ -68,13 +68,12 @@ class UsersService extends Component
 
         return
             SectionSubjects::find()
-                ->select('section_subjects.id, section_subjects.name, lessons.id, lessons.name')
                 ->joinWith(
                     [
                         'lessons' => function ($query) {
-                            $query->andWhere(['lessons.id'=>$this->lessonsId]);
+                            $query->andWhere(['b.id' => $this->lessonsId]);
+                            $query->from(['b' => 'lessons'])->select('b.name');
                         },
-
                     ]
                 )
                 ->where(['section_subjects.id' => $sectionId])
