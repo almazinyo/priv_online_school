@@ -68,6 +68,7 @@ class UsersService extends Component
 
         return
             SectionSubjects::find()
+                ->select('section_subjects.id, section_subjects.name, lessons.id, lessons.name')
                 ->joinWith(
                     [
                         'lessons' => function ($query) {
