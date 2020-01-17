@@ -71,11 +71,11 @@ class UsersService extends Component
                 ->joinWith(
                     [
                         'lessons' => function ($query) {
-                            $query->andWhere(['b.id' => $this->lessonsId]);
-                            $query->from(['b' => 'lessons'])->select('b.name');
+                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name as lesson_name', 'section_id']);
                         },
                     ]
                 )
+                ->select('section_subjects.name as  section_name, section_subjects.id ')
                 ->where(['section_subjects.id' => $sectionId])
                 ->asArray()
                 ->all()
