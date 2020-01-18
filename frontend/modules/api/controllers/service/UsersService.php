@@ -6,6 +6,7 @@ use common\models\OrderList;
 use common\models\PassingLessons;
 use common\models\Profile;
 use common\models\SectionSubjects;
+use common\models\Subjects;
 use common\models\User;
 use yii\base\Component;
 use yii\helpers\Html;
@@ -16,6 +17,7 @@ use yii;
 class UsersService extends Component
 {
     private $lessonsId = [];
+    private $sectionId = [];
 
     public function receiveUserId(string $token): int
     {
@@ -63,20 +65,30 @@ class UsersService extends Component
                 ->all()
         ;
 
-        $sectionId = ArrayHelper::map($passingLessons, 'section_id', 'section_id');
+        $subjectId = ArrayHelper::map($passingLessons, 'subject_id', 'subject_id');
+        $this->sectionId = ArrayHelper::map($passingLessons, 'section_id', 'section_id');
         $this->lessonsId = ArrayHelper::map($passingLessons, 'lesson_id', 'lesson_id');
 
         return
-            SectionSubjects::find()
+            Subjects::find()
                 ->joinWith(
                     [
-                        'lessons' => function ($query) {
-                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name as lesson_name', 'section_id']);
+                        'sectionSubjects' => function ($query) {
+                            $query
+                                ->from(['sections' => 'section_subjects'])
+                                ->andWhere(['sections.id' => $this->sectionId])->select(['name', 'background','subject_id','id']);
                         },
                     ]
                 )
-                ->select('section_subjects.name as  section_name, section_subjects.id ')
-                ->where(['section_subjects.id' => $sectionId])
+                ->joinWith(
+                    [
+                        'sectionSubjects.lessons' => function ($query) {
+                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name',  'section_id']);
+                        },
+                    ]
+                )
+                ->select('subjects.title as  name, subjects.color, subjects.id ')
+                ->where(['subjects.id' => $subjectId])
                 ->asArray()
                 ->all()
             ;
