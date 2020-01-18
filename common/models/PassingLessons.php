@@ -11,12 +11,14 @@ use Yii;
  * @property int|null $user_id
  * @property int|null $lesson_id
  * @property int|null $section_id
+ * @property int|null $subject_id
  * @property string|null $created_at
  * @property string|null $updated_at
  * @property int|null $is_status
  *
  * @property Lessons $lesson
  * @property SectionSubjects $section
+ * @property Subjects $subject
  * @property User $user
  */
 class PassingLessons extends \yii\db\ActiveRecord
@@ -35,10 +37,11 @@ class PassingLessons extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'lesson_id', 'section_id', 'is_status'], 'integer'],
+            [['user_id', 'lesson_id', 'section_id', 'subject_id', 'is_status'], 'integer'],
             [['created_at', 'updated_at'], 'string', 'max' => 300],
             [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lessons::className(), 'targetAttribute' => ['lesson_id' => 'id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
+            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -53,6 +56,7 @@ class PassingLessons extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'lesson_id' => Yii::t('app', 'Lesson ID'),
             'section_id' => Yii::t('app', 'Section ID'),
+            'subject_id' => Yii::t('app', 'Subject ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'is_status' => Yii::t('app', 'Is Status'),
@@ -73,6 +77,14 @@ class PassingLessons extends \yii\db\ActiveRecord
     public function getSection()
     {
         return $this->hasOne(SectionSubjects::className(), ['id' => 'section_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubject()
+    {
+        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
     }
 
     /**

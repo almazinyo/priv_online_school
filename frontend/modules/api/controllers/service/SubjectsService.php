@@ -24,6 +24,7 @@ class SubjectsService extends Component
         $userId = (new UsersService())->receiveUserId($source['token']);
         $section_id = $source['section_id'];
         $lesson_id = $source['lesson_id'];
+        $subject_id = $source['subject_id'];
         $passingLessons = new PassingLessons();
         $percentPassage = 0;
 
@@ -46,6 +47,7 @@ class SubjectsService extends Component
         $percentPassage = (100 / count($answers)) * $correctly;
         $passingLessons->section_id = $section_id;
         $passingLessons->lesson_id = $lesson_id;
+        $passingLessons->subject_id = $subject_id;
         $passingLessons->user_id = $userId;
         $passingLessons->created_at = time();
         $passingLessons->is_status = false;

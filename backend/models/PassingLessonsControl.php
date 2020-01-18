@@ -17,7 +17,7 @@ class PassingLessonsControl extends PassingLessons
     public function rules()
     {
         return [
-            [['id', 'user_id', 'lesson_id', 'section_id', 'is_status'], 'integer'],
+            [['id', 'user_id', 'lesson_id', 'section_id', 'subject_id', 'is_status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -62,6 +62,7 @@ class PassingLessonsControl extends PassingLessons
             'user_id' => $this->user_id,
             'lesson_id' => $this->lesson_id,
             'section_id' => $this->section_id,
+            'subject_id' => $this->subject_id,
             'is_status' => $this->is_status,
         ]);
 

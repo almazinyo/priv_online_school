@@ -39,6 +39,7 @@ class m200114_144526_passing_lessons extends Migration
                 'user_id' => $this->integer(11),
                 'lesson_id' => $this->integer(11),
                 'section_id' => $this->integer(11),
+                'subject_id' => $this->integer(11),
                 'created_at' => $this->string(300),
                 'updated_at' => $this->string(300),
                 'is_status' => $this->tinyInteger(2),
@@ -49,6 +50,7 @@ class m200114_144526_passing_lessons extends Migration
 
         $this->addForeignKey('FK_passing_lessons', 'passing_lessons', 'lesson_id', 'lessons', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('FK_passing_lessons_user', 'passing_lessons', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_passing_lessons_subject', 'passing_lessons', 'subject_id', 'subjects', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('FK_passing_lessons_section', 'passing_lessons', 'section_id', 'section_subjects', 'id', 'CASCADE', 'CASCADE');
     }
 
