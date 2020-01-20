@@ -111,9 +111,35 @@ class QuizController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldQuestion = $model->question;
+        $oldHint = $model->hint;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $question = UploadedFile::getInstance($model, 'question');
+            $hint = UploadedFile::getInstance($model, 'hint');
+
+            if (!empty($question)) {
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/question/';
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $question->extension;
+                $question->saveAs($imgPath . $imgName);
+                $model->question = $imgName;
+            }else{
+                $model->question = $oldQuestion;
+            }
+
+            if (!empty($hint)) {
+                $imgPath = Yii::getAlias('@frontend') . '/web/images/question/hint/';
+                $imgName = Yii::$app->security->generateRandomString() . '.' . $hint->extension;
+                $hint->saveAs($imgPath . $imgName);
+                $model->hint = $imgName;
+            }else{
+                $model->hint = $oldHint;
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
