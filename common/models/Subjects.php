@@ -112,6 +112,14 @@ class Subjects extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getQuizzes()
+    {
+        return $this->hasMany(Quiz::className(), ['subject_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getSectionSubjects()
     {
         return $this->hasMany(SectionSubjects::className(), ['subject_id' => 'id']);
@@ -180,6 +188,7 @@ class Subjects extends ActiveRecord
                         },
                     ]
                 )
+                ->joinWith('quizzes')
                 ->where(['subjects.slug' => Html::encode($slug)])
                 ->asArray()
                 ->one()

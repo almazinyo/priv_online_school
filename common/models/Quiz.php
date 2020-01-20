@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $lessons_id
+ * @property int $subject_id
  * @property int $bonus_points
  * @property string $question
  * @property string $hint
@@ -37,7 +38,7 @@ class Quiz extends ActiveRecord
     public function rules()
     {
         return [
-            [['lessons_id', 'bonus_points', 'is_status'], 'integer'],
+            [['lessons_id','subject_id', 'bonus_points', 'is_status'], 'integer'],
             [['question', 'hint', 'correct_answer'], 'string', 'max' => 500],
             [['created_at', 'updated_at'], 'string', 'max' => 300],
             [
@@ -74,6 +75,7 @@ class Quiz extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'lessons_id' => Yii::t('app', 'Lessons ID'),
+            'subject_id' => Yii::t('app', 'Subjects ID'),
             'bonus_points' => Yii::t('app', 'Bonus Points'),
             'question' => Yii::t('app', 'Question'),
             'hint' => Yii::t('app', 'Hint'),

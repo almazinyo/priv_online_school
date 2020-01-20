@@ -37,6 +37,7 @@ class m190929_110438_quiz extends Migration
             [
                 'id' => $this->primaryKey(),
                 'lessons_id' => $this->integer(11),
+                'subject_id' => $this->integer(11),
                 'bonus_points' => $this->integer(11),
                 'question' => $this->string(500),
                 'hint' => $this->string(500),
@@ -48,7 +49,9 @@ class m190929_110438_quiz extends Migration
             $tableOptions
 
         );
+
         $this->addForeignKey('FK_quiz_lessons', 'quiz', 'lessons_id', 'lessons', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('FK_quiz_subjects', 'quiz', 'subject_id', 'subjects', 'id', 'CASCADE', 'CASCADE');
     }
 
     /**

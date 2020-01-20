@@ -29,8 +29,8 @@ use yii\helpers\Url;
                             'size' => 'large',
                             'onColor' => 'success',
                             'offColor' => 'danger',
-                            'onText' => Yii::t('app','Active'),
-                            'offText' => Yii::t('app','Inactive'),
+                            'onText' => Yii::t('app', 'Active'),
+                            'offText' => Yii::t('app', 'Inactive'),
                         ],
                 ]
             )
@@ -40,20 +40,40 @@ use yii\helpers\Url;
 
 
     <div class="col-xs-12">
-        <?= $form->field($model, 'lessons_id')->widget(
-            Select2::classname(), [
-            'data' =>
-                ArrayHelper::map(
-                    Lessons::find()
-                        ->select('id,name')
-                        ->asArray()
-                        ->all(),
-                    "id", "name"),
-            'options' => ['placeholder' => 'Parent'],
-            'pluginOptions' => ['allowClear' => true],
-        ])
-        ;
-        ?>
+        <div class="row">
+            <div class="col-xs-6">
+                <?= $form->field($model, 'lessons_id')->widget(
+                    Select2::classname(), [
+                    'data' =>
+                        ArrayHelper::map(
+                            Lessons::find()
+                                ->select('id,name')
+                                ->asArray()
+                                ->all(),
+                            "id", "name"),
+                    'options' => ['placeholder' => 'Parent'],
+                    'pluginOptions' => ['allowClear' => true],
+                ])
+                ;
+                ?>
+            </div>
+            <div class="col-xs-6">
+                <?= $form->field($model, 'subject_id')->widget(
+                    Select2::classname(), [
+                    'data' =>
+                        ArrayHelper::map(
+                            \common\models\Subjects::find()
+                                ->select('id,title')
+                                ->asArray()
+                                ->all(),
+                            "id", "title"),
+                    'options' => ['placeholder' => 'Parent'],
+                    'pluginOptions' => ['allowClear' => true],
+                ])
+                ;
+                ?>
+            </div>
+        </div>
     </div>
 
     <div class="col-xs-12">
@@ -127,7 +147,8 @@ use yii\helpers\Url;
                             'resizeImages' => true,
                             'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
                         ],
-                ]);
+                ])
+        ;
         ?>
 
     </div>
@@ -192,7 +213,8 @@ use yii\helpers\Url;
                             'resizeImages' => true,
                             'layoutTemplates' => [!$model->isNewRecord ?: 'actionUpload' => '',],
                         ],
-                ]);
+                ])
+        ;
         ?>
     </div>
 
