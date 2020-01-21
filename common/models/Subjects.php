@@ -163,6 +163,7 @@ class Subjects extends ActiveRecord
      */
     public static function receiveSpecificData($slug)
     {
+        $selectSubject = ['id', 'slug'];
 
         return
             self::find()
@@ -189,6 +190,12 @@ class Subjects extends ActiveRecord
                     ]
                 )
                 ->joinWith('quizzes')
+                ->joinWith(
+                    [
+                        'quizzes.lessons' => function ($query) {
+                            $query->select(['id', 'name','slug']);
+                        },
+                    ])
                 ->where(['subjects.slug' => Html::encode($slug)])
                 ->asArray()
                 ->one()
