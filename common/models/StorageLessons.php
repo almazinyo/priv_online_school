@@ -32,18 +32,25 @@ class StorageLessons extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['lesson_id', 'is_status'], 'integer'],
-            [['name', 'lesson_id'], 'required'],
-            [['name','type'], 'string', 'max' => 500],
+        $rules =
             [
-                ['lesson_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Lessons::className(),
-                'targetAttribute' => ['lesson_id' => 'id'],
-            ],
-        ];
+                [['lesson_id', 'is_status'], 'integer'],
+                [['lesson_id'], 'required'],
+                [['name', 'type'], 'string', 'max' => 500],
+                [
+                    ['lesson_id'],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => Lessons::className(),
+                    'targetAttribute' => ['lesson_id' => 'id'],
+                ],
+            ];
+
+        if (Yii::$app->controller->action->id != 'update') {
+            $rules[] = [['name'], 'required'];
+        }
+
+        return $rules;
     }
 
     /**

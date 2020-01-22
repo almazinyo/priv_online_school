@@ -93,15 +93,15 @@ class StorageLessonsController extends Controller
                     $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
                     $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
                     $file->saveAs($filePath . $fileName);
-                    $model = new StorageLessons();
-                    $model->name = $fileName;
-                    $model->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
-                    $model->lesson_id = $lessonId;
-                    $model->is_status = $status;
-                    $model->save();
+                    $modelLessons = new StorageLessons();
+                    $modelLessons->name = $fileName;
+                    $modelLessons->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
+                    $modelLessons->lesson_id = $lessonId;
+                    $modelLessons->is_status = $status;
+                    $modelLessons->save();
                 }
-
-                return $this->redirect(['view', 'id' => $model->id]);
+                
+                return $this->redirect('index');
             }
         }
 
@@ -117,6 +117,7 @@ class StorageLessonsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldImgName = $model->name;
 
         if ($model->load(Yii::$app->request->post())) {
             $lessonId = $model->lesson_id;
@@ -129,15 +130,19 @@ class StorageLessonsController extends Controller
                     $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
                     $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
                     $file->saveAs($filePath . $fileName);
-                    $model = new StorageLessons();
-                    $model->name = $fileName;
-                    $model->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
-                    $model->lesson_id = $lessonId;
-                    $model->is_status = $status;
-                    $model->save();
+                    $modelLessons = new StorageLessons();
+                    $modelLessons->name = $fileName;
+                    $modelLessons->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
+                    $modelLessons->lesson_id = $lessonId;
+                    $modelLessons->is_status = $status;
+                    $modelLessons->save();
                 }
+            } else {
+                $model->name = $oldImgName;
+            }
 
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save()) {
+                return $this->redirect('index');
             }
         }
 
