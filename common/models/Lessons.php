@@ -166,11 +166,8 @@ class Lessons extends ActiveRecord
         return
             self::find()
                 ->select('id, name, slug, section_id, is_status')
-                ->where(
-                    [
-                        'section_id' => Html::encode($sectionId),
-                        'is_status' => self::STATUS_FREE,
-                    ])
+                ->where(['section_id' => Html::encode($sectionId)])
+                ->andWhere(['!=', 'is_status', false])
                 ->asArray()
                 ->all()
             ;
