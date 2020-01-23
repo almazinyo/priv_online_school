@@ -35,14 +35,14 @@ class SubjectsService extends Component
         $questions = $this->receiveQuestions($source['data']);
         $answers = ArrayHelper::map($source['data'], 'id', 'answer');
 
-        foreach ($questions as $question) {
+        foreach ($questions as $index=>$question) {
             $answer = $answers[$question['id']];
 
             if ($answer == $question['correct_answer']) {
                 $correctly++;
 
-                if ($question['hint']) {
-                    $points += $question['hint'];
+                if (!$source['data'][$index]['hint']) {
+                    $points += $source['data'][$index]['points'];
                 }
 
                 continue;
