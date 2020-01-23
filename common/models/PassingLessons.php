@@ -14,6 +14,7 @@ use Yii;
  * @property int|null $subject_id
  * @property string|null $created_at
  * @property string|null $updated_at
+ * @property string|null $points
  * @property int|null $is_status
  *
  * @property Lessons $lesson
@@ -38,7 +39,7 @@ class PassingLessons extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'lesson_id', 'section_id', 'subject_id', 'is_status'], 'integer'],
-            [['created_at', 'updated_at'], 'string', 'max' => 300],
+            [['created_at', 'updated_at','points'], 'string', 'max' => 300],
             [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lessons::className(), 'targetAttribute' => ['lesson_id' => 'id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'id']],
@@ -59,6 +60,7 @@ class PassingLessons extends \yii\db\ActiveRecord
             'subject_id' => Yii::t('app', 'Subject ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'points' => Yii::t('app', 'Points'),
             'is_status' => Yii::t('app', 'Is Status'),
         ];
     }

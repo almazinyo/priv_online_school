@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'section_id')->textInput() ?>
 
+    <?= $form->field($model, 'points')->textInput() ?>
+
     <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>

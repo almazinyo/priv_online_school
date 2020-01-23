@@ -3,6 +3,7 @@
 namespace frontend\modules\api\controllers\service;
 
 use common\models\PassingLessons;
+use common\models\Profile;
 use common\models\Quiz;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -27,6 +28,7 @@ class SubjectsService extends Component
         $subject_id = $source['subject_id'];
         $passingLessons = new PassingLessons();
         $percentPassage = 0;
+        $points = 0;
 
         $correctly = 0;
         $wrong = 0;
@@ -38,6 +40,11 @@ class SubjectsService extends Component
 
             if ($answer == $question['correct_answer']) {
                 $correctly++;
+
+                if ($question['hint']) {
+                    $points += $question['hint'];
+                }
+
                 continue;
             }
 
@@ -54,6 +61,10 @@ class SubjectsService extends Component
 
         if ($percentPassage >= 70) {
             $passingLessons->is_status = true;
+            $passingLessons->points = $points;
+            $profile = Profile::findOne(['user_id' => $userId]);
+            $profile->bonus_points = $profile->bonus_points + $points;
+            $profile->save(false);
         }
 
         $passingLessons->save(false);
