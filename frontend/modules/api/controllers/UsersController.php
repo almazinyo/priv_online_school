@@ -101,6 +101,7 @@ class UsersController extends Controller
                     'email' => $user->email,
                     'first_name' => $user->profiles->first_name,
                     'last_name' => $user->profiles->last_name,
+                    'bonus_points' => $user->profiles->bonus_points,
                     'phone' => $user->profiles->phone,
                     'image' => preg_replace('~.*\/~sui', '', $user->profiles->image),
                     'date_birth' => $user->profiles->date_of_birth,
