@@ -42,6 +42,7 @@ class m200114_144526_passing_lessons extends Migration
                 'subject_id' => $this->integer(11),
                 'created_at' => $this->string(300),
                 'updated_at' => $this->string(300),
+                'points' => $this->string(300),
                 'is_status' => $this->tinyInteger(2),
             ],
             $tableOptions
