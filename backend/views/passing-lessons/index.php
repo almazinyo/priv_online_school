@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use  backend\modules\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PassingLessonsControl */
@@ -10,30 +10,40 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Passing Lessons');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="passing-lessons-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Passing Lessons'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
             'user_id',
-            'lesson_id',
-            'section_id',
-            'created_at',
+            [
+                'attribute' => 'lesson_id',
+                'label' => Yii::t('app', 'Lessons'),
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['lesson']['name'];
+                },
+            ],
+            [
+                'attribute' => 'section_id',
+                'label' => Yii::t('app', 'Sections'),
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['section']['name'];
+                },
+            ],
             'points',
-            //'updated_at',
-            //'is_status',
-
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'is_status',
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['is_status'] ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive');
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

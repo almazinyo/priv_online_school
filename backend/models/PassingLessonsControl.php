@@ -40,7 +40,7 @@ class PassingLessonsControl extends PassingLessons
      */
     public function search($params)
     {
-        $query = PassingLessons::find();
+        $query = PassingLessons::find()->joinWith('lesson')->joinWith('section');
 
         // add conditions that should always apply here
 
