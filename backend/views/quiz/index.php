@@ -31,16 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'correct_answer',
             [
                 'attribute' => 'question',
-                'format' => 'image',
+                'format' => 'html',
                 'value' => function ($data) {
-                    return sprintf("http://%s/images/question/%s", $_SERVER['HTTP_HOST'], $data['question']);
+                    return
+                        Html::img(
+                            sprintf("http://%s/images/question/%s", $_SERVER['HTTP_HOST'], $data['question']),
+                            ['width' => '200']
+                        );
                 },
             ],
             [
                 'attribute' => 'hint',
-                'format' => 'image',
+                'format' => 'html',
                 'value' => function ($data) {
-                    return sprintf("http://%s/images/question/hint/%s", $_SERVER['HTTP_HOST'], $data['question']);
+                    return
+                        Html::img(
+                            sprintf("http://%s/images/question/hint/%s", $_SERVER['HTTP_HOST'], $data['hint']),
+                            ['width' => '300']
+                        );
                 },
             ],
             'created_at:datetime',
