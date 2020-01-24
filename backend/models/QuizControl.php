@@ -40,7 +40,7 @@ class QuizControl extends Quiz
      */
     public function search($params)
     {
-        $query = Quiz::find();
+        $query = Quiz::find()->joinWith('lessons');
 
         // add conditions that should always apply here
 

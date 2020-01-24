@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use  backend\modules\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -12,32 +12,46 @@ $this->title = Yii::t('app', 'Quizzes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quiz-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Quiz'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'lessons_id',
+            [
+                'attribute' => 'lessons_id',
+                'label' => Yii::t('app', 'Lessons'),
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['lessons']['name'];
+                },
+            ],
             'bonus_points',
-            'question',
-            'hint',
             'correct_answer',
+            [
+                'attribute' => 'question',
+                'format' => 'image',
+                'value' => function ($data) {
+                    return sprintf("http://%s/images/question/%s", $_SERVER['HTTP_HOST'], $data['question']);
+                },
+            ],
+            [
+                'attribute' => 'hint',
+                'format' => 'image',
+                'value' => function ($data) {
+                    return sprintf("http://%s/images/question/hint/%s", $_SERVER['HTTP_HOST'], $data['question']);
+                },
+            ],
             'created_at:datetime',
             'updated_at:datetime',
-            'is_status',
-
+            [
+                'attribute' => 'is_status',
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['is_status'] ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive');
+                },
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{duplicate}  {view} {update} {delete}',
@@ -51,8 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
             ],
         ],
+        'isValidActionColumn' => false,
+        'bordered' => true,
+        'pjax' => true,
+        'responsive' => true,
+        'hover' => true,
     ]); ?>
 
     <?php Pjax::end(); ?>
-
 </div>
