@@ -17,7 +17,7 @@ class PromotionalCodeControl extends PromotionalCode
     public function rules()
     {
         return [
-            [['id', 'price', 'user_id', 'subjects_id', 'section_id', 'is_status'], 'integer'],
+            [['id', 'percent', 'user_id',  'is_status'], 'integer'],
             [['key', 'created_at', 'updated_at'], 'trim'],
         ];
     }
