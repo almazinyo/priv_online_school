@@ -29,7 +29,7 @@ class PromotionalCodeController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view'],
+                        'actions' => ['index', 'create', 'update', 'view','delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -81,8 +81,12 @@ class PromotionalCodeController extends Controller
     {
         $model = new PromotionalCode();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->key = mb_convert_encoding(Yii::$app->security->generateRandomString(6),'utf-8');
+
+            if ($model->save()){
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
