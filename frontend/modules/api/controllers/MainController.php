@@ -86,6 +86,36 @@ class MainController extends Controller
         return [];
     }
 
+
+    /**
+     * @SWG\Post(path="/api/main/promo-code",
+     *     tags={"main"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
+    public function actionPromoCode()
+    {
+        $request = Yii::$app->request;
+        $mainService = $this->mainService;
+
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
+
+        return
+            [
+                'status' => 200,
+                'data' => [],
+            ];
+    }
+
     public function actionUser()
     {
 
@@ -132,10 +162,6 @@ class MainController extends Controller
 
         $request = Yii::$app->request;
         $mainService = $this->mainService;
-
-        if (!$request->post('prBlock')) {
-            return [];
-        }
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $mid =
