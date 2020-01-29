@@ -59,10 +59,8 @@ class PromotionalCodeControl extends PromotionalCode
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'price' => $this->price,
+            'percent' => $this->percent,
             'user_id' => $this->user_id,
-            'subjects_id' => $this->subjects_id,
-            'section_id' => $this->section_id,
             'is_status' => $this->is_status,
         ]);
 

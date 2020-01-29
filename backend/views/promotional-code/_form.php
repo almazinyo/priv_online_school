@@ -14,17 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'percent')->textInput() ?>
 
     <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'subjects_id')->textInput() ?>
-
-    <?= $form->field($model, 'section_id')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'is_status')->textInput() ?>
 

@@ -24,6 +24,30 @@ class QuizController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' =>
+                            [
+                                'index',
+                                'create',
+                                'update',
+                                'view',
+                                'upload-hint',
+                                'delete',
+                                'upload-question',
+                                'duplicate',
+                            ],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -114,7 +138,6 @@ class QuizController extends Controller
         $oldQuestion = $model->question;
         $oldHint = $model->hint;
 
-
         if ($model->load(Yii::$app->request->post())) {
             $question = UploadedFile::getInstance($model, 'question');
             $hint = UploadedFile::getInstance($model, 'hint');
@@ -124,7 +147,7 @@ class QuizController extends Controller
                 $imgName = Yii::$app->security->generateRandomString() . '.' . $question->extension;
                 $question->saveAs($imgPath . $imgName);
                 $model->question = $imgName;
-            }else{
+            } else {
                 $model->question = $oldQuestion;
             }
 
@@ -133,7 +156,7 @@ class QuizController extends Controller
                 $imgName = Yii::$app->security->generateRandomString() . '.' . $hint->extension;
                 $hint->saveAs($imgPath . $imgName);
                 $model->hint = $imgName;
-            }else{
+            } else {
                 $model->hint = $oldHint;
             }
 
@@ -173,6 +196,7 @@ class QuizController extends Controller
 
         return true;
     }
+
     public function actionUploadHint($id)
     {
         $model = $this->findModel($id);
@@ -199,7 +223,6 @@ class QuizController extends Controller
 
         return true;
     }
-
 
     public function actionDelete($id)
     {
@@ -281,7 +304,6 @@ class QuizController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
 
     /**
      * @param $id
