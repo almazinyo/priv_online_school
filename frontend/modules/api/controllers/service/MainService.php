@@ -158,13 +158,13 @@ class MainService extends Component
                 ]);
 
         if (!empty($model)) {
-            $newPrice = ($price * $model->percent) / 100;
+            $stocks = ($price * $model->percent) / 100;
 
             $result =
                 [
-                    'old_price' => $price,
-                    'new_price' => $newPrice,
-                    'stocks' => $price - $newPrice,
+                    'old_price' =>(int) $price,
+                    'new_price' => $price - $stocks,
+                    'stocks' => $stocks,
                     'percent' => $model->percent,
                     'is_valid' => true,
                 ];
