@@ -4,6 +4,8 @@ namespace frontend\modules\api\controllers\service;
 
 use common\models\Auth;
 use common\models\Profile;
+use common\models\PromotionalCode;
+use common\models\SectionSubjects;
 use common\models\Session;
 use common\models\User;
 use frontend\modules\api\components\Helpers;
@@ -134,4 +136,38 @@ class MainService extends Component
         return $session->save(false);
     }
 
+    public function promoCode($source)
+    {
+        $userService = new UsersService();
+        $userId = $userService->receiveUserId($source['token']);
+        $promoCode = $source['promo'];
+        $price = SectionSubjects::findOne(['slug' => $source['slug']])->price;
+        $result =
+            [
+                'price' => $price,
+                'percent' => 0,
+                'is_valid' => false,
+            ];
+
+        $model =
+            PromotionalCode::findOne(
+                [
+                    'user_id' => $userId,
+                    'key' => trim($promoCode),
+                    'is_status' => true,
+                ]);
+
+        if (!empty($model)) {
+            $result =
+                [
+                    'price' => ($price * $model->percent) / 100,
+                    'percent' => $price * $model->percent,
+                    'is_valid' => true,
+                ];
+            $model->is_status = 0;
+            $model->save(false);
+        }
+
+        return $result;
+    }
 }

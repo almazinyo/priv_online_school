@@ -86,7 +86,6 @@ class MainController extends Controller
         return [];
     }
 
-
     /**
      * @SWG\Post(path="/api/main/promo-code",
      *     tags={"main"},
@@ -112,7 +111,7 @@ class MainController extends Controller
         return
             [
                 'status' => 200,
-                'data' => [],
+                'data' => $mainService->promoCode($data),
             ];
     }
 
