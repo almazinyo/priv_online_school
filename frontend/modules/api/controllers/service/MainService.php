@@ -144,7 +144,9 @@ class MainService extends Component
         $price = SectionSubjects::findOne(['slug' => $source['slug']])->price;
         $result =
             [
-                'price' => $price,
+                'old_price' => $price,
+                'new_price' => 0,
+                'stocks' => 0,
                 'percent' => 0,
                 'is_valid' => false,
             ];
