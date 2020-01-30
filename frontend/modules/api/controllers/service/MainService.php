@@ -144,8 +144,8 @@ class MainService extends Component
         $price = SectionSubjects::findOne(['slug' => $source['slug']])->price;
         $result =
             [
-                'old_price' => $price,
-                'new_price' => 0,
+                'old_price' => (int) $price,
+                'new_price' => (int) $price,
                 'stocks' => 0,
                 'percent' => 0,
                 'is_valid' => false,
@@ -164,7 +164,7 @@ class MainService extends Component
 
             $result =
                 [
-                    'old_price' =>(int) $price,
+                    'old_price' => (int) $price,
                     'new_price' => $price - $stocks,
                     'stocks' => $stocks,
                     'percent' => $model->percent,
