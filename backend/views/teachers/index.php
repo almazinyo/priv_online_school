@@ -36,9 +36,15 @@ $this->params['breadcrumbs'][] = $this->title;
             //'large_img_path',
             //'slug',
             //'description:ntext',
-            //'created_at',
-            //'updated_at',
-            //'is_status',
+            'created_at:datetime',
+            'updated_at:datetime',
+            [
+                'attribute' => 'is_status',
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['is_status'] ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive');
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -36,7 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'seo_description',
             'created_at:datetime',
             'updated_at:datetime',
-            'is_status',
+            [
+                'attribute' => 'is_status',
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['is_status'] ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive');
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

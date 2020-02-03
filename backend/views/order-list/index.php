@@ -23,7 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+            [
+                'attribute' => 'user_id',
+                'label' => Yii::t('app', 'Users'),
+                'format' => 'text',
+                'value' => function ($data) {
+                    return
+                        sprintf(
+                            "%s %s",
+                            $data['user']['profiles']['first_name'],
+                            $data['user']['profiles']['last_name']
+                        );
+                },
+            ],
 //            'subjects_id',
             'section_id',
             'name',
