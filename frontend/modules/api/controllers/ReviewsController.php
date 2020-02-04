@@ -2,10 +2,19 @@
 
 namespace frontend\modules\api\controllers;;
 
+use common\models\Reviews;
 use yii\web\Controller;
+use yii\web\Response;
 
 class ReviewsController extends Controller
 {
+
+    public function init()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        parent::init();
+    }
+
 
     /**
      * {@inheritDoc}
@@ -41,10 +50,26 @@ class ReviewsController extends Controller
     }
 
     /**
-     * @return string
+     * @SWG\Get(path="/api/reviews",
+     *     tags={"reviews"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = Reviews::receiveAllData();
+
+        return [
+            'status' => 200,
+            'data' => $model,
+        ];
     }
 }

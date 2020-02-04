@@ -40,9 +40,27 @@ class Reviews extends \yii\db\ActiveRecord
             [['user_id', 'subjects_id', 'section_id', 'rating', 'is_status'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'string', 'max' => 300],
-            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
-            [['subjects_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subjects_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [
+                ['section_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => SectionSubjects::className(),
+                'targetAttribute' => ['section_id' => 'id'],
+            ],
+            [
+                ['subjects_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subjects_id' => 'id'],
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id'],
+            ],
         ];
     }
 
@@ -86,5 +104,31 @@ class Reviews extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public static function receiveAllData(): array
+    {
+        $select =
+            sprintf(
+                '%s.*, %s, %s, %s, %s, %s, %s',
+                self::tableName(),
+                'DATE(FROM_UNIXTIME(reviews.created_at)) as created_at',
+                'DATE(FROM_UNIXTIME(reviews.updated_at)) as updated_at',
+                'subjects.title as subject_name ',
+                'section_subjects.name as section_name',
+                'profile.first_name as first_name',
+                'profile.last_name as last_name'
+            );
+
+        return
+            self::find()
+                ->select($select)
+                ->joinWith('subjects')
+                ->joinWith('section')
+                ->joinWith('user.profiles')
+                ->where(['reviews.is_status' => true])
+                ->asArray()
+                ->all()
+            ;
     }
 }
