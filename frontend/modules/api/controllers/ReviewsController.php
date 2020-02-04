@@ -1,20 +1,22 @@
 <?php
 
-namespace frontend\modules\api\controllers;;
+namespace frontend\modules\api\controllers;
+
+;
 
 use common\models\Reviews;
+use frontend\modules\api\components\Helpers;
+use frontend\modules\api\controllers\service\UsersService;
 use yii\web\Controller;
 use yii\web\Response;
 
 class ReviewsController extends Controller
 {
-
     public function init()
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
         parent::init();
     }
-
 
     /**
      * {@inheritDoc}
@@ -70,6 +72,87 @@ class ReviewsController extends Controller
         return [
             'status' => 200,
             'data' => $model,
+        ];
+    }
+
+    /**
+     * @SWG\Post(path="/api/reviews/create",
+     *     tags={"reviews"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *       @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "rating",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *       @SWG\Parameter(
+     *        in = "formData",
+     *        name = "description",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *      @SWG\Parameter(
+     *        in = "formData",
+     *        name = "subject_id",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "section_id",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     *     @SWG\Response(
+     *         response = 401,
+     *         description = "",
+     *         @SWG\Schema(ref="#/definitions/Error")
+     *     )
+     * )
+     *
+     */
+    public function actionCreate()
+    {
+        $request = Yii::$app->request;
+        $userService = new UsersService();
+
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
+        $userId = $userService->receiveUserId($data['token']);
+
+        $model =
+            new  Reviews(
+                [
+                    'user_id' => $userId,
+                    'subjects_id' => $data['subject_id'],
+                    'section_id' => $data['section_id'],
+                    'rating' => $data['rating'],
+                    'description' => $data['description'],
+                    'is_status' => 1,
+                ]
+            );
+
+        return [
+            'status' => 200,
+            'success' => $model->save(),
         ];
     }
 }
