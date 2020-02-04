@@ -92,15 +92,20 @@ class StorageLessonsController extends Controller
                 foreach ($lessons as $file) {
                     $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
                     $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
-                    $file->saveAs($filePath . $fileName);
                     $modelLessons = new StorageLessons();
-                    $modelLessons->name = $fileName;
                     $modelLessons->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
+
+                    if (preg_match('~pdf~sui', $file->type)) {
+                        $fileName = $file->name;
+                    }
+
+                    $modelLessons->name = $fileName;
                     $modelLessons->lesson_id = $lessonId;
                     $modelLessons->is_status = $status;
+                    $file->saveAs($filePath . $fileName);
                     $modelLessons->save();
                 }
-                
+
                 return $this->redirect('index');
             }
         }
@@ -129,12 +134,17 @@ class StorageLessonsController extends Controller
                 foreach ($lessons as $file) {
                     $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
                     $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
-                    $file->saveAs($filePath . $fileName);
                     $modelLessons = new StorageLessons();
-                    $modelLessons->name = $fileName;
                     $modelLessons->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
+
+                    if (preg_match('~pdf~sui', $file->type)) {
+                        $fileName = $file->name;
+                    }
+
+                    $modelLessons->name = $fileName;
                     $modelLessons->lesson_id = $lessonId;
                     $modelLessons->is_status = $status;
+                    $file->saveAs($filePath . $fileName);
                     $modelLessons->save();
                 }
             } else {
@@ -194,13 +204,18 @@ class StorageLessonsController extends Controller
             foreach ($lessons as $file) {
                 $filePath = Yii::getAlias("@frontend") . "/web/images/lessons/";
                 $fileName = Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                $modelLessons = new StorageLessons();
+                $modelLessons->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
+
+                if (preg_match('~pdf~sui', $file->type)) {
+                    $fileName = $file->name;
+                }
+
+                $modelLessons->name = $fileName;
+                $modelLessons->lesson_id = $lessonId;
+                $modelLessons->is_status = $status;
                 $file->saveAs($filePath . $fileName);
-                $model = new StorageLessons();
-                $model->name = $fileName;
-                $model->type = preg_replace('~application\/|\/.*~sui', '', $file->type ?? '');
-                $model->lesson_id = $lessonId;
-                $model->is_status = $status;
-                $model->save();
+                $modelLessons->save();
             }
         }
 
