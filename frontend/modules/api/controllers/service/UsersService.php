@@ -60,7 +60,7 @@ class UsersService extends Component
         $userId = $this->receiveUserId($token);
         $passingLessons =
             PassingLessons::find()
-                ->where(['user_id' => $userId, 'is_status' => 1])
+                ->where(['user_id' => $userId])
                 ->asArray()
                 ->all()
         ;
