@@ -5,9 +5,10 @@ namespace frontend\modules\api\controllers;
 ;
 
 use common\models\Reviews;
+use common\models\Subjects;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\UsersService;
-use yii\web\Controller;
+use yii\base\Controller;
 use yii\web\Response;
 
 class ReviewsController extends Controller
@@ -75,8 +76,8 @@ class ReviewsController extends Controller
                 'subject_name' => $review['subject_name'],
                 'description' => $review['description'],
                 'rating' => $review['rating'],
-                'first_name' =>  $review['user']['profiles']['first_name'],
-                'last_name' =>  $review['user']['profiles']['last_name'],
+                'first_name' => $review['user']['profiles']['first_name'],
+                'last_name' => $review['user']['profiles']['last_name'],
                 'url_vk' => 'https://vk.com/id' . $review['user']['username'],
                 'img' => 'http://api.examator.ru/images/users/' . $review['user']['profiles']['image'],
             ];
@@ -84,7 +85,7 @@ class ReviewsController extends Controller
 
         return [
             'status' => 200,
-            'data' => $data
+            'data' => $data,
         ];
     }
 
@@ -145,18 +146,19 @@ class ReviewsController extends Controller
      */
     public function actionCreate()
     {
-        $request = Yii::$app->request;
+        $request = \Yii::$app->request;
         $userService = new UsersService();
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $userId = $userService->receiveUserId($data['token']);
 
+        $subjectId = Subjects::findOne(['slug' => $data['slug']])->id;
+
         $model =
             new  Reviews(
                 [
                     'user_id' => $userId,
-                    'subjects_id' => $data['subject_id'],
-                    'section_id' => $data['section_id'],
+                    'subjects_id' =>$subjectId,
                     'rating' => $data['rating'],
                     'description' => $data['description'],
                     'is_status' => 1,
