@@ -75,6 +75,8 @@ class ReviewsController extends Controller
                 'subject_name' => $review['subject_name'],
                 'description' => $review['description'],
                 'rating' => $review['rating'],
+                'first_name' =>  $review['user']['profiles']['first_name'],
+                'last_name' =>  $review['user']['profiles']['last_name'],
                 'url_vk' => 'https://vk.com/id' . $review['user']['username'],
                 'img' => 'http://api.examator.ru/images/users/' . $review['user']['profiles']['image'],
             ];
