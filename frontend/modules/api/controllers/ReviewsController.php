@@ -68,10 +68,21 @@ class ReviewsController extends Controller
     public function actionIndex()
     {
         $model = Reviews::receiveAllData();
+        $data = [];
+
+        foreach ($model as $index => $review) {
+            $data[] = [
+                'subject_name' => $review['subject_name'],
+                'description' => $review['description'],
+                'rating' => $review['rating'],
+                'url_vk' => 'https://vk.com/id' . $review['user']['username'],
+                'img' => 'http://api.examator.ru/images/users/' . $review['user']['profiles']['image'],
+            ];
+        }
 
         return [
             'status' => 200,
-            'data' => $model,
+            'data' => $data
         ];
     }
 
