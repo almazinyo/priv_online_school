@@ -204,4 +204,36 @@ class MainController extends Controller
                 'data' => $optionsData,
             ];
     }
+
+
+    /**
+     * @SWG\Get(path="/api/main/hints",
+     *     tags={"main"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
+    public function actionHints()
+    {
+        $model = Options::find()->where(['key' => 'hints'])->asArray()->all();
+
+        $hintsData = [];
+
+        foreach ($model as $option) {
+            $hintsData[$option['key']][] = \Opis\Closure\unserialize($option['value']);
+        }
+
+        return
+            [
+                'status' => 200,
+                'data' => $hintsData,
+            ];
+    }
 }
