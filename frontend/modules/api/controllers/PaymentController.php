@@ -54,7 +54,7 @@ class PaymentController extends Controller
         $model->is_status = 0;
 
         if ($postRequest['sha1_hash'] == $hash || $postRequest['codepro'] === false || $postRequest['unaccepted'] === false) {
-            $model->is_status = 2;
+            $model->is_status = 1;
             file_put_contents('test.json', json_encode($_POST));
         }
 
