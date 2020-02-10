@@ -48,6 +48,8 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6">
         <?= $form->field($model, 'section_id')->widget(
             Select2::classname(), [
             'data' =>
@@ -62,6 +64,10 @@ use yii\widgets\ActiveForm;
         ])
         ;
         ?>
+    </div>
+            <div class="col-xs-6"><?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?></div>
+
+        </div>
     </div>
     <div class="col-xs-12">
         <div class="row">

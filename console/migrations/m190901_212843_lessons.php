@@ -36,6 +36,7 @@ class m190901_212843_lessons extends Migration
                 'section_id' => $this->integer(11),
                 'background' => $this->string(300),
                 'logo' => $this->string(500),
+                'price' => $this->string(500)->defaultValue(0),
                 'slug' => $this->string(500)->notNull(),
                 'short_description' => $this->text(),
                 'description' => $this->text(),

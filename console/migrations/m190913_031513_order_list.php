@@ -40,6 +40,7 @@ class m190913_031513_order_list extends Migration
                 'user_id' => $this->integer(11),
                 'subjects_id' => $this->integer(11),
                 'section_id' => $this->integer(11),
+                'lesson_id' => $this->integer(11),
                 'name' => $this->string(300),
                 'email' => $this->string(300),
                 'price' => $this->string(300),

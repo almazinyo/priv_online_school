@@ -16,6 +16,7 @@ use yii\helpers\Html;
  * @property string $background
  * @property string $logo
  * @property string $slug
+ * @property string $price
  * @property string $short_description
  * @property string $description
  * @property string $seo_keywords
@@ -48,7 +49,7 @@ class Lessons extends ActiveRecord
         return [
             [['sort_lessons', 'section_id', 'is_status'], 'integer'],
             [['name', 'slug'], 'required'],
-            [['short_description', 'description'], 'string'],
+            [['short_description', 'description','price'], 'string'],
             [['name', 'logo', 'slug'], 'string', 'max' => 500],
             [['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'], 'string', 'max' => 300],
             [
@@ -98,6 +99,7 @@ class Lessons extends ActiveRecord
             'section_id' => Yii::t('app', 'Section ID'),
             'background' => Yii::t('app', 'Background'),
             'logo' => Yii::t('app', 'Logo'),
+            'price' => Yii::t('app', 'Price'),
             'slug' => Yii::t('app', 'Slug'),
             'short_description' => Yii::t('app', 'Short Description'),
             'description' => Yii::t('app', 'Description'),
@@ -165,7 +167,7 @@ class Lessons extends ActiveRecord
     {
         return
             self::find()
-                ->select('id, name, slug, section_id, is_status')
+                ->select('id, name, slug, section_id, is_status, price')
                 ->where(['section_id' => Html::encode($sectionId)])
                 ->andWhere(['!=', 'is_status', false])
                 ->asArray()

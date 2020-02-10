@@ -4,6 +4,8 @@ namespace frontend\modules\api\controllers;
 
 use common\models\Lessons;
 use common\models\SectionSubjects;
+use frontend\modules\api\components\Helpers;
+use frontend\modules\api\controllers\service\LessonsService;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -56,6 +58,23 @@ class SectionsController extends Controller
      *     description="description",
      *     produces={"application/json"},
      *
+     *    @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slug_section",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *
      *     @SWG\Response(
      *         response = 200,
      *         description = " success"
@@ -76,6 +95,37 @@ class SectionsController extends Controller
         return [
             'status' => 200,
             'data' => $model,
+        ];
+    }
+
+
+    /**
+     * @SWG\Get(path="/api/sections/valid-lessons(",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     */
+    public function actionValidLessons()
+    {
+        $request = Yii::$app->request;
+        $lessonsService = new LessonsService();
+
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
+        $sectionId = SectionSubjects::findOne(['slug'=>$data['slug']])->id;
+
+
+      $lessons =   Lessons::receiveLessonsForSection($sectionId);
+
+        return [
+            'status' => 200,
+            'data' => [],
         ];
     }
 }

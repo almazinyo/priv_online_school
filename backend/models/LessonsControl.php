@@ -23,6 +23,7 @@ class LessonsControl extends Lessons
                     'name',
                     'background',
                     'logo',
+                    'price',
                     'slug',
                     'short_description',
                     'description',
@@ -81,7 +82,7 @@ class LessonsControl extends Lessons
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'background', $this->background])
             ->andFilterWhere(['like', 'logo', $this->logo])
-            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'price', $this->price])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'seo_keywords', $this->seo_keywords])
