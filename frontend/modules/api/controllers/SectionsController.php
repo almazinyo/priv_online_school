@@ -77,7 +77,7 @@ class SectionsController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $model['allLessons'] = Lessons::receiveLessonsForSection($model['id']);
+//        $model['allLessons'] = Lessons::receiveLessonsForSection($model['id']);
 
         return [
             'status' => 200,
