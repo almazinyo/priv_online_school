@@ -104,7 +104,6 @@ class SectionsController extends Controller
      *     @SWG\Parameter(
      *        in = "formData",
      *        name = "slug_section",
-     *        description = " user  token",
      *        required = true,
      *        type = "string"
      *     ),
