@@ -1,0 +1,14 @@
+# curl 'http://api.examator.ru/api/sections/valid_lessons/' -H 'Accept: application/json, text/plain, */*' -H 'Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya' -H 'DNT: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36' -H 'Content-Type: application/json' --data-binary '{"prBlock":"eyJzbHVnX3NlY3Rpb24iOiJ1cmF2bmVuaXlhLWR2aXpoZW5peWEiLCJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="}' --compressed
+POST http://api.examator.ru/api/sections/valid-lessons/
+Accept: application/json, text/plain, */*
+Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya
+DNT: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36
+Content-Type: application/json
+
+{
+  "prBlock": "eyJzbHVnX3NlY3Rpb24iOiJ1cmF2bmVuaXlhLWR2aXpoZW5peWEiLCJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="
+}
+
+###
+

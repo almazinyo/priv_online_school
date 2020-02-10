@@ -8,7 +8,7 @@ use common\models\SectionSubjects;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\LessonsService;
 use frontend\modules\api\controllers\service\UsersService;
-use yii\web\Controller;
+use yii\base\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -116,7 +116,7 @@ class SectionsController extends Controller
      */
     public function actionValidLessons()
     {
-        $request = Yii::$app->request;
+        $request = \Yii::$app->request;
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $userId = (new UsersService())->receiveUserId($data['token']);
