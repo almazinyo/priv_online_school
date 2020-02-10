@@ -3,9 +3,11 @@
 namespace frontend\modules\api\controllers;
 
 use common\models\Lessons;
+use common\models\OrderList;
 use common\models\SectionSubjects;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\LessonsService;
+use frontend\modules\api\controllers\service\UsersService;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -58,21 +60,6 @@ class SectionsController extends Controller
      *     description="description",
      *     produces={"application/json"},
      *
-     *    @SWG\Parameter(
-     *        in = "formData",
-     *        name = "token",
-     *        description = " user  token",
-     *        required = true,
-     *        type = "string"
-     *     ),
-     *
-     *     @SWG\Parameter(
-     *        in = "formData",
-     *        name = "slug_section",
-     *        description = " user  token",
-     *        required = true,
-     *        type = "string"
-     *     ),
      *
      *
      *     @SWG\Response(
@@ -98,13 +85,29 @@ class SectionsController extends Controller
         ];
     }
 
-
     /**
-     * @SWG\Get(path="/api/sections/valid-lessons(",
+     * @SWG\post(path="/api/sections/valid-lessons(",
      *     tags={"sections"},
      *     summary="summary",
      *     description="description",
      *     produces={"application/json"},
+     *
+     *
+     *    @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slug_section",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
      *
      *     @SWG\Response(
      *         response = 200,
@@ -118,14 +121,42 @@ class SectionsController extends Controller
         $lessonsService = new LessonsService();
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
-        $sectionId = SectionSubjects::findOne(['slug'=>$data['slug']])->id;
+        $userId = (new UsersService())->receiveUserId($data['token']);
+        $sectionId = SectionSubjects::findOne(['slug' => $data['slug']])->id;
 
+        $orderListSection = OrderList::find()->where(['section_id' => $sectionId, 'user_id' => $userId]);
+        $orderListLessons = OrderList::find()->where(['lesson_id' => $sectionId, 'user_id' => $userId]);
+        $modelLessons = Lessons::receiveLessonsForSection($sectionId);
+        $validLessons = [];
 
-      $lessons =   Lessons::receiveLessonsForSection($sectionId);
+        foreach ($modelLessons as $index => $lesson) {
+            $validLessons[$lesson['id']] =
+                [
+                    'name' => $lesson['name'],
+                    'slug' => $lesson['slug'],
+                    'price' => $lesson['price'],
+                    'is_status' => $lesson['is_status'],
+                    'is_bought' => false,
+                ];
+        }
 
-        return [
-            'status' => 200,
-            'data' => [],
-        ];
+        if (!empty($orderListSection)) {
+            foreach ($validLessons as $index => $validLesson) {
+                $validLessons[$index]['is_bought'] = true;
+            }
+        }
+
+        if (empty($orderListSection) && !empty($orderListLessons)) {
+            foreach ($orderListLessons as $index => $order) {
+                $lessonId = $order['lesson_id'];
+                $validLessons[$lessonId]['is_bought'] = true;
+            }
+        }
+
+        return
+            [
+                'status' => 200,
+                'data' => $validLessons,
+            ];
     }
 }
