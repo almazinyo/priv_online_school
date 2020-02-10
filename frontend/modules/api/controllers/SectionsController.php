@@ -54,7 +54,7 @@ class SectionsController extends Controller
     }
 
     /**
-     * @SWG\Get(path="/api/sections/{slugSection}{slugLesson}",
+     * @SWG\Get(path="/api/sections/details/{slugSection}/{slugLesson}",
      *     tags={"sections"},
      *     summary="summary",
      *     description="description",
@@ -68,8 +68,12 @@ class SectionsController extends Controller
      *     ),
      * )
      */
-    public function actionDetails($slugSection, $slugLesson = '')
+    public function actionDetails()
     {
+        $getRequest = \Yii::$app->request->get();
+
+        $slugSection = $getRequest['slugSection'] ?? '';
+        $slugLesson = $getRequest['slugLesson'] ?? '';
 
         $model = SectionSubjects::receiveSpecificData($slugSection, $slugLesson);
 
