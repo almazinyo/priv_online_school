@@ -1,13 +1,19 @@
-# curl 'http://api.examator.ru/api/sections/valid_lessons/' -H 'Accept: application/json, text/plain, */*' -H 'Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya' -H 'DNT: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36' -H 'Content-Type: application/json' --data-binary '{"prBlock":"eyJzbHVnX3NlY3Rpb24iOiJ1cmF2bmVuaXlhLWR2aXpoZW5peWEiLCJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="}' --compressed
-POST http://api.examator.ru/api/sections/valid-lessons/
+###
+
+# curl 'http://api.examator.ru/api/sections/valid-lessons' -H 'Connection: keep-alive' -H 'Accept: application/json, text/plain, */*' -H 'DNT: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36' -H 'Content-Type: application/json' -H 'Origin: http://dev.examator.ru' -H 'Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' --data-binary '{"prBlock":"eyJzbHVnX3NlY3Rpb24iOiJraW5lbWF0aWthIiwidG9rZW4iOiJFUzJaaWRSaHhjUF9Md3Y0S3NBRlB6OElvMkJNUHRYdyJ9"}' --compressed
+POST http://api.examator.ru/api/sections/valid-lessons
+Connection: keep-alive
 Accept: application/json, text/plain, */*
-Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya
 DNT: 1
 User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36
+Origin: http://dev.examator.ru
+Referer: http://dev.examator.ru/work/kinematika/uravneniya-dvizheniya
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
 Content-Type: application/json
 
 {
-  "prBlock": "eyJzbHVnX3NlY3Rpb24iOiJ1cmF2bmVuaXlhLWR2aXpoZW5peWEiLCJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="
+  "prBlock": "eyJzbHVnX3NlY3Rpb24iOiJraW5lbWF0aWthIiwidG9rZW4iOiJFUzJaaWRSaHhjUF9Md3Y0S3NBRlB6OElvMkJNUHRYdyJ9"
 }
 
 ###

@@ -120,11 +120,12 @@ class SectionsController extends Controller
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $userId = (new UsersService())->receiveUserId($data['token']);
-        $sectionId = SectionSubjects::findOne(['slug' => $data['slug']])->id;
+        $sectionId = SectionSubjects::findOne(['slug' => $data['slug_section']])->id;
 
         $orderListSection = OrderList::find()->where(['section_id' => $sectionId, 'user_id' => $userId]);
         $orderListLessons = OrderList::find()->where(['lesson_id' => $sectionId, 'user_id' => $userId]);
         $modelLessons = Lessons::receiveLessonsForSection($sectionId);
+
         $validLessons = [];
 
         foreach ($modelLessons as $index => $lesson) {
