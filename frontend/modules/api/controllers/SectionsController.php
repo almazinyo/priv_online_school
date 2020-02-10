@@ -86,7 +86,7 @@ class SectionsController extends Controller
     }
 
     /**
-     * @SWG\post(path="/api/sections/valid-lessons(",
+     * @SWG\post(path="/api/sections/valid-lessons",
      *     tags={"sections"},
      *     summary="summary",
      *     description="description",
@@ -118,7 +118,6 @@ class SectionsController extends Controller
     public function actionValidLessons()
     {
         $request = Yii::$app->request;
-        $lessonsService = new LessonsService();
 
         $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
         $userId = (new UsersService())->receiveUserId($data['token']);
