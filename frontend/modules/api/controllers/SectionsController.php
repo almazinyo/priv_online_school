@@ -54,13 +54,33 @@ class SectionsController extends Controller
     }
 
     /**
-     * @SWG\Get(path="/api/sections/details/{slugSection}/{slugLesson}",
+     * @SWG\post(path="/api/sections/details",
      *     tags={"sections"},
      *     summary="summary",
      *     description="description",
      *     produces={"application/json"},
      *
+     *    @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
      *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slugSection",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *       @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slugLesson",
+     *        required = true,
+     *        type = "string"
+     *     ),
      *
      *     @SWG\Response(
      *         response = 200,
@@ -70,10 +90,11 @@ class SectionsController extends Controller
      */
     public function actionDetails()
     {
-        $getRequest = \Yii::$app->request->get();
+        $request = \Yii::$app->request;
 
-        $slugSection = $getRequest['slugSection'] ?? '';
-        $slugLesson = $getRequest['slugLesson'] ?? '';
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
+        $slugSection = $data['slugSection'] ?? '';
+        $slugLesson = $data['slugLesson'] ?? '';
 
         $model = SectionSubjects::receiveSpecificData($slugSection, $slugLesson);
 
@@ -81,7 +102,50 @@ class SectionsController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $model['allLessons'] = Lessons::receiveLessonsForSection($model['id']);
+        $lessonId = Lessons::findOne(['slug' => $slugLesson])->id;
+        $sectionId = $model['id'];
+
+        $model['allLessons'] = [];
+
+        foreach (Lessons::receiveLessonsForSection($model['id']) as $index => $lesson) {
+            $model['allLessons'][$lesson['id']] =
+                [
+                    'name' => $lesson['name'],
+                    'slug' => $lesson['slug'],
+                    'price' => $lesson['price'],
+                    'is_status' => $lesson['is_status'],
+                    'is_bought' => false,
+                ];
+        }
+
+        $userId = (new UsersService())->receiveUserId($data['token']);
+
+        $orderListSection =
+            OrderList::find()
+                ->where(['section_id' => $sectionId, 'user_id' => $userId])
+                ->asArray()
+                ->all()
+        ;
+
+        $orderListLessons =
+            OrderList::find()
+                ->where(['lesson_id' => $lessonId, 'user_id' => $userId])
+                ->asArray()
+                ->all()
+        ;
+
+        if (!empty($orderListSection)) {
+            foreach ($model['allLessons'] as $index => $validLesson) {
+                $model['allLessons'][$index]['is_bought'] = true;
+            }
+        }
+
+        if (empty($orderListSection) && !empty($orderListLessons)) {
+            foreach ($orderListLessons as $index => $order) {
+                $lessonId = $order['lesson_id'];
+                $model['allLessons'][$lessonId]['is_bought'] = true;
+            }
+        }
 
         return [
             'status' => 200,
