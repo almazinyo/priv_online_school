@@ -126,8 +126,18 @@ class SectionsController extends Controller
         $userId = (new UsersService())->receiveUserId($data['token']);
         $sectionId = SectionSubjects::findOne(['slug' => $data['slug_section']])->id;
 
-        $orderListSection = OrderList::find()->where(['section_id' => $sectionId, 'user_id' => $userId]);
-        $orderListLessons = OrderList::find()->where(['lesson_id' => $sectionId, 'user_id' => $userId]);
+        $orderListSection =
+            OrderList::find()
+                ->where(['section_id' => $sectionId, 'user_id' => $userId])
+                ->asArray()
+                ->all()
+        ;
+        $orderListLessons =
+            OrderList::find()
+                ->where(['lesson_id' => $sectionId, 'user_id' => $userId])
+                ->asArray()
+                ->all()
+        ;
         $modelLessons = Lessons::receiveLessonsForSection($sectionId);
 
         $validLessons = [];
@@ -161,5 +171,61 @@ class SectionsController extends Controller
                 'status' => 200,
                 'data' => $validLessons,
             ];
+    }
+
+    /**
+     * @SWG\post(path="/api/sections/check-access",
+     *     tags={"sections"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *    @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slug_section",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *      @SWG\Parameter(
+     *        in = "formData",
+     *        name = "slug_lesson",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     */
+    public function actionCheckAccess()
+    {
+        $request = \Yii::$app->request;
+
+        $data = (new Helpers())->decodePostRequest($request->post('prBlock'));
+        $userId = (new UsersService())->receiveUserId($data['token']);
+        $sectionId = SectionSubjects::findOne(['slug' => $data['slug_section']])->id;
+        $lessonId = Lessons::findOne(['slug' => $data['slug_lesson']])->id;
+
+        $orderList =
+            OrderList::find()
+                ->where(['section_id' => $sectionId, 'user_id' => $userId])
+                ->orWhere(['lesson_id' => $lessonId, 'user_id' => $userId])
+                ->asArray()
+                ->all()
+        ;
+
+        return $orderList ? true : false;
     }
 }
