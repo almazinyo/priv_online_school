@@ -231,9 +231,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
                 )->joinWith(
                     [
                         'lessons' => function ($query) {
-                            $query->onCondition(
-                                ['lessons.is_status' => Lessons::STATUS_FREE]
-                            )
+                            $query
                                 ->limit(1)
                                 ->joinWith('storageLessons')
                                 ->joinWith('quizzes')
