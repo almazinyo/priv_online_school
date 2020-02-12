@@ -108,8 +108,9 @@ class SectionsController extends Controller
         $model['allLessons'] = [];
 
         foreach (Lessons::receiveLessonsForSection($model['id']) as $index => $lesson) {
-            $model['allLessons'][$lesson['id']] =
+            $model['allLessons'][] =
                 [
+                    'id' => $lesson['id'],
                     'name' => $lesson['name'],
                     'slug' => $lesson['slug'],
                     'price' => $lesson['price'],
@@ -143,7 +144,13 @@ class SectionsController extends Controller
         if (empty($orderListSection) && !empty($orderListLessons)) {
             foreach ($orderListLessons as $index => $order) {
                 $lessonId = $order['lesson_id'];
-                $model['allLessons'][$lessonId]['is_bought'] = true;
+
+                foreach ($model['allLessons'] as $lessonKey => $lesson) {
+                    if ($lessonId == $lesson['id']) {
+                        $model['allLessons'][$lessonKey]['is_bought'] = true;
+                        break;
+                    }
+                }
             }
         }
 

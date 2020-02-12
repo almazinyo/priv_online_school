@@ -112,8 +112,6 @@ return [
                 'api/subjects/details/<slug>' => 'api/subjects/details/',
                 'api/lessons/details/<slug>' => 'api/lessons/details/',
                 'api/blog/details/<slug>' => 'api/blog/details/',
-                'api/sections/details/<slugSection>/<slugLesson>' => 'api/sections/details/',
-                'api/sections/details/<slugSection>' => 'api/sections/details/',
                 'api/subjects/teachers' => 'api/subjects/teachers/',
                 'api/subjects/teacher/<slug>' => 'api/subjects/teacher/',
             ],
