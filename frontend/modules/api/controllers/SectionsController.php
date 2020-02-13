@@ -7,6 +7,7 @@ use common\models\OrderList;
 use common\models\SectionSubjects;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\LessonsService;
+use frontend\modules\api\controllers\service\SectionService;
 use frontend\modules\api\controllers\service\UsersService;
 use yii\base\Controller;
 use yii\web\NotFoundHttpException;
@@ -105,53 +106,10 @@ class SectionsController extends Controller
         $lessonId = Lessons::findOne(['slug' => $slugLesson])->id;
         $sectionId = $model['id'];
 
-        $model['allLessons'] = [];
+        $model['allLessons'] = Lessons::receiveLessonsForSection($sectionId);
 
-        foreach (Lessons::receiveLessonsForSection($model['id']) as $index => $lesson) {
-            $model['allLessons'][] =
-                [
-                    'id' => $lesson['id'],
-                    'name' => $lesson['name'],
-                    'slug' => $lesson['slug'],
-                    'price' => $lesson['price'],
-                    'is_status' => $lesson['is_status'],
-                    'is_bought' => false,
-                ];
-        }
-
-        $userId = (new UsersService())->receiveUserId($data['token']);
-
-        $orderListSection =
-            OrderList::find()
-                ->where(['section_id' => $sectionId, 'user_id' => $userId])
-                ->asArray()
-                ->all()
-        ;
-
-        $orderListLessons =
-            OrderList::find()
-                ->where(['lesson_id' => $lessonId, 'user_id' => $userId])
-                ->asArray()
-                ->all()
-        ;
-
-        if (!empty($orderListSection)) {
-            foreach ($model['allLessons'] as $index => $validLesson) {
-                $model['allLessons'][$index]['is_bought'] = true;
-            }
-        }
-
-        if (empty($orderListSection) && !empty($orderListLessons)) {
-            foreach ($orderListLessons as $index => $order) {
-                $lessonId = $order['lesson_id'];
-
-                foreach ($model['allLessons'] as $lessonKey => $lesson) {
-                    if ($lessonId == $lesson['id']) {
-                        $model['allLessons'][$lessonKey]['is_bought'] = true;
-                        break;
-                    }
-                }
-            }
+        if (!empty($data['token'])) {
+            $model['allLessons'] = SectionService::receiveLessonsForUsers($sectionId, $lessonId, $data['token']);
         }
 
         return [

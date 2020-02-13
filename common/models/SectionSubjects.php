@@ -209,7 +209,6 @@ class SectionSubjects extends \yii\db\ActiveRecord
 
     public static function receiveSpecificData($slug, $slugLesson)
     {
-
         self::$slugLesson = $slugLesson;
         return
             self::find()
