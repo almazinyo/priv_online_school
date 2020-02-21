@@ -42,6 +42,8 @@ class m190813_092119_subjects extends Migration
                 'short_description' => $this->text(),
                 'description' => $this->text(),
                 'seo_keywords' => $this->string(300),
+                'price' => $this->string(300),
+                'stock' => $this->string(300),
                 'seo_description' => $this->string(300),
                 'created_at' => $this->string(300),
                 'updated_at' => $this->string(300),
