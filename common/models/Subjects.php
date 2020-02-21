@@ -14,17 +14,28 @@ use yii\helpers\Html;
  *
  * @property int $id
  * @property string $title
- * @property string $sortable_id
  * @property string $slug
- * @property string $short_description
- * @property string $description
- * @property string $seo_keywords
- * @property string $seo_description
- * @property string $created_at
- * @property string $updated_at
- * @property int $is_status
+ * @property string|null $icon
+ * @property string|null $color
+ * @property string|null $sortable_id
+ * @property string|null $short_description
+ * @property string|null $description
+ * @property string|null $seo_keywords
+ * @property string|null $seo_description
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @property int|null $is_status
+ * @property string|null $price
+ * @property string|null $stock
+ *
+ * @property Blog[] $blogs
+ * @property OrderList[] $orderLists
+ * @property PassingLessons[] $passingLessons
+ * @property Reviews[] $reviews
+ * @property SectionSubjects[] $sectionSubjects
+ * @property Teachers[] $teachers
  */
-class Subjects extends ActiveRecord
+class Subjects extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -40,16 +51,48 @@ class Subjects extends ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'icon', 'color', 'sortable_id'], 'string'],
-            ['sortable_id', 'default', 'value' => 0],
+            [['title', 'slug'], 'required'],
+            [['icon', 'short_description', 'description'], 'string'],
             [['is_status'], 'integer'],
-            [['title'], 'required'],
             [['title', 'slug'], 'string', 'max' => 500],
             [
-                ['short_description', 'seo_keywords', 'seo_description', 'created_at', 'updated_at'],
+                [
+                    'color',
+                    'sortable_id',
+                    'seo_keywords',
+                    'seo_description',
+                    'created_at',
+                    'updated_at',
+                    'price',
+                    'stock',
+                ],
                 'string',
                 'max' => 300,
             ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'title' => Yii::t('app', 'Title'),
+            'slug' => Yii::t('app', 'Slug'),
+            'icon' => Yii::t('app', 'Icon'),
+            'color' => Yii::t('app', 'Color'),
+            'sortable_id' => Yii::t('app', 'Sortable ID'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'description' => Yii::t('app', 'Description'),
+            'seo_keywords' => Yii::t('app', 'Seo Keywords'),
+            'seo_description' => Yii::t('app', 'Seo Description'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'is_status' => Yii::t('app', 'Is Status'),
+            'price' => Yii::t('app', 'Price'),
+            'stock' => Yii::t('app', 'Stock'),
         ];
     }
 
@@ -78,26 +121,6 @@ class Subjects extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'sortable_id' => Yii::t('app', 'Sortable Id'),
-            'slug' => Yii::t('app', 'Slug'),
-            'short_description' => Yii::t('app', 'Short Description'),
-            'description' => Yii::t('app', 'Description'),
-            'seo_keywords' => Yii::t('app', 'Seo Keywords'),
-            'seo_description' => Yii::t('app', 'Seo Description'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'is_status' => Yii::t('app', 'Is Status'),
         ];
     }
 
@@ -193,7 +216,7 @@ class Subjects extends ActiveRecord
                 ->joinWith(
                     [
                         'quizzes.lessons' => function ($query) {
-                            $query->select(['id', 'name','slug']);
+                            $query->select(['id', 'name', 'slug']);
                         },
                     ])
                 ->where(['subjects.slug' => Html::encode($slug)])
