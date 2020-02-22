@@ -105,11 +105,13 @@ class SectionsController extends Controller
 
         $lessonId = Lessons::findOne(['slug' => $slugLesson])->id;
         $sectionId = $model['id'];
+        $subjectId = $model['subject_id'];
 
         $model['allLessons'] = Lessons::receiveLessonsForSection($sectionId);
 
         if (!empty($data['token'])) {
-            $model['allLessons'] = SectionService::receiveLessonsForUsers($sectionId, $lessonId, $data['token']);
+            $model['allLessons'] = SectionService::receiveLessonsForUsers($sectionId, $lessonId, $subjectId,
+                $data['token']);
         }
 
         return [

@@ -14,7 +14,7 @@ class SectionService extends Component
      * @param $token
      * @return array
      */
-    public static function receiveLessonsForUsers($sectionId, $lessonId, $token)
+    public static function receiveLessonsForUsers($sectionId, $lessonId, $subjectId, $token)
     {
         $lessons = [];
 
@@ -46,10 +46,22 @@ class SectionService extends Component
                 ->all()
         ;
 
+        $orderListSubject = OrderList::find()->where(['subjects_id' => $subjectId, 'user_id' => $userId])->one();
+
+        if (!empty($orderListSubject)) {
+            foreach ($lessons as $index => $validLesson) {
+                $lessons[$index]['is_bought'] = true;
+            }
+
+            return $lessons;
+        }
+
         if (!empty($orderListSection)) {
             foreach ($lessons as $index => $validLesson) {
                 $lessons[$index]['is_bought'] = true;
             }
+
+            return $lessons;
         }
 
         if (empty($orderListSection) && !empty($orderListLessons)) {
