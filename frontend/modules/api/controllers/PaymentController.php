@@ -2,9 +2,11 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Lessons;
 use common\models\OrderList;
 use common\models\Profile;
 use common\models\SectionSubjects;
+use common\models\Subjects;
 use frontend\models\Auth;
 use yii\base\Controller;
 use yii\web\BadRequestHttpException;
@@ -20,7 +22,10 @@ class PaymentController extends Controller
         }
         $label = $postRequest['label'];
         $userId = Auth::findOne(['source_id' => preg_replace('~\-.*~sui', '', $label)])->user_id;
-        $sectionId = SectionSubjects::findOne(['slug' => preg_replace('~.*\-~sui', '', $label)])->id;
+        $slug = preg_replace('~.*\-~sui', '', $label);
+        $sectionId = SectionSubjects::findOne(['slug' => $slug])->id ?? '';
+        $lessonId = Lessons::findOne(['slug' => $slug])->id ?? '';
+        $subjectId = Subjects::findOne(['slug' => $slug])->id ?? '';
         $profile = Profile::findOne(['user_id' => $userId]);
         $fulName = sprintf('%s %s', $profile->first_name, $profile->last_name);
 
@@ -43,6 +48,8 @@ class PaymentController extends Controller
         $model = new OrderList();
         $model->user_id = $userId;
         $model->section_id = $sectionId;
+        $model->lesson_id = $lessonId;
+        $model->subjects_id = $subjectId;
         $model->name = $fulName;
         $model->price = $postRequest['amount'];
         $model->sender = $postRequest['sender'];

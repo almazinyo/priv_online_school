@@ -11,6 +11,7 @@ use Yii;
  * @property int|null $user_id
  * @property int|null $subjects_id
  * @property int|null $section_id
+ * @property int|null $lesson_id
  * @property string|null $name
  * @property string|null $email
  * @property int|null $price
@@ -41,11 +42,42 @@ class OrderList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'subjects_id', 'section_id',    'is_status'], 'integer'],
-            [['name', 'email', 'datetime', 'notification_type','price','sender','operation_label', 'operation_id',], 'string', 'max' => 300],
-            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => SectionSubjects::className(), 'targetAttribute' => ['section_id' => 'id']],
-            [['subjects_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subjects_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id', 'subjects_id', 'section_id', 'lesson_id', 'is_status'], 'integer'],
+            [
+                [
+                    'name',
+                    'email',
+                    'datetime',
+                    'notification_type',
+                    'price',
+                    'sender',
+                    'operation_label',
+                    'operation_id',
+                ],
+                'string',
+                'max' => 300,
+            ],
+            [
+                ['section_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => SectionSubjects::className(),
+                'targetAttribute' => ['section_id' => 'id'],
+            ],
+            [
+                ['subjects_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Subjects::className(),
+                'targetAttribute' => ['subjects_id' => 'id'],
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id'],
+            ],
         ];
     }
 
