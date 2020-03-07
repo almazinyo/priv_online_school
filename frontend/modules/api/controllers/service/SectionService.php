@@ -79,4 +79,24 @@ class SectionService extends Component
 
         return $lessons;
     }
+
+    /**
+     * @param array $where
+     * @return bool
+     */
+    public static function checkOrder(array $where)
+    {
+        $model =
+            OrderList::find()
+                ->where($where)
+                ->asArray()
+                ->all()
+        ;
+
+        if (!empty($model)) {
+            return true;
+        }
+
+        return false;
+    }
 }

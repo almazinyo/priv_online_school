@@ -98,6 +98,7 @@ class SectionsController extends Controller
         $slugLesson = $data['slugLesson'] ?? '';
 
         $model = SectionSubjects::receiveSpecificData($slugSection, $slugLesson);
+        $model['is_bought'] = false;
 
         if (empty($model)) {
             throw new NotFoundHttpException();
@@ -106,6 +107,19 @@ class SectionsController extends Controller
         $lessonId = Lessons::findOne(['slug' => $slugLesson])->id;
         $sectionId = $model['id'];
         $subjectId = $model['subject_id'];
+        $userId = (new UsersService())->receiveUserId($data['token']);
+
+        if (SectionService::checkOrder(['section_id' => $sectionId, 'user_id' => $userId])) {
+            $model['is_bought'] = true;
+        }
+
+        if (SectionService::checkOrder(['lesson_id' => $lessonId, 'user_id' => $userId])) {
+            $model['is_bought'] = true;
+        }
+
+        if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
+            $model['is_bought'] = true;
+        }
 
         $model['allLessons'] = Lessons::receiveLessonsForSection($sectionId);
 
