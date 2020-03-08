@@ -87,6 +87,13 @@ class UsersService extends Component
                         },
                     ]
                 )
+                ->joinWith(
+                    [
+                        'sectionSubjects.lessons.quizzes(' => function ($query) {
+                            $query->andWhere(['lessons_id' => $this->lessonsId])->select(['bonus_points',  'lessons_id']);
+                        },
+                    ]
+                )
                 ->select('subjects.title as  name, subjects.color, subjects.id ')
                 ->where(['subjects.id' => $subjectId])
                 ->asArray()
