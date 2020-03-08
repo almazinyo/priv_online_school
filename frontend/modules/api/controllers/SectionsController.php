@@ -110,7 +110,7 @@ class SectionsController extends Controller
 
         $model['allLessons'] = Lessons::receiveLessonsForSection($sectionId);
 
-        if (!empty($data['token'])) {
+        if (!empty($data['token']) && !empty($slugLesson)) {
             $userId = (new UsersService())->receiveUserId($data['token']);
             $model['allLessons'] = SectionService::receiveLessonsForUsers($sectionId, $lessonId, $subjectId,
                 $data['token']);
@@ -125,6 +125,23 @@ class SectionsController extends Controller
 
             if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
+            }
+        }
+
+        if (!empty($data['token']) && empty($slugLesson)) {
+            $userId = (new UsersService())->receiveUserId($data['token']);
+            $model['is_bought'] = false;
+
+            if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
+                $model['is_bought'] = true;
+            }
+
+            foreach ($model['sections'] as $index => $section) {
+                $model['sections'][$index]['is_bought'] = false;
+
+                if (SectionService::checkOrder(['section_id' => $section['id'], 'user_id' => $userId])) {
+                    $model['sections'][$index]['is_bought'] = true;
+                };
             }
         }
 
