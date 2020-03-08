@@ -35,7 +35,7 @@ class SubjectsService extends Component
         $questions = $this->receiveQuestions($source['data']);
         $answers = ArrayHelper::map($source['data'], 'id', 'answer');
 
-        foreach ($questions as $index=>$question) {
+        foreach ($questions as $index => $question) {
             $answer = $answers[$question['id']];
 
             if ($answer == $question['correct_answer']) {
@@ -59,7 +59,7 @@ class SubjectsService extends Component
         $passingLessons->created_at = time();
         $passingLessons->is_status = false;
 
-        if ($percentPassage >= 70) {
+        if ($percentPassage >= 70 && $this->checkQuiz(['lesson_id' => $lesson_id, 'user_id' => $userId])) {
             $passingLessons->is_status = true;
             $passingLessons->points = $points;
             $profile = Profile::findOne(['user_id' => $userId]);
@@ -75,5 +75,24 @@ class SubjectsService extends Component
                 'wrong_answers' => $wrong,
                 'percent_passage' => $percentPassage,
             ];
+    }
+
+    /**
+     * @param array $where
+     * @return bool
+     */
+    private function checkQuiz(array $where): bool
+    {
+        $model = Quiz::find()
+            ->where($where)
+            ->asArray()
+            ->all()
+        ;
+
+        if (empty($model)) {
+            return true;
+        }
+
+        return false;
     }
 }
