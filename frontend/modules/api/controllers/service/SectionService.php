@@ -51,6 +51,7 @@ class SectionService extends Component
         if (!empty($orderListSubject)) {
             foreach ($lessons as $index => $validLesson) {
                 $lessons[$index]['is_bought'] = true;
+                $lessons[$index]['is_status'] = 3;
             }
 
             return $lessons;
@@ -59,6 +60,7 @@ class SectionService extends Component
         if (!empty($orderListSection)) {
             foreach ($lessons as $index => $validLesson) {
                 $lessons[$index]['is_bought'] = true;
+                $lessons[$index]['is_status'] = 3;
             }
 
             return $lessons;
@@ -71,6 +73,7 @@ class SectionService extends Component
                 foreach ($lessons as $lessonKey => $lesson) {
                     if ($lessonId == $lesson['id']) {
                         $lessons[$lessonKey]['is_bought'] = true;
+                        $lessons[$lessonKey]['is_status'] = 3;
                         break;
                     }
                 }

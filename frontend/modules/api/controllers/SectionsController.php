@@ -117,14 +117,17 @@ class SectionsController extends Controller
 
             if (SectionService::checkOrder(['section_id' => $sectionId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
+                $model['is_status'] = 3;
             }
 
             if (SectionService::checkOrder(['lesson_id' => $lessonId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
+                $model['is_status'] = 3;
             }
 
             if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
+                $model['is_status'] = 3;
             }
         }
 
@@ -134,6 +137,7 @@ class SectionsController extends Controller
 
             if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
+                $model['is_status'] = 3;
             }
 
             foreach ($model['sections'] as $index => $section) {
@@ -141,6 +145,7 @@ class SectionsController extends Controller
 
                 if (SectionService::checkOrder(['section_id' => $section['id'], 'user_id' => $userId])) {
                     $model['sections'][$index]['is_bought'] = true;
+                    $model['sections'][$index]['is_status'] = 3;
                 };
             }
         }
