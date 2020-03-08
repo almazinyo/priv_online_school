@@ -83,14 +83,13 @@ class UsersService extends Component
                 ->joinWith(
                     [
                         'sectionSubjects.lessons' => function ($query) {
-                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name',  'section_id']);
+                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name', 'id', 'section_id']);
                         },
                     ]
-                )
-                ->joinWith(
+                )   ->joinWith(
                     [
-                        'sectionSubjects.lessons.quizzes(' => function ($query) {
-                            $query->andWhere(['lessons_id' => $this->lessonsId])->select(['bonus_points',  'lessons_id']);
+                        'sectionSubjects.lessons.quizzes' => function ($query) {
+                            $query->select(['bonus_points',  'lessons_id'])->limit(1);
                         },
                     ]
                 )
