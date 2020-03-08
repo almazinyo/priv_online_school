@@ -118,6 +118,7 @@ class SectionsController extends Controller
             if (SectionService::checkOrder(['section_id' => $sectionId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;
                 $model['is_status'] = 3;
+                $model['lessons'][0]['is_status'] = 3;
             }
 
             if (SectionService::checkOrder(['lesson_id' => $lessonId, 'user_id' => $userId])) {
