@@ -22,7 +22,7 @@ class PaymentController extends Controller
         }
         $label = $postRequest['label'];
         $userId = Auth::findOne(['source_id' => preg_replace('~\-.*~sui', '', $label)])->user_id;
-        $slug = preg_replace('~.*\-~sui', '', $label);
+        $slug = preg_replace('~^\d+\-~sui', '', $label);
         $sectionId = SectionSubjects::findOne(['slug' => $slug])->id ?? '';
         $lessonId = Lessons::findOne(['slug' => $slug])->id ?? '';
         $subjectId = Subjects::findOne(['slug' => $slug])->id ?? '';
@@ -59,6 +59,9 @@ class PaymentController extends Controller
         $model->operation_label = $postRequest['operation_label'];
         $model->notification_type = $postRequest['notification_type'];
         $model->is_status = 0;
+
+        file_put_contents('test.json', json_encode($_POST));
+
 
         if ($postRequest['sha1_hash'] == $hash || $postRequest['codepro'] === false || $postRequest['unaccepted'] === false) {
             $model->is_status = 1;
