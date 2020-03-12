@@ -210,8 +210,8 @@ class UsersController extends Controller
                     }
                 }
 
-                $model[$subjectId]['sectionSubjects']['bonus_points'] = $bonusPoints;
-                unset($model[$subjectId]['sectionSubjects']['lessons']);
+                $model[$subjectId]['sectionSubjects'][$sectionId]['bonus_points'] = $bonusPoints;
+                unset($model[$subjectId]['sectionSubjects'][$sectionId]['lessons']);
             }
         }
 
