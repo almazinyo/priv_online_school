@@ -202,6 +202,9 @@ class UsersController extends Controller
         $model = $service->receivePassingLessons($data['token']);
 
         foreach ($model as $subjectId => $subject) {
+            $model[$subjectId]['background'] = $subject['color'];
+            unset($model[$subjectId]['color'])
+                ;
             foreach ($subject['sectionSubjects'] as $sectionId => $section) {
                 $bonusPoints = 0;
                 foreach ($section['lessons'] as $lessonId => $lesson) {
