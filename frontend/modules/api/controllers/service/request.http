@@ -1,6 +1,0 @@
-POST http://api.examator.ru/api/users/passing-lessons
-Content-Type: application/json
-
-{"prBlock":"eyJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0"}
-
-###

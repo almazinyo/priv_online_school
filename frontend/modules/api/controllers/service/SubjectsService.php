@@ -59,7 +59,7 @@ class SubjectsService extends Component
         $passingLessons->created_at = time();
         $passingLessons->is_status = false;
 
-        if ($percentPassage >= 70 && $this->checkQuiz(['lesson_id' => $lesson_id, 'user_id' => $userId])) {
+        if ($percentPassage >= 70 && $this->checkQuiz(['lessons_id' => $lesson_id, 'user_id' => $userId])) {
             $passingLessons->is_status = true;
             $passingLessons->points = $points;
             $profile = Profile::findOne(['user_id' => $userId]);
