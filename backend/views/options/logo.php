@@ -26,7 +26,7 @@ use  yii\helpers\Url;
             $imgFullPath = Yii::getAlias("@frontend") . "/web/images/logo-text.svg";
 
             if (!empty($imgName)) {
-                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/options/') . $imgName;
+                $imgPath[] = Url::to('http://' . $_SERVER['HTTP_HOST'] . '/images/') . $imgName;
                 $size = 0;
                 if (file_exists($imgFullPath)) {
                     $size = filesize($imgFullPath);
