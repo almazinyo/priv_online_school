@@ -115,6 +115,33 @@ class MainController extends Controller
             ];
     }
 
+
+    /**
+     * @SWG\Post(path="/api/main/menu",
+     *     tags={"main"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     *
+     */
+    public function actionMenu()
+    {
+        $model = Menu::find()->select('name, slug')->asArray()->all();
+
+        return
+            [
+                'status' => 200,
+                'data' =>$model,
+            ];
+    }
+
     public function actionUser()
     {
 
@@ -140,18 +167,6 @@ class MainController extends Controller
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function actionMenu()
-    {
-        $model = Select::receiveAllData(new Menu());
-        return
-            [
-                'status' => 200,
-                'data' => $model,
-            ];
-    }
 
     /**
      * @return array
