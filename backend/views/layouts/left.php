@@ -69,7 +69,7 @@
                     ['label' => Yii::t('app', 'Blog'), 'icon' => 'fa fa-clipboard', 'url' => ['/blog']],
                     ['label' => Yii::t('app', 'Menu'), 'icon' => 'fa fa-clipboard', 'url' => ['/menu']],
                     ['label' => Yii::t('app', 'Reviews'), 'icon' => 'fa fa-clipboard', 'url' => ['/reviews']],
-                    ['label' => Yii::t('app', 'Subject'), 'icon' => '', 'url' => ['/subjects']],
+                    ['label' => Yii::t('app', 'Subject'), 'icon' =>  'fa fa-clipboard', 'url' => ['/subjects']],
 
                     [
                         'label' => Yii::t('app', 'Sections'),
@@ -124,7 +124,7 @@
                         ],
                     ],
 
-                    ['label' => Yii::t('app', 'Promotional Code'), 'icon' => '', 'url' => ['/promotional-code']],
+                    ['label' => Yii::t('app', 'Promotional Code'), 'icon' =>  'fa fa-clipboard', 'url' => ['/promotional-code']],
                     [
                         'label' => Yii::t('app', 'Settings'),
                         'icon' => 'fa fa-key',
