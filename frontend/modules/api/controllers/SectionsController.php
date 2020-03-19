@@ -110,8 +110,16 @@ class SectionsController extends Controller
 
         $model['allLessons'] = Lessons::receiveLessonsForSection($sectionId);
 
-        if (!empty($data['token']) && !empty($slugLesson)) {
+        if (!empty($data['token']) && !empty($slugLesson) && $data['token'] != 'null') {
             $userId = (new UsersService())->receiveUserId($data['token']);
+
+            if (empty($userId)) {
+                return [
+                    'status' => 200,
+                    'data' => $model,
+                ];
+            }
+
             $model['allLessons'] = SectionService::receiveLessonsForUsers($sectionId, $lessonId, $subjectId,
                 $data['token']);
 
@@ -130,11 +138,6 @@ class SectionsController extends Controller
                 $model['is_bought'] = true;
                 $model['is_status'] = 3;
             }
-        }
-
-        if (!empty($data['token']) && empty($slugLesson)) {
-            $userId = (new UsersService())->receiveUserId($data['token']);
-            $model['is_bought'] = false;
 
             if (SectionService::checkOrder(['subjects_id' => $subjectId, 'user_id' => $userId])) {
                 $model['is_bought'] = true;

@@ -68,14 +68,8 @@
                     ],
                     ['label' => Yii::t('app', 'Blog'), 'icon' => 'fa fa-clipboard', 'url' => ['/blog']],
                     ['label' => Yii::t('app', 'Reviews'), 'icon' => 'fa fa-clipboard', 'url' => ['/reviews']],
-                    [
-                        'label' => Yii::t('app', 'Subjects'),
-                        'icon' => 'fa fa-key',
-                        'items' =>
-                            [
-                                ['label' => Yii::t('app', 'Subject'), 'icon' => '', 'url' => ['/subjects']],
-                            ],
-                    ],
+                    ['label' => Yii::t('app', 'Subject'), 'icon' => '', 'url' => ['/subjects']],
+
                     [
                         'label' => Yii::t('app', 'Sections'),
                         'icon' => 'fa fa-key',

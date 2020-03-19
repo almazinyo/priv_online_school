@@ -15,6 +15,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string $stock_description
  * @property string|null $icon
  * @property string|null $color
  * @property string|null $sortable_id
@@ -65,6 +66,7 @@ class Subjects extends \yii\db\ActiveRecord
                     'updated_at',
                     'price',
                     'stock',
+                    'stock_description',
                 ],
                 'string',
                 'max' => 300,
@@ -93,6 +95,7 @@ class Subjects extends \yii\db\ActiveRecord
             'is_status' => Yii::t('app', 'Is Status'),
             'price' => Yii::t('app', 'Price'),
             'stock' => Yii::t('app', 'Stock'),
+            'stock_description' => Yii::t('app', 'stock description'),
         ];
     }
 

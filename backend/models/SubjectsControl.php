@@ -22,6 +22,7 @@ class SubjectsControl extends Subjects
                 [
                     'title',
                     'slug',
+                    'stock_description',
                     'price',
                     'stock',
                     'sortable_id',
