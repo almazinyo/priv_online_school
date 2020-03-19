@@ -31,7 +31,16 @@ class OptionsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'create', 'update', 'view','delete','delete-file','upload-images'],
+                        'actions' => [
+                            'index',
+                            'create',
+                            'update',
+                            'view',
+                            'delete',
+                            'delete-file',
+                            'upload-images',
+                            'logo',
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,6 +68,25 @@ class OptionsController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionLogo()
+    {
+        $model = new Options();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $imgFile = UploadedFile::getInstance($model, "img_name");
+
+            if (!empty($imgFile)) {
+                $imgPath = Yii::getAlias("@frontend") . "/web/images/logo-text.svg";
+                $imgFile->saveAs($imgPath);
+            }
+        }
+
+        return $this->render('logo', ['model' => $model]);
     }
 
     /**

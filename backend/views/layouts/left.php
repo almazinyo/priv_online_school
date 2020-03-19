@@ -134,13 +134,16 @@
                                 'label' => Yii::t('app', 'Options'),
                                 'icon' => '',
                                 'url' => ['/options'],
-                                'active' => Yii::$app->controller->id == 'route',
+                            ],
+                            [
+                                'label' => Yii::t('app', 'logo'),
+                                'icon' => '',
+                                'url' => ['/options/logo'],
                             ],
                             [
                                 'label' => Yii::t('app', 'Payments Received'),
                                 'icon' => '',
                                 'url' => ['/order-list'],
-                                'active' => Yii::$app->controller->id == 'route',
                             ],
                         ],
                     ],

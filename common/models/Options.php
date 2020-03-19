@@ -32,11 +32,18 @@ class Options extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        $rules = [
             [['key'], 'required'],
             [['value', 'name', 'description', 'img_name'], 'string'],
             [['key'], 'string', 'max' => 500],
         ];
+
+
+        if (Yii::$app->controller->action->id == 'logo') {
+            array_push($rules, [['img_name'], 'file', 'skipOnEmpty' => false, 'extensions' => 'svg']);
+        }
+
+        return $rules;
     }
 
     /**
