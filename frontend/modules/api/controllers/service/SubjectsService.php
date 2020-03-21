@@ -68,7 +68,6 @@ class SubjectsService extends Component
         $passingLessons->subject_id = $subject_id;
         $passingLessons->user_id = $userId;
         $passingLessons->created_at = time();
-        $passingLessons->is_status = false;
 
         if ($percentPassage >= 70 && $this->checkQuiz([
                 'lesson_id' => $lesson_id,
@@ -80,9 +79,14 @@ class SubjectsService extends Component
             $profile = Profile::findOne(['user_id' => $userId]);
             $profile->bonus_points = $profile->bonus_points + $points;
             $profile->save(false);
+            $passingLessons->save(false);
+
         }
 
-        $passingLessons->save(false);
+        if (empty($passingLessons['points'])) {
+            $passingLessons->is_status = false;
+            $passingLessons->save(false);
+        }
 
         return
             [
@@ -108,9 +112,9 @@ class SubjectsService extends Component
             return true;
         }
 
+
         return false;
     }
-
 
     /**
      * @param string $source
