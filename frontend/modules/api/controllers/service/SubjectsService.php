@@ -26,19 +26,30 @@ class SubjectsService extends Component
         $section_id = $source['section_id'];
         $lesson_id = $source['lesson_id'];
         $subject_id = $source['subject_id'];
-        $passingLessons = new PassingLessons();
+
+        $passingLessons = PassingLessons::findOne([
+            'lesson_id' => $lesson_id,
+            'user_id' => $userId,
+            'section_id' => $section_id,
+        ]);
+
+        if (empty($passingLessons)) {
+            $passingLessons = new PassingLessons();
+        }
+
         $percentPassage = 0;
         $points = 0;
 
         $correctly = 0;
         $wrong = 0;
+
         $questions = $this->receiveQuestions($source['data']);
         $answers = ArrayHelper::map($source['data'], 'id', 'answer');
 
         foreach ($questions as $index => $question) {
             $answer = $answers[$question['id']];
 
-            if ($answer == $question['correct_answer']) {
+            if ($this->createFloatNumber($answer) == $this->createFloatNumber($question['correct_answer'])) {
                 $correctly++;
 
                 if (!$source['data'][$index]['hint']) {
@@ -59,7 +70,11 @@ class SubjectsService extends Component
         $passingLessons->created_at = time();
         $passingLessons->is_status = false;
 
-        if ($percentPassage >= 70 && $this->checkQuiz(['lessons_id' => $lesson_id, 'user_id' => $userId])) {
+        if ($percentPassage >= 70 && $this->checkQuiz([
+                'lesson_id' => $lesson_id,
+                'user_id' => $userId,
+                'section_id' => $section_id,
+            ])) {
             $passingLessons->is_status = true;
             $passingLessons->points = $points;
             $profile = Profile::findOne(['user_id' => $userId]);
@@ -83,16 +98,31 @@ class SubjectsService extends Component
      */
     private function checkQuiz(array $where): bool
     {
-        $model = Quiz::find()
+        $model = PassingLessons::find()
             ->where($where)
             ->asArray()
             ->all()
         ;
 
-        if (empty($model)) {
+        if (empty($model) || !$model['is_status']) {
             return true;
         }
 
         return false;
+    }
+
+
+    /**
+     * @param string $source
+     * @return float
+     */
+    private function createFloatNumber(string $source): float
+    {
+        return
+            (float) preg_replace(
+                ['~,~sui', '~[^\.\d]~sui'],
+                ['.', ''],
+                $source
+            );
     }
 }

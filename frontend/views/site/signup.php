@@ -96,7 +96,7 @@ var_dump($_GET);
     <input type="hidden" name="successURL" value="http://dev.examator.ru/">
 
     <input type="hidden" name="paymentType" value="payment-shop">
-    <input type="submit" value="Перевести">
+    <input type="submit" value="Купить">
 </form>
 
 <?php

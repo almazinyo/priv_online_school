@@ -1,0 +1,6 @@
+POST http://api.examator.ru/api/subjects/check-test
+Content-Type: application/json
+
+{"prBlock":"eyJzZWN0aW9uX2lkIjoiMiIsImxlc3Nvbl9pZCI6IjMiLCJzdWJqZWN0X2lkIjoiMSIsImRhdGEiOlt7ImlkIjoiMTMiLCJhbnN3ZXIiOiIyMCIsImhpbnQiOmZhbHNlLCJwb2ludHMiOiI2In0seyJpZCI6IjE0IiwiYW5zd2VyIjoiMjIuNSIsImhpbnQiOmZhbHNlLCJwb2ludHMiOiI1In1dLCJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="}
+
+###
