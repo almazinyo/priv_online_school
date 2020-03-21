@@ -199,29 +199,11 @@ class UsersController extends Controller
         }
 
         $service = $this->userService;
-        $model = $service->receivePassingLessons($data['token']);
-
-        foreach ($model as $subjectId => $subject) {
-            $model[$subjectId]['background'] = $subject['color'];
-            unset($model[$subjectId]['color'])
-                ;
-            foreach ($subject['sectionSubjects'] as $sectionId => $section) {
-                $bonusPoints = 0;
-                foreach ($section['lessons'] as $lessonId => $lesson) {
-                    foreach ($lesson['quizzes'] as $quizzes) {
-                        $bonusPoints += $quizzes['bonus_points'];
-                    }
-                }
-
-                $model[$subjectId]['sectionSubjects'][$sectionId]['bonus_points'] = $bonusPoints;
-                unset($model[$subjectId]['sectionSubjects'][$sectionId]['lessons']);
-            }
-        }
 
         return
             [
                 'status' => 200,
-                'data' => $model,
+                'data' => $service->receivePassingLessons($data['token']),
             ];
     }
 

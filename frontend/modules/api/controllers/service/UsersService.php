@@ -17,6 +17,7 @@ use yii;
 class UsersService extends Component
 {
     private $lessonsId = [];
+
     private $sectionId = [];
 
     public function receiveUserId(string $token): int
@@ -61,43 +62,53 @@ class UsersService extends Component
         $passingLessons =
             PassingLessons::find()
                 ->where(['user_id' => $userId])
+                ->joinWith('subject')
+                ->joinWith('section')
                 ->asArray()
                 ->all()
         ;
 
-        $subjectId = ArrayHelper::map($passingLessons, 'subject_id', 'subject_id');
-        $this->sectionId = ArrayHelper::map($passingLessons, 'section_id', 'section_id');
-        $this->lessonsId = ArrayHelper::map($passingLessons, 'lesson_id', 'lesson_id');
+        $model = [];
 
-        return
-            Subjects::find()
-                ->joinWith(
-                    [
-                        'sectionSubjects' => function ($query) {
-                            $query
-                                ->from(['sections' => 'section_subjects'])
-                                ->andWhere(['sections.id' => $this->sectionId])->select(['name', 'background','subject_id','id']);
-                        },
-                    ]
-                )
-                ->joinWith(
-                    [
-                        'sectionSubjects.lessons' => function ($query) {
-                            $query->andWhere(['lessons.id' => $this->lessonsId])->select(['name', 'id', 'section_id']);
-                        },
-                    ]
-                )   ->joinWith(
-                    [
-                        'sectionSubjects.lessons.quizzes' => function ($query) {
-                            $query->select(['bonus_points',  'lessons_id'])->limit(1);
-                        },
-                    ]
-                )
-                ->select('subjects.title as  name, subjects.color, subjects.id ')
-                ->where(['subjects.id' => $subjectId])
-                ->asArray()
-                ->all()
-            ;
+
+        foreach ($passingLessons as $passing) {
+            $subjectId = $passing['subject']['id'];
+            $subject = [
+                'name' => $passing['subject']['title'],
+                'background' => $passing['subject']['color'],
+            ];
+
+            if (empty($model[$subjectId])) {
+                $model[$subjectId] = $subject;
+            }
+
+            $model[$subjectId]['sectionSubjects'][$passing['section']['id']][] =
+                [
+                    'name' => $passing['section']['name'],
+                    'background' => $passing['section']['background'],
+                    'bonus_points' => $passing['points'],
+                ];
+        }
+
+        foreach ($model as $index => $item) {
+            $model[$index]['sectionSubjects'] = [];
+
+            foreach ($item['sectionSubjects'] as $section) {
+                $sectionSubjects = [];
+
+                foreach ($section as $value) {
+                    $sectionSubjects = [
+                        'name' => $value['name'],
+                        'background' => $value['background'],
+                        'bonus_points' =>  ($sectionSubjects['bonus_points'] ?? 0) + $value['bonus_points'],
+                    ];
+                }
+
+                $model[$index]['sectionSubjects'][] = $sectionSubjects;
+            }
+        }
+
+        return array_values($model);
     }
 
     public function updateUserInfo(array $data)

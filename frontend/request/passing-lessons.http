@@ -1,0 +1,32 @@
+POST http://api.examator.ru/api/users/passing-lessons
+Content-Type: application/json
+
+{"prBlock":"eyJ0b2tlbiI6IkVTMlppZFJoeGNQX0x3djRLc0FGUHo4SW8yQk1QdFh3In0="}
+
+###
+#{
+#  "status": 200,
+#  "data": {
+#    "1": {
+#      "name": "Физика",
+#      "id": "1",
+#      "background": "#77e624",
+#      "sectionSubjects": [
+#        {
+#          "name": "Кинематика",
+#          "background": "#ed5a7a",
+#          "subject_id": "1",
+#          "id": "2",
+#          "bonus_points": "11"
+#        },
+#        {
+#          "name": "Динамика",
+#          "background": "#ed5a7a",
+#          "subject_id": "1",
+#          "id": "8",
+#          "bonus_points": "4"
+#        }
+#      ]
+#    }
+#  }
+#}
