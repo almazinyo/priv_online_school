@@ -95,7 +95,13 @@ use yii\helpers\ArrayHelper;
     </div>
 
     <div class="col-xs-12">
-        <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+        <div class="row">
+            <div class="col-xs-6"><?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-xs-6"><?= $form->field($model, 'stock')->textInput(['maxlength' => true]) ?></div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <?= $form->field($model, 'stock_description')->textarea(['row' => 3]) ?>
     </div>
     <div class="col-xs-12">
         <?= $form->field($model, 'description')

@@ -59,7 +59,7 @@ class SectionSubjects extends \yii\db\ActiveRecord
             [['short_description', 'description'], 'string'],
             [['name', 'price', 'slug', 'icon', 'img_path'], 'string', 'max' => 500],
             [
-                ['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'stock'],
+                ['background', 'seo_keywords', 'seo_description', 'created_at', 'updated_at', 'stock','stock_description'],
                 'string',
                 'max' => 300,
             ],

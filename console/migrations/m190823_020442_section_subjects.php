@@ -31,6 +31,7 @@ class m190823_020442_section_subjects extends Migration
                 'slug' => $this->string(500)->notNull(),
                 'price' => $this->string(500)->notNull(),
                 'stock' => $this->string(300),
+                'stock_description' => $this->string(300),
                 'img_path' => $this->string(500),
                 'background' => $this->string(300),
                 'icon' => $this->string(500),
