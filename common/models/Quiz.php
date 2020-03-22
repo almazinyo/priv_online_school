@@ -97,6 +97,14 @@ class Quiz extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getSubjects()
+    {
+        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getQuizzesUsers()
     {
         return $this->hasMany(QuizzesUsers::className(), ['quiz_id' => 'id']);

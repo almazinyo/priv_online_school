@@ -24,7 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('app', 'Lessons'),
                 'format' => 'text',
                 'value' => function ($data) {
+
                     return $data['lessons']['name'];
+                },
+            ],
+            [
+                'attribute' => 'subject_id',
+                'label' => Yii::t('app', 'Subject'),
+                'format' => 'text',
+                'value' => function ($data) {
+                    return $data['subjects']['title'];
                 },
             ],
             'bonus_points',

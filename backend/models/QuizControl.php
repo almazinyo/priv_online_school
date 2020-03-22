@@ -17,8 +17,8 @@ class QuizControl extends Quiz
     public function rules()
     {
         return [
-            [['id', 'lessons_id', 'bonus_points', 'is_status'], 'integer'],
-            [['question', 'hint', 'correct_answer', 'created_at', 'updated_at'], 'safe'],
+            [['id',], 'integer'],
+            [['question', 'hint', 'lessons_id', 'subject_id', 'bonus_points', 'is_status', 'correct_answer', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class QuizControl extends Quiz
      */
     public function search($params)
     {
-        $query = Quiz::find()->joinWith('lessons');
+        $query = Quiz::find()->joinWith('lessons')->joinWith('subjects');
 
         // add conditions that should always apply here
 
