@@ -18,7 +18,7 @@ class QuizControl extends Quiz
     {
         return [
             [['id',], 'integer'],
-            [['question', 'hint', 'lessons_id', 'subject_id', 'bonus_points', 'is_status', 'correct_answer', 'created_at', 'updated_at'], 'safe'],
+            [['question', 'hint', 'lessons_id', 'subject_id', 'bonus_points', 'is_status', 'correct_answer', 'created_at', 'updated_at'], 'trim'],
         ];
     }
 
@@ -70,6 +70,8 @@ class QuizControl extends Quiz
             ->andFilterWhere(['like', 'created_at', $this->created_at])
             ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
 
+        $query->orFilterWhere(['like', 'lessons.name', $this->lessons_id])
+            ->orFilterWhere(['like', 'subjects.title', $this->subject_id]);
         return $dataProvider;
     }
 }
