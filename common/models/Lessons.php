@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -60,6 +61,14 @@ class Lessons extends ActiveRecord
                 'targetAttribute' => ['section_id' => 'id'],
             ],
         ];
+    }
+
+    public static function receiveTitles()
+    {
+        return
+            ArrayHelper::map(
+                self::find()->all(), 'id', 'name'
+            );
     }
 
     /**

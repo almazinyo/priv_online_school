@@ -12,30 +12,53 @@ $this->title = Yii::t('app', 'Quizzes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quiz-index">
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin();
+
+    $attributeLesson =
+        [
+            'attribute' => 'lessons_id',
+            'label' => Yii::t('app', 'Lessons'),
+            'filter' => \common\models\Lessons::receiveTitles(),
+            'filterType' => GridView::FILTER_SELECT2,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => [
+                'placeholder' =>
+                    Yii::t('app', 'Lesson'),
+                'multiple' => false,
+            ],
+            'value' => function ($data) {
+                return $data['lessons']['name'];
+            },
+        ];
+    $attributeSubjects =
+        [
+            'attribute' => 'subject_id',
+            'label' => Yii::t('app', 'Subject'),
+            'filter' => \common\models\Subjects::receiveTitles(),
+            'filterType' => GridView::FILTER_SELECT2,
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'filterInputOptions' => [
+                'placeholder' =>
+                    Yii::t('app', 'Subject'),
+                'multiple' => false,
+            ],
+            'value' => function ($data) {
+                return $data['subjects']['title'];
+            },
+        ];
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute' => 'lessons_id',
-                'label' => Yii::t('app', 'Lessons'),
-                'format' => 'text',
-                'value' => function ($data) {
-
-                    return $data['lessons']['name'];
-                },
-            ],
-            [
-                'attribute' => 'subject_id',
-                'label' => Yii::t('app', 'Subject'),
-                'format' => 'text',
-                'value' => function ($data) {
-                    return $data['subjects']['title'];
-                },
-            ],
+            $attributeLesson,
+            $attributeSubjects,
             'bonus_points',
             'correct_answer',
             [
