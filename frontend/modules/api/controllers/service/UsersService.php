@@ -70,7 +70,6 @@ class UsersService extends Component
 
         $model = [];
 
-
         foreach ($passingLessons as $passing) {
             $subjectId = $passing['subject']['id'];
             $subject = [
@@ -100,7 +99,7 @@ class UsersService extends Component
                     $sectionSubjects = [
                         'name' => $value['name'],
                         'background' => $value['background'],
-                        'bonus_points' =>  ($sectionSubjects['bonus_points'] ?? 0) + $value['bonus_points'],
+                        'bonus_points' => ($sectionSubjects['bonus_points'] ?? 0) + $value['bonus_points'],
                     ];
                 }
 
@@ -145,11 +144,12 @@ class UsersService extends Component
                 $data['phone'],
                 $data['content']
             );
-        return Yii::$app->mailer->compose(['text' => 'contact', 'html' => 'contact'], ['content' => $content])
-            ->setTo($data['email'])
-//            ->setFrom([$this->email => $this->name])
-//            ->setSubject('')
-//            ->setTextBody( sprintf(' email:%s \n %s ',$this->email,$this->body))
+        return Yii::$app->mailer->compose()
+            ->setTo(Yii::$app->params['adminEmail'])
+            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+            ->setReplyTo([$this->email => $this->name])
+            ->setSubject($this->subject)
+            ->setTextBody($content)
             ->send()
             ;
     }
