@@ -137,18 +137,22 @@ class UsersService extends Component
 
     public function sendEmail($data)
     {
+        $user = $this->receiveUser($data['token']);
+        $userName = sprintf("%s %s", $user['profiles']['first_name'], $user['profiles']['last_name']);
+
         $content =
             sprintf(
-                'ЭЛЕКТРОННАЯ ПОЧТА: %s <br /> НОМЕР ТЕЛЕФОНА: %s <br />ВОПРОС: %s <br />',
+                'Пользователь: %s <br />   ЭЛЕКТРОННАЯ ПОЧТА: %s <br /> НОМЕР ТЕЛЕФОНА: %s <br />ВОПРОС: %s <br />',
+                $userName,
                 $data['email'],
                 $data['phone'],
                 $data['content']
             );
         return Yii::$app->mailer->compose()
             ->setTo(Yii::$app->params['adminEmail'])
-            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo([$this->email => $this->name])
-            ->setSubject($this->subject)
+            ->setFrom([$data['email'] => $userName])
+            ->setReplyTo([$data['email'] => $userName])
+            ->setSubject($data['email'])
             ->setTextBody($content)
             ->send()
             ;
