@@ -14,6 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?php
+
+    if (preg_match('~http~sui',$model->slug)){
+        echo $form->field($model, 'slug')->textInput(['maxlength' => true]);
+    }
+
+    ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
