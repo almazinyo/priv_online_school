@@ -1,0 +1,6 @@
+POST http://api.examator.ru/api/users/contact
+Content-Type: application/json
+
+{"prBlock": "eyJlbWFpbCI6ImZmZGZkQG1haWwucnUiLCJ0ZWwiOiIwMDAwMDAwMDAwMCIsInRleHQiOiJ4Y3pjIiwidG9rZW4iOiJFUzJaaWRSaHhjUF9Md3Y0S3NBRlB6OElvMkJNUHRYdyJ9"}
+
+###

@@ -230,7 +230,11 @@ class UsersController extends Controller
         $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
         $service = $this->userService;
 
-        return $service->sendEmail($data);
+        return
+            [
+                'status' => 200,
+                'data' => $service->sendEmail($data),
+            ];
     }
 
     /**

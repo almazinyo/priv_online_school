@@ -142,11 +142,12 @@ class UsersService extends Component
 
         $content =
             sprintf(
-                'Пользователь: %s <br />   ЭЛЕКТРОННАЯ ПОЧТА: %s <br /> НОМЕР ТЕЛЕФОНА: %s <br />ВОПРОС: %s <br />',
+                "Пользователь: %s \n\nvk: https://vk.com/id%s \n\nЭЛЕКТРОННАЯ ПОЧТА: %s \n\nНОМЕР ТЕЛЕФОНА: %s \n\nВОПРОС: %s \n\n",
                 $userName,
+                $user['username'],
                 $data['email'],
-                $data['phone'],
-                $data['content']
+                $data['tel'],
+                $data['text']
             );
         return Yii::$app->mailer->compose()
             ->setTo(Yii::$app->params['adminEmail'])
