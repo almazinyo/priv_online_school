@@ -3,6 +3,7 @@
 namespace frontend\modules\api\controllers;
 
 use common\models\User;
+use common\models\PromotionalCode;
 use frontend\modules\api\components\Helpers;
 use frontend\modules\api\controllers\service\UsersService;
 use yii\data\ActiveDataProvider;
@@ -170,6 +171,44 @@ class UsersController extends Controller
         $service = $this->userService;
 
         return $service->updateUserInfo($data);
+    }
+
+    /**
+     * @SWG\post(path="/api/users/promo-code",
+     *     tags={"user"},
+     *     summary="summary",
+     *     description="description",
+     *     produces={"application/json"},
+     *
+     *    @SWG\Parameter(
+     *        in = "formData",
+     *        name = "token",
+     *        description = " user  token",
+     *        required = true,
+     *        type = "string"
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     ),
+     * )
+     */
+    public function actionPromoCode()
+    {
+        $helpers = new Helpers();
+        $postRequest = Yii::$app->request->post();
+
+        $data = $helpers->decodePostRequest(Html::decode($postRequest['prBlock']));
+
+        if (empty($data)) {
+            return false;
+        }
+
+        $service = $this->userService;
+        $userId = $service->receiveUserId($data['token']);
+
+        return PromotionalCode::findOne(['user_id' => $userId, 'is_status' => 1]);
     }
 
     /**
