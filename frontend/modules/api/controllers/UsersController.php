@@ -208,7 +208,11 @@ class UsersController extends Controller
         $service = $this->userService;
         $userId = $service->receiveUserId($data['token']);
 
-        return PromotionalCode::findOne(['user_id' => $userId, 'is_status' => 1]);
+        return
+            [
+                'status' => 200,
+                'data' => PromotionalCode::findOne(['user_id' => $userId, 'is_status' => 1]),
+            ];
     }
 
     /**
