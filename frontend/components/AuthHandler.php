@@ -2,6 +2,7 @@
 
 namespace frontend\components;
 
+use common\models\PromotionalCode;
 use common\models\Session;
 use Yii;
 use frontend\models\Auth;
@@ -100,6 +101,16 @@ class AuthHandler
 
         $transaction = User::getDb()->beginTransaction();
         if ($user->save()) {
+            $promoCode = new PromotionalCode([
+                'key' => $this->generateCode(),
+                'percent' => 10,
+                'user_id' => $user->id,
+                'created_at' => time(),
+                'updated_at' => time(),
+                'is_status' => 1,
+            ]);
+            $promoCode->save(false);
+
             $auth = $this->createAuth($user->id, $id);
             if ($auth->save()) {
                 $transaction->commit();
@@ -120,6 +131,14 @@ class AuthHandler
             'created_at' => $time = time(),
             'updated_at' => $time,
         ]);
+    }
+
+    private function generateCode($code_length = 5)
+    {
+        $min = pow(10, $code_length);
+        $max = $min * 10 - 1;
+
+        return mt_rand($min, $max);
     }
 
     private function createAuth($userId, $sourceId)
